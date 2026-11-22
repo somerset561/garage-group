@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garage Group</title>
+<style>
+:root{--bg:#0c0c0e;--card:#16161a;--card2:#1d1d22;--line:#2a2a31;--tx:#ececf1;--mut:#8d8d98;--acc:#ff6a1a;--ok:#2ecc71;--bad:#ff4d5e;--blue:#3d9bff;--gold:#f5c542}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+#app{--acc:#ff6a1a;max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:84px}
+header{position:sticky;top:0;z-index:5;background:rgba(12,12,14,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px 8px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:900;letter-spacing:.14em;font-size:17px;display:flex;align-items:center;gap:8px}
+.brand b{color:var(--acc);margin-left:5px}
+.cbrand{display:flex;align-items:center;gap:8px}.cbrand .logo{font-size:26px;margin:0}.cbrand .cn{font-weight:900;font-size:17px;color:var(--acc);line-height:1.1}.cbrand small{font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.sw{width:34px;height:34px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--bg) inset}
+.chead h1{color:var(--acc)}
+.tire{width:20px;height:20px;border-radius:50%;border:4px dashed #555;box-shadow:inset 0 0 0 3px #0c0c0e,inset 0 0 0 6px #777}
+.bell{position:relative;background:none;border:0;font-size:20px;padding:4px 6px;cursor:pointer}
+.bell i,nav i{position:absolute;top:-2px;right:-4px;background:var(--acc);color:#fff;font:700 10px/16px sans-serif;min-width:16px;height:16px;border-radius:8px;font-style:normal;padding:0 4px}
+.roles{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;color:var(--mut)}
+.roles button{flex:1;background:var(--card2);color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:6px 4px;font-size:12px;font-weight:600;cursor:pointer}
+.roles button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+main{padding:12px 14px}
+h1{font-size:22px;margin:6px 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}h3{margin:0 0 4px;font-size:16px}
+p{margin:4px 0}.sub{color:var(--mut);font-size:13px;margin:4px 0 12px}.meta{color:var(--mut);font-size:13px}.meta.big{font-size:15px;color:var(--tx)}
+.empty{color:var(--mut);text-align:center;padding:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}
+.row{display:flex;gap:8px;align-items:center;margin-top:8px}.row.end{justify-content:flex-end}.row.wrap{flex-wrap:wrap}.grow{flex:1;min-width:0}
+.btn{background:var(--acc);color:#fff;border:1px solid var(--acc);border-radius:10px;padding:9px 14px;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+.btn.sm{padding:6px 10px;font-size:13px}.btn.wide{display:block;width:100%;margin:10px 0}
+.btn.ghost{background:transparent;color:var(--tx);border-color:var(--line)}.btn.ok{background:var(--ok);border-color:var(--ok)}
+.btn.danger{background:var(--bad);border-color:var(--bad)}.btn.ghost.danger{background:transparent;color:var(--bad);border-color:#4a2a2f}
+.btn:disabled{opacity:.6}
+textarea,input,select{width:100%;background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--acc)}
+input.plain{background:none;border:0;padding:2px 0;font-weight:700;font-size:17px}input.plain.sm{font-weight:400;font-size:13px;color:var(--mut)}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 0}label input,label select,label textarea{margin-top:4px}
+label.chk{display:flex;gap:8px;align-items:flex-start;color:var(--tx)}label.chk input{width:auto;margin-top:3px}
+.lbl{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin:12px 0 4px}
+.chip{display:inline-block;font-size:12px;padding:3px 9px;border-radius:999px;background:var(--card2);border:1px solid var(--line);color:var(--tx);white-space:nowrap}
+.chip.sm{font-size:10px;padding:1px 6px;vertical-align:middle}.chip.bad{color:var(--bad)}.chip.prem{color:var(--gold);border-color:#5a4a1a}
+.vb{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px;font-weight:900;margin-left:5px;vertical-align:middle}
+.logo{font-size:18px;margin-right:6px}.logo.big{font-size:30px}.logo.xl{font-size:44px}
+.who{display:flex;align-items:center;gap:4px;font-size:14px;margin-bottom:4px}.who .t{margin-left:auto;color:var(--mut);font-size:12px}
+.club{display:flex;align-items:center;gap:10px;cursor:pointer}
+.chead{display:flex;gap:12px;align-items:center;margin-top:6px}
+.back{background:none;border:0;color:var(--acc);font-size:15px;font-weight:600;padding:4px 0;cursor:pointer}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px;margin:14px 0 4px}
+.seg button{flex:1;background:none;border:0;color:var(--mut);padding:8px 4px;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--card2);color:var(--tx);box-shadow:0 0 0 1px var(--line)}
+.seg.sm{margin:0;flex:1}
+.ev{padding:0;overflow:hidden;cursor:pointer}.evb{padding:10px 12px 12px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:#2b2b33;text-transform:uppercase;letter-spacing:.04em}
+.tag.rideout{background:#3a2412;color:#ffb27a}.tag.meet{background:#12283a;color:#8cc6ff}.tag.merged{background:#2d1a3a;color:#d3a6ff}.tag.feat{background:#3a3212;color:var(--gold)}
+.pres{font-size:13px;margin-top:6px;color:var(--mut)}.pres b{color:var(--tx)}
+.map{display:block;width:100%;height:auto;background:#1b1e24}.map.big{border-radius:12px;border:1px solid var(--line);margin:10px 0}
+.map.tap{cursor:crosshair}
+.pinrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.pinrow:last-child{border-bottom:0}
+.pinrow input{flex:1;min-width:0}
+.pn{width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.av{width:32px;height:32px;border-radius:50%;background:#2b2b33;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none}.av.big{width:52px;height:52px;font-size:22px;background:var(--acc)}
+.x{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:8px;width:32px;height:32px;cursor:pointer;flex:none}
+.lnk{cursor:pointer;color:var(--tx);text-decoration:underline;text-decoration-color:var(--line)}
+.mini{font-size:13px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:8px}
+.mini.pending{border-color:#5a4a1a}.mini.rejected{border-color:#5a2a30}
+.note{margin-top:6px;color:var(--mut);font-style:italic}
+.pinned{background:#2a2112;border:1px solid #5a4a1a;border-radius:10px;padding:8px 10px;font-size:13px;margin:10px 0}
+.chat{max-height:52vh;overflow:auto;padding:6px 0}
+.msg{margin:8px 0;max-width:85%}.msg.me{margin-left:auto;text-align:right}
+.mu{font-size:12px;color:var(--mut);margin-bottom:2px}
+.bub{display:inline-block;background:var(--card2);border:1px solid var(--line);padding:8px 11px;border-radius:14px;text-align:left}
+.msg.me .bub{background:var(--acc);border-color:var(--acc);color:#fff}
+.mod{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}.msg.me .mod{justify-content:flex-end}
+.mod button{background:none;border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:6px;padding:2px 6px;cursor:pointer}
+.chatin{display:flex;gap:8px;margin-top:8px}.chatin input{flex:1}
+.deal{font-size:14px;margin-top:6px}.deal.prem{color:var(--gold)}.deal.locked{color:var(--mut)}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ph{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.ph img{width:100%;height:100%;object-fit:cover}.ph .x{position:absolute;top:4px;right:4px;width:24px;height:24px;font-size:11px;background:rgba(0,0,0,.6)}
+.ph.add{display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--mut);cursor:pointer;margin:0}
+.vimg{width:calc(100% + 24px);margin:-12px -12px 10px;display:block;max-height:220px;object-fit:cover;border-radius:14px 14px 0 0}
+.hp{display:inline-block;margin-top:2px;font-weight:800;color:var(--acc);font-size:13px}
+.log{font-size:13px;padding:4px 0;border-bottom:1px dashed var(--line)}.log span{color:var(--mut);margin-right:6px}
+.premc{border-color:#5a4a1a;background:linear-gradient(160deg,#1d1a10,#16161a)}.premc ul{margin:8px 0;padding-left:18px;color:var(--tx)}
+.stat{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:4px}.stat b{color:var(--tx)}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:6;display:flex;justify-content:center;background:rgba(16,16,19,.97);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+nav button{position:relative;flex:1;max-width:96px;background:none;border:0;color:var(--mut);font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;padding:4px 0}
+nav button span{font-size:19px;filter:grayscale(1);opacity:.7}nav button.on{color:var(--acc)}nav button.on span{filter:none;opacity:1}
+nav i{top:0;right:18%}
+#modal{position:fixed;inset:0;z-index:10;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center}
+#modal.show{display:flex}
+#modal .box{background:var(--card);border:1px solid var(--line);border-bottom:0;border-radius:18px 18px 0 0;width:100%;max-width:560px;max-height:90vh;overflow:auto;padding:16px 16px calc(20px + env(safe-area-inset-bottom))}
+#modal h2{margin-top:0;color:var(--tx);text-transform:none;letter-spacing:0;font-size:19px}
+.mcard{border-radius:16px;padding:18px;background:linear-gradient(135deg,#222 0%,#0c0c0e 60%,#3a1b08 100%);border:1px solid #444;margin:10px 0}
+.mcard .code{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;margin-top:14px}
+.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.fc{perspective:900px;cursor:pointer}
+.fc-in{position:relative;aspect-ratio:5/7;transition:transform .6s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;overflow:hidden;border:3px solid var(--cc);background:#111;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.face.fr img,.face.fr svg{width:100%;height:100%;object-fit:cover;display:block}
+.face.bk{transform:rotateY(180deg);padding:10px;display:flex;flex-direction:column;gap:4px;background:linear-gradient(170deg,#1d1d23,#0c0c0e)}
+.fbadge{position:absolute;top:6px;left:6px;right:6px;font-size:10px;font-weight:700;background:rgba(0,0,0,.65);padding:3px 6px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fband{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.92) 45%);padding:22px 8px 8px}
+.fband .yr{font-size:11px;font-weight:800;color:var(--cc);letter-spacing:.12em}
+.fband .mm{font-weight:900;font-size:14px;line-height:1.15;text-transform:uppercase}
+.bh{background:var(--cc);color:#fff;margin:-10px -10px 4px;padding:6px 10px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bmm{font-weight:800;font-size:13px;line-height:1.2;text-transform:uppercase}
+.bhp{font-size:11px;color:var(--mut)}.bhp b{font-size:24px;color:var(--cc);margin-right:2px}
+.blbl{font-size:10px;text-transform:uppercase;color:var(--mut);letter-spacing:.06em;margin-top:2px}
+.bmods{font-size:11.5px;line-height:1.3;overflow:auto;flex:1;min-height:0}
+.bso{display:flex;flex-direction:column;gap:3px;font-size:12px}.bso a{color:var(--tx);text-decoration:none;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tapb{font-size:9px;color:var(--mut);text-align:center}
+.gact{display:flex;gap:6px;margin-top:6px}.gact button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:9px;padding:6px;font-size:13px;cursor:pointer}
+.gst{font-size:12px;margin-top:6px;color:var(--mut);text-align:center}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px;margin-top:6px}
+.chips button{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:12px;white-space:nowrap;cursor:pointer}.chips button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.fc.gold .face{border-color:var(--gold);box-shadow:0 0 0 1px rgba(255,255,255,.25) inset,0 0 16px rgba(245,197,66,.35)}
+.fc.gold .fband .yr{color:var(--gold)}
+.drow{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px;scroll-snap-type:x mandatory}
+.dc{flex:none;width:118px;scroll-snap-align:start}.dc .fc-in{aspect-ratio:4/5}.dc .face{border-width:2px}
+.dfront{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:8px;text-align:center;gap:4px;background:linear-gradient(160deg,#202027,#0f0f12)}
+.dfront .dl{font-size:30px}.dfront b{font-size:12px;line-height:1.2}.dfront span{font-size:10px;color:var(--mut)}
+.dback{padding:8px!important;font-size:11px;line-height:1.3;justify-content:center}
+.dback .d1{font-weight:800;font-size:12px}.dback .d2{color:var(--gold)}.dback .d2.lk{color:var(--mut)}
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.dgrid .dc{width:auto}
+.prog{height:8px;background:var(--card2);border-radius:4px;overflow:hidden;margin:6px 0}.prog i{display:block;height:100%;background:var(--gold)}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:6px 0}
+.pgrid .ph{margin:0}
+.ph .main{position:absolute;bottom:3px;left:3px;font-size:9px;background:var(--acc);color:#fff;padding:1px 4px;border-radius:4px}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#26262d;border:1px solid var(--line);color:var(--tx);padding:10px 14px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+<div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const now=()=>Date.now();
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const VB='<span class="vb" title="Verified club">✓</span>';
+const REJECT_NOTE="Thanks for posting! This one didn't make the public feed. Garage Group is for car, truck and bike clubs, so we only approve posts about meets, ride-outs and club news. We don't accept business promotion here. If you're a business, ask us about sponsoring. Feel free to edit your post and send it again.";
+const DECLINE_NOTE="Thanks for applying. Garage Group is for real car, truck and bike clubs, and we couldn't approve this one. Clubs can't be set up to promote a business. If you're a business, ask us about sponsoring.";
+const REPLIES=["Sounds good 👍","I'll be there.","Bringing mine out for this one.","What time are we rolling out?","Count me in!","Weather looks good for it.","Who's grabbing food after?"];
+function dplus(n){const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function ago(t){const m=Math.round((now()-t)/60000);if(m<1)return'just now';if(m<60)return m+'m';const h=Math.round(m/60);if(h<24)return h+'h';return Math.round(h/24)+'d'}
+function fmtDate(d,t){if(!d)return'';const dt=new Date(d+'T'+(t||'12:00'));if(isNaN(dt))return d;return dt.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})+(t?' · '+dt.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'')}
+
+function seed(){const H=3600000;return{
+ role:'member',premium:false,unread:1,
+ vouches:0,founding:false,vouchedFor:[],
+ me:{ig:'',tt:'',state:'',gallery:[],vehicles:[{id:uid(),year:'2018',make:'Ford',model:'F-150 Raptor',hp:'450',mods:'6" lift, 35" tires, cold air intake, Borla exhaust',photos:[],log:[{d:'Mar 2026',t:'Installed 6" lift'}]}]},
+ clubs:[
+  {id:'c1',name:'South Florida Mustangs',logo:'🐎',color:'#e63946',focus:'Ford Mustangs',link:'instagram.com/sflmustangs',joinMode:'open',verified:true,host:'Dave R.',members:['Dave R.','Chris','Tony','Jen','Marcus','Rob','You'],requests:[],joined:true,pending:false,mine:false,status:'active',muted:[],cohosts:['Tony'],
+   feed:[{id:uid(),text:'Club shirts are in! Grab one at Cars & Coffee.',time:now()-5*H}],
+   chat:[{id:uid(),user:'Dave R.',text:'Cars & Coffee is Saturday. Pin is in the event.',time:now()-4*H,pinned:true},{id:uid(),user:'Tony',text:'Who is rolling Saturday?',time:now()-3*H,pinned:false},{id:uid(),user:'Jen',text:"I'm in. Bringing the GT.",time:now()-2*H,pinned:false}]},
+  {id:'c2',name:'Palm Beach Lifted',logo:'🛻',color:'#2f9bff',focus:'Lifted trucks',link:'facebook.com/groups/pblifted',joinMode:'approval',verified:false,host:'You',members:['You','Big Al','Chris','Marcus','Rico'],requests:['Danny','Alexis'],joined:true,pending:false,mine:true,status:'active',muted:[],cohosts:['Big Al'],
+   feed:[{id:uid(),text:'Welcome to Palm Beach Lifted. Ride-out details are in Events.',time:now()-26*H}],
+   chat:[{id:uid(),user:'Big Al',text:'Meet spot is the Shell on Southern. Pinned it.',time:now()-6*H,pinned:true},{id:uid(),user:'Rico',text:'Anyone got a spare tow strap?',time:now()-H,pinned:false}]},
+  {id:'c3',name:'Wellington Iron Riders',logo:'🏍️',color:'#d4a017',focus:'Harley-Davidson',link:'instagram.com/wellingtonironriders',joinMode:'approval',verified:true,host:'Mike T.',members:['Mike T.','Sal','Dee','Hank','Bo','Ray'],requests:[],joined:false,pending:false,mine:false,status:'active',muted:[],cohosts:[],
+   feed:[{id:uid(),text:'Sunday ride to the coast. Kickstands up at 9.',time:now()-30*H}],chat:[{id:uid(),user:'Sal',text:'Who needs a ride buddy Sunday?',time:now()-8*H,pinned:false}]},
+  {id:'c4',name:'Glades Imports',logo:'🏁',color:'#20c4a8',focus:'JDM & imports',link:'instagram.com/gladesimports',joinMode:'open',verified:false,host:'Kenji',members:['Kenji','Luis','Ana','Pete'],requests:[],joined:false,pending:false,mine:false,status:'active',muted:[],cohosts:[],
+   feed:[{id:uid(),text:'Glades Imports is on Garage Group! Open to all import fans.',time:now()-50*H}],chat:[{id:uid(),user:'Luis',text:'Night meet soon?',time:now()-20*H,pinned:false}]}
+ ],
+ apps:[
+  {id:uid(),name:'Treasure Coast Corvettes',logo:'🏎️',focus:'Chevy Corvettes',link:'instagram.com/tccorvettes',joinMode:'open',by:'Sam W.',why:'About 30 members. Monthly meets in Stuart since 2019.'},
+  {id:uid(),name:'TintPro Car Club',logo:'🪟',focus:'Window tint deals',link:'tintpro-deals.com',joinMode:'open',by:'TintPro LLC',why:'Join for 50% off tint every week!'}
+ ],
+ events:[
+  {id:'e1',clubs:['c1'],title:'Cars & Coffee',kind:'meet',date:dplus(6),time:'08:00',details:'Park by the fountain. All Mustangs welcome.',pins:[{x:44,y:30,label:'Wellington Green, Wellington FL'}],sponsor:"Joe's Detailing",featured:true,pub:'approved'},
+  {id:'e2',clubs:['c2'],title:'Lake O Truck Ride-Out',kind:'rideout',date:dplus(13),time:'07:30',details:'Fuel up before. Regroup at each stop.',pins:[{x:72,y:44,label:'Shell, Southern Blvd, Royal Palm Beach FL'},{x:48,y:26,label:'Loxahatchee Groves FL'},{x:14,y:16,label:'Pahokee Marina, Pahokee FL'}],sponsor:'',featured:false,pub:'pending'},
+  {id:'e3',clubs:['c1','c4'],title:'Import vs Domestic Night',kind:'meet',date:dplus(20),time:'19:00',details:'Two clubs, one lot. Bring your best.',pins:[{x:62,y:50,label:'Lake Worth Rd, Wellington FL'}],sponsor:'Gator Performance Parts',featured:false,pub:'approved'},
+  {id:'e4',clubs:['c3'],title:'Sunday Coast Ride',kind:'rideout',date:dplus(8),time:'09:00',details:'Easy pace. Lunch at the end.',pins:[{x:30,y:42,label:'Wellington FL'},{x:88,y:20,label:'Jupiter Inlet, Jupiter FL'}],sponsor:'',featured:false,pub:'approved'}
+ ],
+ posts:[
+  {id:uid(),eventId:'e1',clubId:'c1',author:'Dave R.',text:'',status:'approved',time:now()-6*H},
+  {id:uid(),eventId:'e4',clubId:'c3',author:'Mike T.',text:'',status:'approved',time:now()-12*H},
+  {id:uid(),clubId:'c4',author:'Kenji',text:'Glades Imports is now on Garage Group! Open to all JDM and import fans.',status:'approved',time:now()-30*H},
+  {id:uid(),eventId:'e3',clubId:'c1',author:'Dave R.',text:'',status:'approved',time:now()-40*H},
+  {id:uid(),eventId:'e2',clubId:'c2',author:'You',text:'',status:'pending',time:now()-2*H},
+  {id:uid(),clubId:null,author:'TintPro LLC',text:'🔥 50% OFF window tint this week only at TintPro! Call now!',status:'pending',time:now()-H}
+ ],
+ sponsors:[
+  {name:"Joe's Detailing",cat:'Detailing',free:'10% off any detail',prem:'20% off + free tire shine'},
+  {name:'Wellington Tire & Wheel',cat:'Tires & wheels',free:'Free tire rotation',prem:'$75 off a set of 4'},
+  {name:'Gator Performance Parts',cat:'Parts',free:'5% off in store',prem:'15% off + member pricing'},
+  {name:'Shine Bros Ceramic',cat:'Ceramic coating',free:'$50 off a coating',prem:'$150 off a coating'}
+ ],
+ gallery:seedGallery(),
+ notifs:[{id:uid(),text:'Welcome to Garage Group! Use "Try as" at the top to switch between Member, Host and App Manager.',time:now()}]
+}}
+const SEED_SPONSORS={
+ c1:[{id:'s1',name:"Joe's Detailing",logo:'🧽',cat:'Detailing',deal:'10% off any detail',prem:'20% off + free tire shine'}],
+ c2:[{id:'s2',name:'Wellington Tire & Wheel',logo:'🛞',cat:'Tires & wheels',deal:'Free tire rotation',prem:'$75 off a set of 4'},{id:'s3',name:'Gator Performance Parts',logo:'⚙️',cat:'Parts',deal:'5% off in store',prem:'15% off + member pricing'}],
+ c3:[{id:'s4',name:'Shine Bros Ceramic',logo:'✨',cat:'Ceramic coating',deal:'$50 off a coating',prem:'$150 off a coating'}],
+ c4:[]};
+const STATES=['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
+const spotsLeft=st=>st==='FL'?137:500-([...st].reduce((a,c)=>a*7+c.charCodeAt(0),3)%420);
+const maxPhotos=()=>S.premium?5:2;
+const vPhotos=v=>(v.photos&&v.photos.length)?v.photos:(v.photo?[v.photo]:[]);
+function seedGallery(){const H=3600000;const g=(clubId,kind,year,make,model,hp,mods,ig,tt,likes,status,comments,t,premium)=>({id:uid(),v:{year,make,model,hp,mods,photos:[]},kind,clubId,ig,tt,status,likes,liked:false,comments:comments||[],time:now()-t*H,author:'sample',premium:!!premium});
+ return[
+  g('c2','truck','2021','Ram','1500 TRX','702','Supercharger pulley, 37" Toyos, Fox 2.5 shocks, Magnaflow exhaust','trx_rico','rico.trx',48,'approved',[{u:'stang.life',t:'That thing is a beast',time:now()-2*H}],3),
+  g('c1','car','2020','Ford','Mustang GT','460','Roush supercharger kit, Corsa exhaust, lowered 1.5", 20" forged wheels','gt_kingpin','stang.life',61,'approved',[{u:'r34_luis',t:'Clean!',time:now()-5*H},{u:'trx_rico',t:'Bring it Saturday',time:now()-4*H}],6,true),
+  g('c3','bike','2019','Harley-Davidson','Road Glide','105','Stage 2 117, Fullsac exhaust, 21" front wheel, ape hangers','ironglide_dee','',33,'approved',[],10),
+  g('c4','car','1999','Nissan','Skyline GT-R R34','550','Twin turbo upgrade, Nismo body kit, TE37s, full HKS exhaust','r34_luis','luis.jdm',87,'approved',[{u:'gt_kingpin',t:'Dream car right here',time:now()-20*H}],24,true),
+  g('c1','car','2015','Ford','Mustang EcoBoost','350','Cobb tune, cold air intake, wrapped in matte grey','ecoboost_ana','',0,'pending',[],1)
+ ]}
+function load(){try{const s=localStorage.getItem('gg_v1');return s?JSON.parse(s):null}catch(e){return null}}
+function save(){try{localStorage.setItem('gg_v1',JSON.stringify(S));return true}catch(e){return false}}
+let S=load()||seed();
+if(!S.gallery)S.gallery=seedGallery();if(S.me.ig===undefined){S.me.ig='';S.me.tt=''}
+if(S.vouches===undefined){S.vouches=0;S.founding=false;S.vouchedFor=[];S.premium=false}if(S.me.state===undefined)S.me.state='';
+S.me.vehicles.forEach(v=>{if(!v.photos){v.photos=v.photo?[v.photo]:[];delete v.photo}});
+S.clubs.forEach(c=>{if(!c.sponsors)c.sponsors=JSON.parse(JSON.stringify(SEED_SPONSORS[c.id]||[]))});
+let view={tab:'gallery',club:null,clubTab:'news',event:null,gclub:''};
+let draft=null,vdraft=null;
+const handle=s=>String(s||'').trim().replace(/^@+/,'').replace(/\s+/g,'');
+const GALLERY_NOTE="Thanks for sharing your ride! This photo didn't make the gallery. The gallery is for photos of members' cars, trucks and bikes. Feel free to share a different photo.";
+const C=id=>S.clubs.find(c=>c.id===id);
+const E=id=>S.events.find(e=>e.id===id);
+function notify(t){S.notifs.unshift({id:uid(),text:t,time:now()});S.unread++;save()}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2800)}
+function modal(h,keep){const m=$('#modal'),b=m.querySelector('.box'),st=keep&&b?b.scrollTop:0;m.innerHTML='<div class="box">'+h+'</div>';m.classList.add('show');if(keep)m.querySelector('.box').scrollTop=st}
+function closeModal(){$('#modal').classList.remove('show');$('#modal').innerHTML='';draft=null;vdraft=null}
+const modalOpen=()=>$('#modal').classList.contains('show');
+const mapsLink=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+function routeLink(pins){const p=pins.filter(x=>x.label);if(p.length<2)return null;let u='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(p[0].label)+'&destination='+encodeURIComponent(p[p.length-1].label);if(p.length>2)u+='&waypoints='+encodeURIComponent(p.slice(1,-1).map(x=>x.label).join('|'));return u}
+const pinName=(kind,i,n)=>kind==='rideout'?(i===0?'Start':i===n-1&&n>1?'Finish':'Stop '+i):'Meet spot';
+
+function mapSVG(pins,o={}){const route=pins.length>1;
+ return `<svg class="map${o.big?' big':''}${o.tap?' tap':''}" viewBox="0 0 100 60" ${o.tap?'data-a="mapTap"':''}>
+ <rect width="100" height="60" fill="#1b1e24"/><ellipse cx="6" cy="8" rx="17" ry="13" fill="#15324a"/><path d="M100 0V60H93C95 40 92 20 96 0Z" fill="#15324a"/>
+ <rect x="74" y="6" width="12" height="8" rx="2" fill="#18291d"/><rect x="20" y="46" width="10" height="8" rx="2" fill="#18291d"/>
+ <g stroke="#262b33" stroke-width=".5"><path d="M0 12H100M0 32H100M0 52H100M16 0V60M50 0V60M84 0V60"/></g>
+ <g stroke="#343a46" stroke-width="1.6" fill="none"><path d="M0 22H100M0 42H100M32 0V60M68 0V60"/><path d="M0 58L100 6" stroke-width="1"/></g>
+ ${route?`<polyline points="${pins.map(p=>p.x+','+p.y).join(' ')}" fill="none" style="stroke:var(--acc)" stroke-width="1.2" stroke-dasharray="2 1.4" stroke-linecap="round"/>`:''}
+ ${pins.map((p,i)=>`<circle cx="${p.x}" cy="${p.y}" r="3.2" style="fill:var(--acc)" stroke="#fff" stroke-width=".7"/><text x="${p.x}" y="${p.y+1.2}" font-size="3.4" text-anchor="middle" fill="#fff" font-weight="700" font-family="sans-serif">${i+1}</text>`).join('')}
+ ${!pins.length&&o.tap?'<text x="50" y="31" font-size="4" text-anchor="middle" fill="#8d8d98" font-family="sans-serif">Tap to drop a pin</text>':''}
+ </svg>`}
+
+function render(){
+ const keep={};['pubIn','newsIn','chatIn'].forEach(i=>{const el=document.getElementById(i);if(el)keep[i]=el.value});
+ const tabs=[['gallery','🃏','Gallery'],['feed','🌐','Feed'],['clubs','🏁','Clubs'],['events','📍','Events'],['perks','🎟️','Discounts'],['garage','🔧','Garage']];
+ if(S.role==='manager')tabs.push(['review','🛡️','Review']);
+ const pc=S.posts.filter(p=>p.status==='pending').length+S.apps.length+S.gallery.filter(g=>g.status==='pending').length;
+ const bc=brandClub();$('#app').style.setProperty('--acc',bc?(bc.color||'#ff6a1a'):'#ff6a1a');
+ $('#app').innerHTML=`<header><div class="top">${bc?`<div class="cbrand"><span class="logo">${bc.logo}</span><div><div class="cn">${esc(bc.name)}${bc.verified?VB:''}</div><small>powered by GARAGE GROUP</small></div></div>`:'<div class="brand"><span class="tire"></span>GARAGE<b>GROUP</b></div>'}<button class="bell" data-a="bell">🔔${S.unread?`<i>${S.unread}</i>`:''}</button></div>
+ <div class="roles"><span>Try as</span>${['member','host','manager'].map(r=>`<button data-a="role" data-id="${r}" class="${S.role===r?'on':''}">${{member:'Member',host:'Host',manager:'App Manager'}[r]}</button>`).join('')}</div></header>
+ <main>${main()}</main>
+ <nav>${tabs.map(t=>`<button data-a="tab" data-id="${t[0]}" class="${view.tab===t[0]&&!view.event?'on':''}"><span>${t[1]}</span>${t[2]}${t[0]==='review'&&pc?`<i>${pc}</i>`:''}</button>`).join('')}</nav>`;
+ for(const i in keep){const el=document.getElementById(i);if(el)el.value=keep[i]}
+ const cb=$('#chatBox');if(cb)cb.scrollTop=cb.scrollHeight;
+}
+function brandClub(){if(view.event){const ev=E(view.event);return ev&&ev.clubs.length===1?C(ev.clubs[0]):null}return view.tab==='clubs'&&view.club?C(view.club):null}
+function main(){
+ if(view.event){const ev=E(view.event);if(ev)return eventView(ev);view.event=null}
+ switch(view.tab){case'gallery':return galleryView();case'feed':return feedView();case'clubs':return view.club&&C(view.club)?clubView(C(view.club)):clubsView();case'events':return eventsView();case'perks':return perksView();case'garage':return garageView();case'review':return S.role==='manager'?reviewView():feedView()}
+}
+
+function evCard(ev){const cs=ev.clubs.map(C).filter(Boolean);
+ return `<div class="card ev" data-a="openEvent" data-id="${ev.id}">${mapSVG(ev.pins)}<div class="evb"><div class="tags"><span class="tag ${ev.kind}">${ev.kind==='rideout'?'Ride-out':'Meet'}</span>${cs.length>1?'<span class="tag merged">Merged</span>':''}${ev.featured&&ev.pub==='approved'?'<span class="tag feat">⭐ Featured</span>':''}</div>
+ <h3>${esc(ev.title)}</h3><div class="meta">${fmtDate(ev.date,ev.time)}${ev.kind==='rideout'?' · '+ev.pins.length+' stops':''}</div><div class="meta">${cs.map(c=>c.logo+' '+esc(c.name)+(c.verified?VB:'')).join(' × ')}</div>
+ ${ev.sponsor?`<div class="pres">Presented by <b>${esc(ev.sponsor)}</b></div>`:''}</div></div>`}
+function postCard(p){if(p.eventId){const ev=E(p.eventId);return ev&&!ev.featured?evCard(ev):''}const c=C(p.clubId);
+ return `<div class="card"><div class="who">${c?`<span class="logo">${c.logo}</span><b class="lnk" data-a="openClub" data-id="${c.id}">${esc(c.name)}</b>${c.verified?VB:''}`:`<b>${esc(p.author)}</b>`}<span class="t">${ago(p.time)}</span></div><p>${esc(p.text)}</p></div>`}
+
+function feedView(){
+ const feat=S.events.filter(e=>e.featured&&e.pub==='approved');
+ const posts=S.posts.filter(p=>p.status==='approved').sort((a,b)=>b.time-a.time);
+ const mine=S.posts.filter(p=>p.author==='You'&&p.status!=='approved').slice(0,4);
+ return `<h1>Public feed</h1><p class="sub">Meets, ride-outs and club news from every club. The app manager approves every post. No ads.</p>
+ <div class="card"><textarea id="pubIn" rows="2" placeholder="Share a meet, ride-out or club news…"></textarea><div class="row end"><button class="btn" data-a="pubSend">Send for review</button></div>
+ ${mine.map(p=>`<div class="mini ${p.status}"><b>${p.status==='pending'?'⏳ Waiting for review:':'✖ Not approved:'}</b> ${esc(p.text||(E(p.eventId)||{}).title)}${p.note?`<div class="note">${esc(p.note)}</div>`:''}</div>`).join('')}</div>
+ ${feat.length?`<h2>⭐ Featured</h2>${feat.map(evCard).join('')}`:''}
+ <h2>Latest</h2>${posts.map(postCard).join('')||'<p class="empty">Nothing yet.</p>'}`}
+
+function clubRow(c){return `<div class="card club" data-a="openClub" data-id="${c.id}"><span class="logo big">${c.logo}</span><div class="grow"><b>${esc(c.name)}</b>${c.verified?VB:''}<div class="meta">${esc(c.focus)} · ${c.members.length} members · ${c.joinMode==='open'?'Open':'Approval'}</div></div>${c.status==='suspended'?'<span class="chip bad">Suspended</span>':c.mine?'<span class="chip">Host</span>':c.pending?'<span class="chip">Requested</span>':''}</div>`}
+function clubsView(){
+ const my=S.clubs.filter(c=>c.joined||c.mine),disc=S.clubs.filter(c=>!c.joined&&!c.mine&&c.status==='active'),apps=S.apps.filter(a=>a.by==='You');
+ return `<h1>Clubs</h1><p class="sub">Join as many clubs as you like. Your garage comes with you.</p><button class="btn wide" data-a="startClub">＋ Start a club</button>
+ ${apps.map(a=>`<div class="mini pending">⏳ <b>${esc(a.name)}</b> is waiting for app manager approval</div>`).join('')}
+ <h2>My clubs</h2>${my.map(clubRow).join('')||'<p class="empty">Join a club below.</p>'}
+ <h2>Discover</h2>${disc.map(clubRow).join('')||'<p class="empty">You have joined every club.</p>'}`}
+
+function clubView(c){
+ const host=S.role==='host'&&c.mine,member=c.joined||c.mine;
+ const btn=c.mine?'<span class="chip">You host this club</span>':c.joined?`<button class="btn ghost sm" data-a="leave" data-id="${c.id}">Leave club</button>`:c.pending?'<span class="chip">Request sent</span>':`<button class="btn sm" data-a="join" data-id="${c.id}">${c.joinMode==='open'?'Join club':'Request to join'}</button>`;
+ const tabs=[['news','News'],['chat','Chat'],['events','Events'],['members','Members']];
+ const f={news:clubNews,chat:clubChat,events:clubEvents,members:clubMembers}[view.clubTab]||clubNews;
+ return `<button class="back" data-a="back">‹ Clubs</button>
+ <div class="chead"><span class="logo xl">${c.logo}</span><div class="grow"><h1>${esc(c.name)}${c.verified?VB:''}</h1><div class="meta">${esc(c.focus)} · ${c.members.length} members</div><div class="meta">${c.joinMode==='open'?'🔓 Open to join':'🔒 Host approves members'}</div></div></div>
+ <div class="row">${btn}${c.verified?'<span class="chip">✓ Verified club</span>':''}</div>
+ ${c.status==='suspended'?'<div class="mini rejected">This club is suspended by the app manager.</div>':''}
+ ${c.mine&&!host?'<div class="mini">You host this club. Switch to <b>Host</b> at the top to manage it.</div>':''}
+ ${c.sponsors.length?`<div class="lbl">My Discounts · tap to flip</div><div class="drow">${c.sponsors.map(s=>dCard(s,c.color)).join('')}</div>`:''}
+ <div class="seg">${tabs.map(t=>`<button data-a="clubTab" data-id="${t[0]}" class="${view.clubTab===t[0]?'on':''}">${t[1]}</button>`).join('')}</div>${f(c,host,member)}`}
+function clubNews(c,host){
+ return `${host?`<div class="card"><textarea id="newsIn" rows="2" placeholder="Post news to your club…"></textarea><label class="chk"><input type="checkbox" id="newsPub"> Also send to the public feed (needs approval)</label><div class="row end"><button class="btn" data-a="newsSend" data-id="${c.id}">Post &amp; notify</button></div></div>`:''}
+ ${c.feed.map(n=>`<div class="card"><div class="who"><span class="logo">${c.logo}</span><b>${esc(c.host)}</b> <span class="chip sm">Host</span><span class="t">${ago(n.time)}</span></div><p>${esc(n.text)}</p></div>`).join('')||'<p class="empty">No news yet.</p>'}`}
+function clubChat(c,host,member){
+ if(!member)return'<p class="empty">🔒 Join the club to see the group chat.</p>';
+ const muted=c.muted.includes('You');
+ return `${c.chat.filter(m=>m.pinned).map(m=>`<div class="pinned">📌 <b>${esc(m.user)}:</b> ${esc(m.text)}</div>`).join('')}
+ <div class="chat" id="chatBox">${c.chat.map(m=>{const me=m.user==='You';return `<div class="msg ${me?'me':''}"><div class="mu">${esc(m.user)}${c.cohosts.includes(m.user)?' <span class="chip sm">Co-host</span>':''}${m.user===c.host?' <span class="chip sm">Host</span>':''}${c.muted.includes(m.user)?' <span class="chip sm bad">Muted</span>':''} · ${ago(m.time)}</div><div class="bub">${esc(m.text)}</div>
+ ${host?`<div class="mod"><button data-a="pin" data-c="${c.id}" data-id="${m.id}">${m.pinned?'Unpin':'📌 Pin'}</button><button data-a="delMsg" data-c="${c.id}" data-id="${m.id}">🗑 Delete</button>${!me?(c.muted.includes(m.user)?`<button data-a="unmute" data-c="${c.id}" data-u="${esc(m.user)}">Unmute</button>`:`<button data-a="mute" data-c="${c.id}" data-u="${esc(m.user)}">🔇 Mute</button>`):''}</div>`:''}</div>`}).join('')||'<p class="empty">Say hi to the club.</p>'}</div>
+ ${muted?'<div class="mini rejected">You are muted in this chat.</div>':`<div class="chatin"><input id="chatIn" placeholder="Message the club…"><button class="btn" data-a="chatSend" data-id="${c.id}">Send</button></div>`}`}
+function clubEvents(c,host){const evs=S.events.filter(e=>e.clubs.includes(c.id)).sort((a,b)=>a.date.localeCompare(b.date));
+ return `${host?`<button class="btn wide" data-a="newEvent" data-id="${c.id}">＋ New meet or ride-out</button>`:''}${evs.map(evCard).join('')||'<p class="empty">No events yet.</p>'}`}
+function clubMembers(c,host){
+ const COLS=['#ff6a1a','#e63946','#2f9bff','#20c4a8','#2ecc71','#d4a017','#9b5de5','#ff4fa3','#c0c0c8'];
+ return `${host?`<div class="card"><h3>Club branding</h3><p class="sub" style="margin:0">Your club name, logo and colors show across the app when members are in your club. Free for every club.</p>
+ <label>Club name<input id="brName" value="${esc(c.name)}"></label>
+ <label>Logo<select id="brLogo">${['🚗','🛻','🏍️','🏎️','🏁','🔧','🔥','🐎','⚡','🦅','💀','🐍'].concat([c.logo]).filter((x,i,a)=>a.indexOf(x)===i).map(e=>`<option ${e===c.logo?'selected':''}>${e}</option>`).join('')}</select></label>
+ <div class="lbl">Club color</div><div class="row wrap" style="margin-top:0">${COLS.map(x=>`<button class="sw ${(c.color||'#ff6a1a')===x?'on':''}" style="background:${x}" data-a="brandColor" data-c="${c.id}" data-id="${x}"></button>`).join('')}<input type="color" id="brColor" data-c="${c.id}" value="${c.color||'#ff6a1a'}" style="width:44px;height:36px;padding:2px"></div>
+ <div class="row end"><button class="btn" data-a="saveBrand" data-id="${c.id}">Save branding</button></div></div>
+ <div class="card"><h3>My Discounts (club sponsors)</h3><p class="sub" style="margin:0 0 6px">Sponsors you bring in show as small cards on your club page. Feeds and chat stay ad-free.</p>
+ <div class="meta">Your tier: <b style="color:var(--tx)">${clubTier(c)}</b> · standard price set by Garage Group (TBD) · your club keeps <b style="color:var(--tx)">70%</b></div>
+ ${c.sponsors.map(s=>`<div class="pinrow"><span class="logo">${s.logo}</span><div class="grow"><b>${esc(s.name)}</b><div class="meta">${esc(s.deal)}</div></div><button class="btn sm ghost danger" data-a="rmSponsor" data-c="${c.id}" data-id="${s.id}">Remove</button></div>`).join('')}
+ <button class="btn wide ghost" data-a="addSponsor" data-id="${c.id}">＋ Add a sponsor</button></div>
+ <div class="card"><h3>Who can join?</h3><div class="row"><div class="seg sm">${[['open','Anyone, right away'],['approval','I approve them']].map(m=>`<button data-a="joinMode" data-c="${c.id}" data-id="${m[0]}" class="${c.joinMode===m[0]?'on':''}">${m[1]}</button>`).join('')}</div></div></div>`:''}
+ ${host&&c.requests.length?`<div class="card"><h3>Join requests</h3>${c.requests.map(r=>`<div class="pinrow"><span class="av">${esc(r[0])}</span><b class="grow">${esc(r)}</b><button class="btn sm" data-a="approveReq" data-c="${c.id}" data-u="${esc(r)}">Accept</button><button class="btn sm ghost" data-a="declineReq" data-c="${c.id}" data-u="${esc(r)}">Decline</button></div>`).join('')}</div>`:''}
+ <div class="card">${c.members.map(m=>{const role=m===c.host?'Host':c.cohosts.includes(m)?'Co-host':'';return `<div class="pinrow"><span class="av">${esc(m[0])}</span><b class="grow">${esc(m)} ${role?`<span class="chip sm">${role}</span>`:''}${c.muted.includes(m)?' <span class="chip sm bad">Muted</span>':''}</b>
+ ${S.premium&&m!=='You'?(S.vouchedFor.includes(m)?'<span class="chip sm">✓ Vouched</span>':`<button class="btn sm ghost" data-a="vouch" data-u="${esc(m)}">⭐ Vouch</button>`):''}${host&&m!==c.host?`${c.cohosts.includes(m)?`<button class="btn sm ghost" data-a="uncohost" data-c="${c.id}" data-u="${esc(m)}">Remove co-host</button>`:`<button class="btn sm ghost" data-a="cohost" data-c="${c.id}" data-u="${esc(m)}">Make co-host</button>`}<button class="btn sm ghost danger" data-a="removeMember" data-c="${c.id}" data-u="${esc(m)}">Remove</button>`:''}</div>`}).join('')}</div>`}
+
+function eventsView(){
+ const evs=S.events.filter(e=>e.pub==='approved'||e.clubs.some(id=>{const c=C(id);return c&&(c.joined||c.mine)})).sort((a,b)=>(b.featured&&b.pub==='approved')-(a.featured&&a.pub==='approved')||a.date.localeCompare(b.date));
+ return `<h1>Meets &amp; ride-outs</h1><p class="sub">From your clubs and the public feed. No RSVP needed. Tap one for the map and directions.</p>${evs.map(evCard).join('')||'<p class="empty">No events yet.</p>'}`}
+function eventView(ev){
+ const cs=ev.clubs.map(C).filter(Boolean),host=S.role==='host'&&cs.some(c=>c.mine),dir=ev.kind==='rideout'?routeLink(ev.pins):null;
+ return `<button class="back" data-a="back">‹ Back</button>
+ <div class="tags"><span class="tag ${ev.kind}">${ev.kind==='rideout'?'Ride-out':'Meet'}</span>${cs.length>1?'<span class="tag merged">Merged event</span>':''}${ev.featured&&ev.pub==='approved'?'<span class="tag feat">⭐ Featured</span>':''}</div>
+ <h1>${esc(ev.title)}</h1><div class="meta big">${fmtDate(ev.date,ev.time)}</div>
+ <div class="meta">${cs.map(c=>`<span class="lnk" data-a="openClub" data-id="${c.id}">${c.logo} ${esc(c.name)}</span>${c.verified?VB:''}`).join(' × ')}</div>
+ ${ev.sponsor?`<div class="pres">Presented by <b>${esc(ev.sponsor)}</b></div>`:''}
+ ${mapSVG(ev.pins,{big:true})}
+ <div class="card">${ev.pins.map((p,i)=>`<div class="pinrow"><span class="pn">${i+1}</span><div class="grow"><b>${pinName(ev.kind,i,ev.pins.length)}</b><div class="meta">${esc(p.label||'Pinned on map')}</div></div>${p.label?`<a class="btn sm ghost" href="${mapsLink(p.label)}" target="_blank" rel="noopener">Directions</a>`:''}</div>`).join('')}
+ ${dir?`<a class="btn wide" href="${dir}" target="_blank" rel="noopener">Open full route in Maps</a>`:''}</div>
+ ${ev.details?`<div class="card"><p>${esc(ev.details)}</p></div>`:''}
+ <p class="sub">No RSVP needed. Just show up.</p>
+ ${host?`<div class="card"><h3>Host tools</h3><div class="row wrap"><button class="btn" data-a="editEvent" data-id="${ev.id}">Edit</button><button class="btn ghost" data-a="boost" data-id="${ev.id}" ${ev.featured?'disabled':''}>${ev.featured?'⭐ Boosted':'⭐ Boost to top (paid)'}</button><button class="btn ghost danger" data-a="delEvent" data-id="${ev.id}">Delete</button></div><div class="meta" style="margin-top:8px">Public feed: ${{approved:'Approved',pending:'Waiting for review',rejected:'Not approved',none:'Club only'}[ev.pub]}</div></div>`:''}`}
+
+function perksView(){const my=S.clubs.filter(c=>(c.joined||c.mine)&&c.sponsors.length);
+ return `<h1>My Discounts</h1><p class="sub">Deals from your clubs' sponsors. Tap a card to see the deal, then show your member card at the counter.</p>
+ <button class="btn wide" data-a="memberCard">🎟️ Show my member card</button>
+ ${my.map(c=>`<h2>${c.logo} ${esc(c.name)}</h2><div class="dgrid">${c.sponsors.map(s=>dCard(s,c.color)).join('')}</div>`).join('')||'<p class="empty">Join a club to unlock its discounts.</p>'}
+ ${S.premium?'':'<p class="sub" style="margin-top:14px">🔒 Bigger deals unlock with Premium. Earn it in My Garage.</p>'}`}
+
+function vCard(v){
+ const ps=vPhotos(v);return `<div class="card">${ps.length?`<img class="vimg" src="${ps[0]}" alt="">`:''}${ps.length>1?`<div class="meta" style="margin:-4px 0 6px">📷 ${ps.length} photos</div>`:''}<div class="row" style="margin-top:0"><div class="grow"><h3>${esc(v.year)} ${esc(v.make)} ${esc(v.model)}</h3>${v.hp?`<span class="hp">${esc(v.hp)} HP</span>`:''}</div><button class="btn sm ghost" data-a="shareCard" data-id="${v.id}">🃏 Share</button><button class="btn sm ghost" data-a="editVehicle" data-id="${v.id}">Edit</button></div>
+ ${v.mods?`<div class="lbl">Modifications</div><p>${esc(v.mods)}</p>`:''}
+ ${S.premium?`<div class="lbl">Build log</div>${(v.log||[]).map(l=>`<div class="log"><span>${esc(l.d)}</span>${esc(l.t)}</div>`).join('')}<div class="chatin"><input id="log_${v.id}" placeholder="Add a build log entry"><button class="btn sm" data-a="addLog" data-id="${v.id}">Add</button></div>`:'<div class="meta" style="margin-top:8px">🔒 Build log is a Premium feature</div>'}</div>`}
+function garageView(){const m=S.me,my=S.clubs.filter(c=>c.joined||c.mine),cards=S.gallery.filter(g=>g.author==='You');
+ return `<h1>My garage</h1><p class="sub">Your profile is your rides: your clubs, your handles and your vehicles. No names or bios.</p>
+ <div class="card"><div class="lbl" style="margin-top:0">My clubs</div><div class="row wrap" style="margin-top:0">${my.map(c=>`<span class="chip lnk" data-a="openClub" data-id="${c.id}" style="border-color:${c.color||'#ff6a1a'}">${c.logo} ${esc(c.name)}${c.verified?VB:''}</span>`).join('')||'<span class="meta">Join a club in the Clubs tab.</span>'}${S.premium?'<span class="chip prem">⭐ Premium</span>':''}</div>
+ <div class="lbl">Instagram</div><input data-me="ig" value="${esc(m.ig)}" placeholder="@yourhandle" autocapitalize="off">
+ <div class="lbl">TikTok</div><input data-me="tt" value="${esc(m.tt)}" placeholder="@yourhandle" autocapitalize="off">
+ <div class="meta" style="margin-top:6px">Your handles show on the back of your gallery cards.</div>
+ <div class="lbl">Your state (asked at sign-up)</div><select data-me="state"><option value="">Pick your state</option>${STATES.map(s=>`<option ${m.state===s?'selected':''}>${s}</option>`).join('')}</select></div>
+ ${premiumBox()}
+ <h2>Vehicles</h2>${m.vehicles.map(vCard).join('')||'<p class="empty">Add your first ride.</p>'}
+ <button class="btn wide ghost" data-a="addVehicle">＋ Add a vehicle</button>${S.premium?'':'<p class="sub">Members can have 2 vehicles. Premium gets unlimited.</p>'}
+ <h2>My cards</h2>${cards.length?`<div class="ggrid">${cards.map(gCard).join('')}</div>`:'<p class="empty">Share a vehicle to the gallery to make your first card.</p>'}
+ <button class="btn wide ghost danger" data-a="reset">Reset demo data</button>`}
+
+/* ---------- gallery ---------- */
+function guessKind(v){const s=(v.make+' '+v.model).toLowerCase();if(/harley|ducati|kawasaki|triumph|indian|ktm|glide|sportster|softail|ninja|gsx|cbr|yamaha r|bike|moto/.test(s))return'bike';if(/truck|f-?150|f-?250|raptor|ram|trx|silverado|sierra|tacoma|tundra|bronco|jeep|ranger|colorado|titan/.test(s))return'truck';return'car'}
+function art(kind,col){const id='a'+uid();
+ const body=kind==='truck'?'<path d="M8 66V47h33l8-17h26l7 17h37v19z" fill="#0b0b0d"/><path d="M53 34h18l5 12H48z" fill="'+col+'" opacity=".35"/><circle cx="30" cy="68" r="11" fill="#0b0b0d" stroke="'+col+'" stroke-width="2"/><circle cx="98" cy="68" r="11" fill="#0b0b0d" stroke="'+col+'" stroke-width="2"/>'
+  :kind==='bike'?'<g fill="none" stroke="#0b0b0d" stroke-width="6" stroke-linecap="round"><path d="M32 64l20-22h27l17 22M52 42l-6-12M79 42l7-11h10"/></g><circle cx="32" cy="64" r="13" fill="none" stroke="'+col+'" stroke-width="3"/><circle cx="96" cy="64" r="13" fill="none" stroke="'+col+'" stroke-width="3"/><path d="M55 44h22l-5 9H59z" fill="#0b0b0d"/>'
+  :'<path d="M10 64q2-14 20-17l15-11q8-5 20-5h13q11 1 18 12l12 3q8 2 8 12v6z" fill="#0b0b0d"/><path d="M50 38h14v9H40zM68 38h9q6 1 10 9H68z" fill="'+col+'" opacity=".35"/><circle cx="33" cy="65" r="9" fill="#0b0b0d" stroke="'+col+'" stroke-width="2"/><circle cx="95" cy="65" r="9" fill="#0b0b0d" stroke="'+col+'" stroke-width="2"/>';
+ return `<svg viewBox="0 0 126 176" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="${id}" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="${col}" stop-opacity=".85"/><stop offset="1" stop-color="#0c0c0e"/></radialGradient></defs><rect width="126" height="176" fill="url(#${id})"/><g transform="translate(0,42)">${body}<rect x="0" y="79" width="126" height="2" fill="${col}" opacity=".5"/></g></svg>`}
+function gCard(g){const c=C(g.clubId)||{name:'',logo:'',color:'#ff6a1a'},col=c.color||'#ff6a1a',v=g.v;
+ return `<div class="gc"><div class="fc${g.premium?' gold':''}" data-a="flip" style="--cc:${col}"><div class="fc-in">
+ <div class="face fr">${vPhotos(v).length?`<img src="${vPhotos(v)[0]}" alt="">`:art(g.kind,col)}<div class="fbadge">${g.premium?'⭐ ':''}${c.logo} ${esc(c.name)}${c.verified?VB:''}</div><div class="fband"><div class="yr">${esc(v.year)}</div><div class="mm">${esc(v.make)} ${esc(v.model)}</div></div></div>
+ <div class="face bk"><div class="bh">${c.logo} ${esc(c.name)}</div><div class="bmm">${esc(v.year)} ${esc(v.make)} ${esc(v.model)}</div>
+ ${v.hp?`<div class="bhp"><b>${esc(v.hp)}</b>HP</div>`:''}
+ ${v.mods?`<div class="blbl">Mods</div><div class="bmods">${esc(v.mods)}</div>`:'<div style="flex:1"></div>'}
+ <div class="bso">${g.ig?`<a href="https://instagram.com/${encodeURIComponent(g.ig)}" target="_blank" rel="noopener">📸 @${esc(g.ig)}</a>`:''}${g.tt?`<a href="https://www.tiktok.com/@${encodeURIComponent(g.tt)}" target="_blank" rel="noopener">🎵 @${esc(g.tt)}</a>`:''}</div>
+ <div class="tapb">Tap to flip</div></div></div></div>
+ ${g.status==='approved'?`<div class="gact"><button data-a="like" data-id="${g.id}">${g.liked?'❤️':'🤍'} ${g.likes}</button><button data-a="comments" data-id="${g.id}">💬 ${g.comments.length}</button>${vPhotos(v).length>1?`<button data-a="photos" data-id="${g.id}">📷 ${vPhotos(v).length}</button>`:''}</div>`:`<div class="gst">${g.status==='pending'?'⏳ Waiting for approval':'✖ Not approved'}</div>`}</div>`}
+function dCard(s,col){return `<div class="dc"><div class="fc" data-a="flip" style="--cc:${col||'#ff6a1a'}"><div class="fc-in">
+ <div class="face fr dfront"><div class="dl">${s.logo||'🏪'}</div><b>${esc(s.name)}</b><span>${esc(s.cat)}</span></div>
+ <div class="face bk dback"><div class="d1">✔ ${esc(s.deal)}</div><div class="d2 ${S.premium?'':'lk'}">${S.premium?'⭐':'🔒'} Premium: ${esc(s.prem)}</div><div class="tapb">Show your member card</div></div></div></div></div>`}
+function clubTier(c){return c.verified?'Verified club':c.members.length>=25?'Big club':'Small club'}
+function premiumBox(){const perks='<ul><li>5 photos per vehicle (members get 2)</li><li>Gold border on your gallery cards</li><li>Unlimited vehicles and a build log</li><li>Bigger deals in My Discounts</li><li>Early alerts for new meets and ride-outs</li><li>Vouch power: help friends earn Premium</li></ul>';
+ if(S.premium)return `<div class="card premc"><h3>⭐ You're Premium${S.founding?' · Founding member':''}</h3>${perks}<div class="meta">Vouch for friends from any club's Members tab.</div></div>`;
+ const st=S.me.state,left=st?spotsLeft(st):0,pct=Math.min(100,S.vouches/5*100);
+ return `<div class="card premc"><h3>⭐ Earn Premium</h3><p class="sub" style="margin:0">Premium can't be bought. It's earned.</p>${perks}
+ <div class="lbl">1 · Founding member</div><div class="meta">The first 500 members in each state get Premium automatically.</div>
+ ${st?`<div class="meta" style="margin-top:4px"><b style="color:var(--tx)">${left}</b> founding spots left in ${st}</div><button class="btn wide" data-a="claimFounding">Claim my founding spot</button>`:'<div class="meta" style="margin-top:4px">Pick your state above to check for spots.</div>'}
+ <div class="lbl">2 · Get 5 vouches</div><div class="meta">Invite friends. Once 5 Premium members vouch for you, you're in.</div>
+ <div class="prog"><i style="width:${pct}%"></i></div><div class="meta">${S.vouches} of 5 vouches</div>
+ <div class="row"><button class="btn grow" data-a="invite">Invite friends</button><button class="btn ghost grow" data-a="fakeVouch">Simulate a vouch (demo)</button></div></div>`}
+function galleryView(){
+ const live=S.gallery.filter(g=>g.status==='approved').sort((a,b)=>b.time-a.time);
+ const ids=[...new Set(live.map(g=>g.clubId))].filter(C);
+ const list=view.gclub?live.filter(g=>g.clubId===view.gclub):live;
+ return `<h1>Gallery</h1><p class="sub">Every ride gets a card. Tap a card to flip it for the stats.</p>
+ <button class="btn wide" data-a="shareCard">🃏 Share your ride</button>
+ <div class="chips"><button data-a="gclub" data-id="" class="${!view.gclub?'on':''}">All clubs</button>${ids.map(id=>{const c=C(id);return `<button data-a="gclub" data-id="${id}" class="${view.gclub===id?'on':''}">${c.logo} ${esc(c.name)}</button>`}).join('')}</div>
+ ${list.length?`<div class="ggrid">${list.map(gCard).join('')}</div>`:'<p class="empty">No cards yet.</p>'}`}
+
+function reviewView(){
+ const pend=S.posts.filter(p=>p.status==='pending');
+ const clubs=S.clubs;
+ return `<h1>App manager</h1><p class="sub">Keep Garage Group relevant: real clubs, real meets, no free advertising.</p>
+ <h2>Public feed posts (${pend.length})</h2>${pend.map(p=>{const ev=p.eventId&&E(p.eventId),c=C(p.clubId);return `<div class="card"><div class="who"><b>${c?c.logo+' '+esc(c.name):esc(p.author)}</b><span class="t">${ago(p.time)}</span></div>${ev?evCard(ev):`<p>${esc(p.text)}</p>`}<div class="row"><button class="btn ok" data-a="approvePost" data-id="${p.id}">Approve</button><button class="btn ghost danger" data-a="rejectPost" data-id="${p.id}">Reject with note</button></div></div>`}).join('')||'<p class="empty">All caught up.</p>'}
+ <h2>Gallery photos (${S.gallery.filter(g=>g.status==='pending').length})</h2>${(()=>{const pg=S.gallery.filter(g=>g.status==='pending');return pg.length?`<div class="ggrid">${pg.map(g=>`<div>${gCard(g)}<div class="row" style="margin-top:6px"><button class="btn sm ok grow" data-a="approveCard" data-id="${g.id}">Approve</button><button class="btn sm ghost danger grow" data-a="rejectCard" data-id="${g.id}">Reject</button></div></div>`).join('')}</div>`:'<p class="empty">No photos waiting.</p>'})()}
+ <h2>Club applications (${S.apps.length})</h2>${S.apps.map(a=>`<div class="card"><div class="row" style="margin-top:0"><span class="logo big">${a.logo}</span><div class="grow"><b>${esc(a.name)}</b><div class="meta">${esc(a.focus)} · by ${esc(a.by)}</div><div class="meta">🔗 ${esc(a.link)}</div></div></div><p>${esc(a.why)}</p><div class="row"><button class="btn ok" data-a="approveApp" data-id="${a.id}">Approve club</button><button class="btn ghost danger" data-a="declineApp" data-id="${a.id}">Decline</button></div></div>`).join('')||'<p class="empty">No applications.</p>'}
+ <h2>Clubs &amp; verified badges</h2><p class="sub">Badges can't be bought. Clubs earn them through activity.</p>
+ ${clubs.map(c=>{const ev=S.events.filter(e=>e.clubs.includes(c.id)).length;return `<div class="card"><b>${c.logo} ${esc(c.name)}</b>${c.verified?VB:''}${c.status==='suspended'?' <span class="chip bad">Suspended</span>':''}
+ <div class="stat"><span><b>${c.members.length}</b> members</span><span><b>${ev}</b> events</span><span><b>${c.feed.length}</b> news posts</span><span><b>${c.chat.length}</b> chat messages</span></div>
+ <div class="row wrap">${c.verified?`<button class="btn sm ghost" data-a="unverify" data-id="${c.id}">Remove badge</button>`:`<button class="btn sm" data-a="verify" data-id="${c.id}">✓ Grant verified badge</button>`}${c.status==='suspended'?`<button class="btn sm ghost" data-a="reinstate" data-id="${c.id}">Reinstate</button>`:`<button class="btn sm ghost danger" data-a="suspend" data-id="${c.id}">Suspend</button>`}</div></div>`}).join('')}`}
+
+/* ---------- forms ---------- */
+function openEventForm(clubId,evId){
+ if(evId){const ev=E(evId);draft={id:ev.id,isNew:false,club:ev.clubs[0],merge:ev.clubs[1]||'',title:ev.title,kind:ev.kind,date:ev.date,time:ev.time,details:ev.details,pins:JSON.parse(JSON.stringify(ev.pins)),sponsor:ev.sponsor,pub:ev.pub!=='none'}}
+ else draft={isNew:true,club:clubId,merge:'',title:'',kind:'meet',date:dplus(7),time:'09:00',details:'',pins:[],sponsor:'',pub:false};
+ renderEventForm()}
+function renderEventForm(keep){const d=draft,others=S.clubs.filter(c=>c.id!==d.club&&c.status==='active');
+ modal(`<h2>${d.isNew?'New event':'Edit event'}</h2>
+ <label>Title<input data-d="title" value="${esc(d.title)}" placeholder="Sunday Cars & Coffee"></label>
+ <label>Type<select data-d="kind"><option value="meet" ${d.kind==='meet'?'selected':''}>Meet (one spot)</option><option value="rideout" ${d.kind==='rideout'?'selected':''}>Ride-out (route)</option></select></label>
+ <div class="row"><label class="grow">Date<input type="date" data-d="date" value="${d.date}"></label><label class="grow">Time<input type="time" data-d="time" value="${d.time}"></label></div>
+ <label>Details<textarea data-d="details" rows="2" placeholder="Where to park, what to bring…">${esc(d.details)}</textarea></label>
+ <div class="lbl">${d.kind==='rideout'?'Tap the map to drop pins in order: start, stops, finish':'Tap the map to drop the meet pin'}</div>
+ ${mapSVG(d.pins,{tap:true,big:true})}
+ ${d.pins.map((p,i)=>`<div class="pinrow"><span class="pn">${i+1}</span><input data-pin="${i}" value="${esc(p.label)}" placeholder="${pinName(d.kind,i,d.pins.length)}: place or address"><button class="x" data-a="rmPin" data-i="${i}">✕</button></div>`).join('')}
+ ${d.pins.length?'<div class="meta">Add a place or address to each pin so members get directions.</div>':''}
+ <label>Merge with another club (optional)<select data-d="merge"><option value="">No merge</option>${others.map(c=>`<option value="${c.id}" ${d.merge===c.id?'selected':''}>${c.logo} ${esc(c.name)}</option>`).join('')}</select></label>
+ <label>Event sponsor (optional)<select data-d="sponsor"><option value="">None</option>${[...new Set(S.sponsors.map(s=>s.name).concat(...S.clubs.map(c=>c.sponsors.map(s=>s.name))))].map(n=>`<option value="${esc(n)}" ${d.sponsor===n?'selected':''}>${esc(n)}</option>`).join('')}</select></label>
+ <label class="chk"><input type="checkbox" data-d="pub" ${d.pub?'checked':''}> Post to the public feed (the app manager approves it). Merged events always go public.</label>
+ <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="saveEvent">${d.isNew?'Post event':'Save changes'}</button></div>`,keep)}
+function applyDraft(ev,d){
+ const goPublic=d.pub||!!d.merge;
+ Object.assign(ev,{clubs:[d.club].concat(d.merge?[d.merge]:[]),title:d.title.trim(),kind:d.kind,date:d.date,time:d.time,details:d.details,pins:d.pins,sponsor:d.sponsor});
+ if(goPublic&&(ev.pub==='none'||ev.pub==='rejected')){ev.pub='pending';S.posts.unshift({id:uid(),eventId:ev.id,clubId:d.club,author:'You',text:'',status:'pending',time:now()})}
+ if(!goPublic)ev.pub='none';
+ return goPublic}
+function renderVehicleForm(){const v=vdraft,mx=maxPhotos();
+ modal(`<h2>${v.isNew?'Add a vehicle':'Edit vehicle'}</h2>
+ <div class="lbl">Photos (${v.photos.length}/${mx})${S.premium?' ⭐':''}</div>
+ <div class="pgrid">${v.photos.map((p,i)=>`<div class="ph"><img src="${p}" alt="">${i===0?'<span class="main">Card</span>':''}<button class="x" data-a="rmVPhoto" data-i="${i}">✕</button></div>`).join('')}${v.photos.length<mx?`<label class="ph add">＋<input type="file" accept="image/*" multiple data-f="vphoto" hidden></label>`:''}</div>
+ <div class="meta">The first photo goes on the front of your card. ${S.premium?'Premium members get 5 photos per vehicle.':'Members get 2 photos per vehicle. Premium gets 5.'}</div>
+ <div class="row"><label class="grow">Year<input data-v="year" inputmode="numeric" value="${esc(v.year)}" placeholder="2018"></label><label class="grow">Horsepower<input data-v="hp" inputmode="numeric" value="${esc(v.hp)}" placeholder="450"></label></div>
+ <label>Make<input data-v="make" value="${esc(v.make)}" placeholder="Ford"></label>
+ <label>Model<input data-v="model" value="${esc(v.model)}" placeholder="F-150 Raptor"></label>
+ <label>Modifications<textarea data-v="mods" rows="3" placeholder="Lift, wheels, exhaust, tune…">${esc(v.mods)}</textarea></label>
+ <div class="row end">${v.isNew?'':`<button class="btn ghost danger" data-a="delVehicle" data-id="${v.id}">Delete</button>`}<span class="grow"></span><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="saveVehicle">Save</button></div>`,true)}
+function readImg(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,720/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};im.src=r.result};r.readAsDataURL(file)}
+
+/* ---------- actions ---------- */
+const go=(fn)=>{fn();save();render()};
+const A={
+ tab(el){view.tab=el.dataset.id;view.club=null;view.event=null;render();scrollTo(0,0)},
+ role(el){S.role=el.dataset.id;save();render();toast({member:'Viewing as a regular member',host:'Viewing as host of Palm Beach Lifted and any club you start',manager:'Viewing as app manager. Check the Review tab for posts, photos and clubs.'}[S.role])},
+ bell(){S.unread=0;save();render();modal(`<h2>Notifications</h2>${S.notifs.map(n=>`<div class="pinrow"><div class="grow">${esc(n.text)}<div class="meta">${ago(n.time)}</div></div></div>`).join('')||'<p class="empty">Nothing yet.</p>'}<button class="btn wide ghost" data-a="close">Close</button>`)},
+ openClub(el){view.tab='clubs';view.club=el.dataset.id;view.clubTab='news';view.event=null;render();scrollTo(0,0)},
+ back(){if(view.event)view.event=null;else view.club=null;render();scrollTo(0,0)},
+ clubTab(el){view.clubTab=el.dataset.id;render()},
+ openEvent(el){view.event=el.dataset.id;render();scrollTo(0,0)},
+ join(el){const c=C(el.dataset.id);
+  if(c.joinMode==='open'){go(()=>{c.joined=true;c.members.push('You')});toast('You joined '+c.name)}
+  else{go(()=>{c.pending=true});toast('Request sent to the host');const id=c.id;setTimeout(()=>{const k=C(id);if(!k||!k.pending)return;k.pending=false;k.joined=true;k.members.push('You');notify(k.name+' accepted your request to join.');if(!modalOpen())render();toast('🔔 '+k.name+' accepted you')},3500)}},
+ leave(el){const c=C(el.dataset.id);go(()=>{c.joined=false;c.members=c.members.filter(m=>m!=='You')});toast('You left '+c.name)},
+ pubSend(){const t=$('#pubIn').value.trim();if(!t)return toast('Write something first');$('#pubIn').value='';go(()=>S.posts.unshift({id:uid(),clubId:null,author:'You',text:t,status:'pending',time:now()}));toast('Sent to the app manager for review')},
+ newsSend(el){const c=C(el.dataset.id),t=$('#newsIn').value.trim(),pub=$('#newsPub').checked;if(!t)return toast('Write something first');$('#newsIn').value='';
+  go(()=>{c.feed.unshift({id:uid(),text:t,time:now()});if(pub)S.posts.unshift({id:uid(),clubId:c.id,author:'You',text:t,status:'pending',time:now()})});toast('Posted. '+(c.members.length-1)+' members notified.'+(pub?' Public copy sent for review.':''))},
+ chatSend(el){const c=C(el.dataset.id),i=$('#chatIn'),t=i.value.trim();if(!t)return;i.value='';go(()=>c.chat.push({id:uid(),user:'You',text:t,time:now(),pinned:false}));
+  const id=c.id;setTimeout(()=>{const k=C(id);if(!k)return;const pool=k.members.filter(m=>m!=='You'&&!k.muted.includes(m));if(!pool.length)return;k.chat.push({id:uid(),user:pool[Math.floor(Math.random()*pool.length)],text:REPLIES[Math.floor(Math.random()*REPLIES.length)],time:now(),pinned:false});save();if(view.club===id&&view.clubTab==='chat'&&!view.event&&!modalOpen())render()},1800)},
+ pin(el){const m=C(el.dataset.c).chat.find(x=>x.id===el.dataset.id);go(()=>m.pinned=!m.pinned)},
+ delMsg(el){const c=C(el.dataset.c);go(()=>c.chat=c.chat.filter(x=>x.id!==el.dataset.id));toast('Message deleted')},
+ mute(el){const c=C(el.dataset.c);go(()=>c.muted.push(el.dataset.u));toast(el.dataset.u+' is muted')},
+ unmute(el){const c=C(el.dataset.c);go(()=>c.muted=c.muted.filter(u=>u!==el.dataset.u));toast(el.dataset.u+' can chat again')},
+ cohost(el){const c=C(el.dataset.c);go(()=>c.cohosts.push(el.dataset.u));toast(el.dataset.u+' is now a co-host')},
+ uncohost(el){const c=C(el.dataset.c);go(()=>c.cohosts=c.cohosts.filter(u=>u!==el.dataset.u))},
+ removeMember(el){const c=C(el.dataset.c),u=el.dataset.u;go(()=>{c.members=c.members.filter(m=>m!==u);c.cohosts=c.cohosts.filter(m=>m!==u)});toast(u+' was removed')},
+ approveReq(el){const c=C(el.dataset.c),u=el.dataset.u;go(()=>{c.requests=c.requests.filter(r=>r!==u);c.members.push(u)});toast(u+' joined the club')},
+ declineReq(el){const c=C(el.dataset.c),u=el.dataset.u;go(()=>c.requests=c.requests.filter(r=>r!==u));toast('Request declined')},
+ joinMode(el){const c=C(el.dataset.c);go(()=>c.joinMode=el.dataset.id);toast(el.dataset.id==='open'?'Anyone can join right away':'You approve new members')},
+ newEvent(el){openEventForm(el.dataset.id)},
+ editEvent(el){openEventForm(null,el.dataset.id)},
+ mapTap(el,e){const r=el.getBoundingClientRect(),x=+((e.clientX-r.left)/r.width*100).toFixed(1),y=+((e.clientY-r.top)/r.height*60).toFixed(1);
+  if(draft.kind==='meet')draft.pins=[{x,y,label:draft.pins[0]?draft.pins[0].label:''}];else draft.pins.push({x,y,label:''});renderEventForm(true)},
+ rmPin(el){draft.pins.splice(+el.dataset.i,1);renderEventForm(true)},
+ saveEvent(){const d=draft;if(!d.title.trim())return toast('Give the event a title');if(!d.date)return toast('Pick a date');if(!d.pins.length)return toast('Drop at least one pin on the map');if(d.kind==='rideout'&&d.pins.length<2)return toast('A ride-out needs a start and a finish pin');
+  if(d.isNew){const ev={id:uid(),pub:'none',featured:false};const pub=applyDraft(ev,d);S.events.push(ev);const c=C(d.club);c.feed.unshift({id:uid(),text:'New '+(ev.kind==='rideout'?'ride-out':'meet')+': '+ev.title+', '+fmtDate(ev.date,ev.time),time:now()});save();closeModal();view.event=ev.id;render();scrollTo(0,0);toast('Event posted. '+(c.members.length-1)+' members notified.'+(pub?' Sent to the public feed for review.':''))}
+  else modal(`<h2>Notify members about this change?</h2><p class="sub">Send an alert for real changes, like a new time or a moved pin. Skip it for small fixes, like a typo.</p><div class="row end"><button class="btn ghost" data-a="notifyNo">Save quietly</button><button class="btn" data-a="notifyYes">Save &amp; notify</button></div>`)},
+ notifyYes(){A._finishEdit(true)},notifyNo(){A._finishEdit(false)},
+ _finishEdit(n){const d=draft,ev=E(d.id);applyDraft(ev,d);if(n)C(d.club).feed.unshift({id:uid(),text:'⚠️ Update to '+ev.title+': check the new details.',time:now()});save();closeModal();render();toast(n?'Saved. Members were notified.':'Saved without notifying members.')},
+ boost(el){const ev=E(el.dataset.id);go(()=>{ev.featured=true;if(ev.pub==='none'||ev.pub==='rejected'){ev.pub='pending';S.posts.unshift({id:uid(),eventId:ev.id,clubId:ev.clubs[0],author:'You',text:'',status:'pending',time:now()})}});toast(ev.pub==='approved'?'Boosted to the top of the public feed (paid, demo)':'Boosted. It goes to the top once the app manager approves it.')},
+ delEvent(el){modal(`<h2>Delete this event?</h2><p class="sub">It will be removed from the club and the public feed.</p><div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn danger" data-a="delEventYes" data-id="${el.dataset.id}">Delete</button></div>`)},
+ delEventYes(el){const id=el.dataset.id;S.events=S.events.filter(e=>e.id!==id);S.posts=S.posts.filter(p=>p.eventId!==id);view.event=null;save();closeModal();render();toast('Event deleted')},
+ approvePost(el){const p=S.posts.find(x=>x.id===el.dataset.id);go(()=>{p.status='approved';p.time=now();if(p.eventId){const ev=E(p.eventId);if(ev)ev.pub='approved'}if(p.author==='You')notify('Your post was approved for the public feed.')});toast('Approved and live on the public feed')},
+ rejectPost(el){modal(`<h2>Reject post</h2><p class="sub">This note goes back to the person who posted it.</p><textarea id="rejNote" rows="7">${esc(REJECT_NOTE)}</textarea><div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn danger" data-a="sendReject" data-id="${el.dataset.id}">Send note &amp; reject</button></div>`)},
+ sendReject(el){const p=S.posts.find(x=>x.id===el.dataset.id),note=$('#rejNote').value.trim();p.status='rejected';p.note=note;if(p.eventId){const ev=E(p.eventId);if(ev){ev.pub='rejected';ev.featured=false}}if(p.author==='You')notify('Your public post was not approved: '+note);save();closeModal();render();toast('Rejected. Note sent to '+p.author+'.')},
+ approveApp(el){const a=S.apps.find(x=>x.id===el.dataset.id);go(()=>{S.apps=S.apps.filter(x=>x!==a);const mine=a.by==='You';S.clubs.push({id:'c'+uid(),sponsors:[],name:a.name,logo:a.logo,color:'#ff6a1a',focus:a.focus,link:a.link,joinMode:a.joinMode,verified:false,host:mine?'You':a.by,members:mine?['You']:[a.by],requests:[],joined:mine,pending:false,mine,status:'active',muted:[],cohosts:[],feed:[],chat:[]});if(mine)notify('Your club '+a.name+' was approved! Switch to Host to run it.')});toast(a.name+' is now a club')},
+ declineApp(el){modal(`<h2>Decline club</h2><p class="sub">This note goes to the applicant.</p><textarea id="decNote" rows="6">${esc(DECLINE_NOTE)}</textarea><div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn danger" data-a="sendDecline" data-id="${el.dataset.id}">Send &amp; decline</button></div>`)},
+ sendDecline(el){const a=S.apps.find(x=>x.id===el.dataset.id),n=$('#decNote').value.trim();S.apps=S.apps.filter(x=>x!==a);if(a.by==='You')notify('Your club application for '+a.name+' was declined: '+n);save();closeModal();render();toast('Application declined')},
+ verify(el){const c=C(el.dataset.id);go(()=>c.verified=true);if(c.mine)notify(c.name+' earned the verified badge!');toast(c.name+' is now verified ✓')},
+ unverify(el){go(()=>C(el.dataset.id).verified=false)},
+ suspend(el){const c=C(el.dataset.id);go(()=>c.status='suspended');toast(c.name+' suspended')},
+ reinstate(el){go(()=>C(el.dataset.id).status='active')},
+ startClub(){modal(`<h2>Start a club</h2><p class="sub">Garage Group is for real car, truck and bike clubs. The app manager reviews every club. Businesses can join as sponsors instead.</p>
+  <label>Club name<input id="apName" placeholder="Palm Beach Lifted"></label>
+  <label>What's the club about?<input id="apFocus" placeholder="Lifted trucks, Mustangs, Harleys…"></label>
+  <label>Link to your existing club page<input id="apLink" placeholder="instagram.com/yourclub"></label>
+  <div class="row"><label class="grow">Club icon<select id="apLogo">${['🚗','🛻','🏍️','🏎️','🏁','🔧','🔥','🐎','⚡','🦅'].map(e=>`<option>${e}</option>`).join('')}</select></label><label class="grow">Who can join?<select id="apMode"><option value="open">Anyone</option><option value="approval">I approve them</option></select></label></div>
+  <label>Tell us about your club<textarea id="apWhy" rows="3" placeholder="How many members, how long you've been around, where you meet…"></textarea></label>
+  <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="submitClub">Send application</button></div>`)},
+ submitClub(){const v=i=>$(i).value.trim(),n=v('#apName'),f=v('#apFocus'),l=v('#apLink');if(!n||!f||!l)return toast('Add a name, what it\'s about, and a club page link');
+  S.apps.push({id:uid(),name:n,focus:f,link:l,logo:$('#apLogo').value,joinMode:$('#apMode').value,why:v('#apWhy'),by:'You'});save();closeModal();render();toast('Application sent. Switch to App Manager to approve it.')},
+ addVehicle(){if(!S.premium&&S.me.vehicles.length>=2)return toast('Members can have 2 vehicles. Premium unlocks unlimited. Earn it in My Garage.');vdraft={isNew:true,id:uid(),year:'',make:'',model:'',hp:'',mods:'',photos:[],log:[]};renderVehicleForm()},
+ editVehicle(el){vdraft=Object.assign({isNew:false},JSON.parse(JSON.stringify(S.me.vehicles.find(v=>v.id===el.dataset.id))));vdraft.photos=vPhotos(vdraft);delete vdraft.photo;renderVehicleForm()},
+ saveVehicle(){const v=vdraft;if(!v.make.trim()||!v.model.trim())return toast('Add at least a make and model');const isNew=v.isNew;delete v.isNew;
+  if(isNew)S.me.vehicles.push(v);else S.me.vehicles=S.me.vehicles.map(x=>x.id===v.id?v:x);if(!save())toast('Storage is full on this device. Try a smaller photo.');closeModal();render()},
+ delVehicle(el){S.me.vehicles=S.me.vehicles.filter(v=>v.id!==el.dataset.id);save();closeModal();render()},
+ addLog(el){const v=S.me.vehicles.find(x=>x.id===el.dataset.id),i=$('#log_'+v.id),t=i.value.trim();if(!t)return;go(()=>{v.log=v.log||[];v.log.push({d:new Date().toLocaleDateString(undefined,{month:'short',year:'numeric'}),t})})},
+ rmPhoto(el){go(()=>S.me.gallery.splice(+el.dataset.i,1))},
+ memberCard(){const code='GG-'+String(Math.abs([...(S.me.ig||S.me.tt||'You')].reduce((a,c)=>a*31+c.charCodeAt(0),7))%900000+100000);
+  modal(`<h2>Member card</h2><div class="mcard"><div class="brand"><span class="tire"></span>GARAGE<b>GROUP</b></div><div style="margin-top:18px;font-size:20px;font-weight:800">${handle(S.me.ig)||handle(S.me.tt)?'@'+esc(handle(S.me.ig)||handle(S.me.tt)):'Garage Group member'}</div><div class="meta">${S.premium?(S.founding?'⭐ Founding Premium member':'⭐ Premium member'):'Member'}</div><div class="code">${code}</div></div><p class="sub">Show this at the counter of any sponsor to get your deal.</p><button class="btn wide ghost" data-a="close">Done</button>`)},
+ reset(){modal(`<h2>Reset demo?</h2><p class="sub">This clears everything you've added and starts the sample data over.</p><div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn danger" data-a="resetYes">Reset</button></div>`)},
+ resetYes(){S=seed();S.clubs.forEach(c=>c.sponsors=JSON.parse(JSON.stringify(SEED_SPONSORS[c.id]||[])));save();view={tab:'gallery',club:null,clubTab:'news',event:null,gclub:''};closeModal();render();scrollTo(0,0)},
+ brandColor(el){go(()=>C(el.dataset.c).color=el.dataset.id)},
+ saveBrand(el){const c=C(el.dataset.id),n=$('#brName').value.trim();if(!n)return toast('Your club needs a name');go(()=>{c.name=n;c.logo=$('#brLogo').value});toast('Branding saved')},
+ flip(el){el.classList.toggle('flip')},
+ rmVPhoto(el){vdraft.photos.splice(+el.dataset.i,1);renderVehicleForm()},
+ photos(el){const g=S.gallery.find(x=>x.id===el.dataset.id);modal(`<h2>${esc(g.v.year+' '+g.v.make+' '+g.v.model)}</h2>${vPhotos(g.v).map(p=>`<img src="${p}" alt="" style="width:100%;border-radius:12px;margin:6px 0">`).join('')}<button class="btn wide ghost" data-a="close">Close</button>`)},
+ claimFounding(){if(!S.me.state)return toast('Pick your state first');go(()=>{S.premium=true;S.founding=true});notify("You're a founding member in "+S.me.state+'! Premium is unlocked.');toast('⭐ Founding member! Premium unlocked.')},
+ invite(el){const t="Join me on Garage Group, the app for car, truck and bike clubs. Get the app, then vouch for me so I can earn Premium.";try{navigator.clipboard.writeText(t).then(()=>toast('Invite copied. Paste it in a text to a friend.'),()=>modal(`<h2>Invite friends</h2><p class="sub">Copy this and send it to a friend:</p><textarea rows="4">${esc(t)}</textarea><button class="btn wide ghost" data-a="close">Done</button>`))}catch(e){modal(`<h2>Invite friends</h2><p class="sub">Copy this and send it to a friend:</p><textarea rows="4">${esc(t)}</textarea><button class="btn wide ghost" data-a="close">Done</button>`)}},
+ fakeVouch(){const names=['gt_kingpin','trx_rico','r34_luis','ironglide_dee','stang.life'];go(()=>{S.vouches=Math.min(5,S.vouches+1);if(S.vouches>=5)S.premium=true});if(S.premium){notify('5 Premium members vouched for you. Premium is unlocked!');toast('⭐ 5 vouches! Premium unlocked.')}else toast('@'+names[S.vouches-1]+' vouched for you ('+S.vouches+'/5)')},
+ vouch(el){const u=el.dataset.u;go(()=>S.vouchedFor.push(u));toast('You vouched for '+u)},
+ addSponsor(el){const c=C(el.dataset.id);modal(`<h2>Add a sponsor</h2><p class="sub">This shows as a card in ${esc(c.name)}'s My Discounts. Tier: ${clubTier(c)}, standard price (TBD). Your club keeps 70%.</p>
+  <label>Business name<input id="spName" placeholder="Joe's Detailing"></label>
+  <div class="row"><label class="grow">Icon<select id="spLogo">${['🧽','🛞','⚙️','✨','🔧','🏁','⛽','🍔','🎨','🔊'].map(e=>`<option>${e}</option>`).join('')}</select></label><label class="grow">Type of business<input id="spCat" placeholder="Detailing"></label></div>
+  <label>Member deal<input id="spDeal" placeholder="10% off any detail"></label>
+  <label>Premium deal<input id="spPrem" placeholder="20% off + free tire shine"></label>
+  <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="saveSponsor" data-id="${c.id}">Add sponsor</button></div>`)},
+ saveSponsor(el){const c=C(el.dataset.id),v=i=>$(i).value.trim();if(!v('#spName')||!v('#spDeal'))return toast('Add a business name and a member deal');c.sponsors.push({id:uid(),name:v('#spName'),logo:$('#spLogo').value,cat:v('#spCat')||'Sponsor',deal:v('#spDeal'),prem:v('#spPrem')||v('#spDeal')});save();closeModal();render();toast('Sponsor added to My Discounts')},
+ rmSponsor(el){const c=C(el.dataset.c);go(()=>c.sponsors=c.sponsors.filter(s=>s.id!==el.dataset.id))},
+ gclub(el){view.gclub=el.dataset.id;render()},
+ like(el){const g=S.gallery.find(x=>x.id===el.dataset.id);go(()=>{g.liked=!g.liked;g.likes+=g.liked?1:-1})},
+ comments(el){const g=S.gallery.find(x=>x.id===el.dataset.id);modal(`<h2>Comments</h2><div class="meta">${esc(g.v.year+' '+g.v.make+' '+g.v.model)}</div>${g.comments.map(c=>`<div class="pinrow"><div class="grow"><b>@${esc(c.u)}</b> ${esc(c.t)}<div class="meta">${ago(c.time)}</div></div></div>`).join('')||'<p class="empty">No comments yet.</p>'}<div class="chatin"><input id="cmIn" placeholder="Add a comment…"><button class="btn" data-a="addComment" data-id="${g.id}">Post</button></div><button class="btn wide ghost" data-a="close">Close</button>`)},
+ addComment(el){const g=S.gallery.find(x=>x.id===el.dataset.id),t=$('#cmIn').value.trim();if(!t)return;g.comments.push({u:handle(S.me.ig)||handle(S.me.tt)||'you',t,time:now()});save();render();A.comments(el)},
+ shareCard(el){const vs=S.me.vehicles,my=S.clubs.filter(c=>(c.joined||c.mine)&&c.status==='active');if(!vs.length)return toast('Add a vehicle in My Garage first');if(!my.length)return toast('Join a club first. Your card shows your club.');
+  const pre=el.dataset.id||vs[0].id;
+  modal(`<h2>Share your ride</h2><p class="sub">Your card shows the photo, year, make and model on the front. The back shows your club, HP, mods and your @handles. No names. The app manager approves every photo.</p>
+  <label>Vehicle<select id="shV">${vs.map(v=>`<option value="${v.id}" ${v.id===pre?'selected':''}>${esc(v.year+' '+v.make+' '+v.model)}${vPhotos(v).length?'':' (no photo yet)'}</option>`).join('')}</select></label>
+  <label>Show which club?<select id="shClub">${my.map(c=>`<option value="${c.id}">${c.logo} ${esc(c.name)}</option>`).join('')}</select></label>
+  <div class="meta" style="margin-top:10px">Handles: ${handle(S.me.ig)?'📸 @'+esc(handle(S.me.ig)):'no Instagram'} · ${handle(S.me.tt)?'🎵 @'+esc(handle(S.me.tt)):'no TikTok'} (change these in My Garage)</div>
+  <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="sendCard">Send for approval</button></div>`)},
+ sendCard(){const v=S.me.vehicles.find(x=>x.id===$('#shV').value);if(!vPhotos(v).length)return toast('Add a photo to this vehicle first: My Garage, then Edit');
+  S.gallery.unshift({id:uid(),v:{year:v.year,make:v.make,model:v.model,hp:v.hp,mods:v.mods,photos:vPhotos(v).slice()},premium:S.premium,kind:guessKind(v),clubId:$('#shClub').value,ig:handle(S.me.ig),tt:handle(S.me.tt),status:'pending',likes:0,liked:false,comments:[],time:now(),author:'You'});
+  if(!save()){S.gallery.shift();return toast('Storage is full on this device. Try a smaller photo.')}closeModal();render();toast('Sent to the app manager for approval')},
+ approveCard(el){const g=S.gallery.find(x=>x.id===el.dataset.id);go(()=>{g.status='approved';g.time=now();if(g.author==='You')notify('Your card was approved and is live in the Gallery!')});toast('Card is live in the Gallery')},
+ rejectCard(el){modal(`<h2>Reject photo</h2><p class="sub">This note goes back to the person who shared it.</p><textarea id="rcNote" rows="5">${esc(GALLERY_NOTE)}</textarea><div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn danger" data-a="sendRejectCard" data-id="${el.dataset.id}">Send note &amp; reject</button></div>`)},
+ sendRejectCard(el){const g=S.gallery.find(x=>x.id===el.dataset.id),n=$('#rcNote').value.trim();g.status='rejected';g.note=n;if(g.author==='You')notify('Your gallery photo was not approved: '+n);save();closeModal();render();toast('Photo rejected. Note sent.')},
+ close(){closeModal()}
+};
+document.addEventListener('click',e=>{if(e.target.closest('a[href]'))return;const el=e.target.closest('[data-a]');if(!el)return;const f=A[el.dataset.a];if(f){e.preventDefault();f(el,e)}});
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.addEventListener('input',e=>{const t=e.target,d=t.dataset;
+ if(d.d&&draft)draft[d.d]=t.type==='checkbox'?t.checked:t.value;
+ if(d.pin!==undefined&&draft&&draft.pins[+d.pin])draft.pins[+d.pin].label=t.value;
+ if(d.v&&vdraft)vdraft[d.v]=t.value;
+ if(d.me){S.me[d.me]=t.value;save()}});
+document.addEventListener('change',e=>{const t=e.target,d=t.dataset;
+ if(d.d==='kind'&&draft){draft.kind=t.value;if(t.value==='meet')draft.pins=draft.pins.slice(0,1);renderEventForm(true)}
+ if(d.d==='pub'&&draft)draft.pub=t.checked;
+ if(d.f==='gallery'){[...t.files].slice(0,6).forEach(f=>readImg(f,u=>{S.me.gallery.push(u);if(!save()){S.me.gallery.pop();toast('Storage is full on this device')}render()}))}
+ if(d.f==='vphoto'&&vdraft){const room=maxPhotos()-vdraft.photos.length;if(t.files.length>room)toast('Only '+maxPhotos()+' photos per vehicle'+(S.premium?'':'. Premium gets 5.'));[...t.files].slice(0,room).forEach(f=>readImg(f,u=>{if(vdraft&&vdraft.photos.length<maxPhotos()){vdraft.photos.push(u);renderVehicleForm()}}))}
+ if(d.me)render()});
+document.addEventListener('change',e=>{if(e.target.id==='brColor'){const c=C(e.target.dataset.c);if(c){c.color=e.target.value;save();render()}}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='cmIn'){const b=document.querySelector('[data-a="addComment"]');if(b)A.addComment(b)}
+ if(e.key==='Enter'&&e.target.id==='chatIn'){const b=document.querySelector('[data-a="chatSend"]');if(b)A.chatSend(b)}});
+render();
+</script>
+</body>
+</html>
