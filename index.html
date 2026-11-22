@@ -103,7 +103,7 @@ nav i{top:0;right:18%}
 .fc-in{position:relative;aspect-ratio:5/7;transition:transform .6s;transform-style:preserve-3d}
 .fc.flip .fc-in{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;overflow:hidden;border:3px solid var(--cc);background:#111;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-.face.fr img,.face.fr svg{width:100%;height:100%;object-fit:cover;display:block}
+.face.fr>img,.face.fr>svg{width:100%;height:100%;object-fit:cover;display:block}
 .face.bk{transform:rotateY(180deg);padding:10px;display:flex;flex-direction:column;gap:4px;background:linear-gradient(170deg,#1d1d23,#0c0c0e)}
 .fbadge{position:absolute;top:6px;left:6px;right:6px;font-size:10px;font-weight:700;background:rgba(0,0,0,.65);padding:3px 6px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fband{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.92) 45%);padding:22px 8px 8px}
@@ -164,6 +164,10 @@ nav i{top:0;right:18%}
 .mprev{position:relative;margin-top:8px}.mprev .x{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6)}
 .attach{display:inline-flex;align-items:center;gap:6px;margin:0}
 .pendtag{font-size:11px;color:var(--gold);margin-top:4px}
+.fbadge .clogo,.bh .clogo{width:1.1em;height:1.1em;margin-right:2px;vertical-align:-2px}
+.fbadge,.bh{display:block}
+.dl .clogo{width:46px;height:46px}.clogo.gen{display:inline-block;vertical-align:middle}
+.bspec{font-size:11px;line-height:1.35}.bspec span{color:var(--mut)}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#26262d;border:1px solid var(--line);color:var(--tx);padding:10px 14px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -421,12 +425,33 @@ S.posts.push({id:uid(),clubId:'c17',author:'cali_carlo',text:'Ferrari California
 })()}
 if(!S._v6){S._v6=1;S.gallery.unshift({id:uid(),v:{year:'2024',make:'Chevrolet',model:'Corvette Z06 Convertible',hp:'670',mods:'Accelerate Yellow, carbon aero package with big rear wing, black wheels, yellow calipers',photos:[],pk:'z06'},kind:'sports',clubId:'c9',ig:'z06_zach',tt:'',status:'approved',likes:189,liked:false,comments:[{u:'c8_carl',t:'That wing 🔥',time:now()-600000}],time:now(),author:'sample',premium:true});
 S.posts.push({id:uid(),clubId:'c9',author:'z06_zach',text:'Top down, wing up. Z06 day ☀️',media:{type:'img',key:'z06'},status:'approved',time:now()-60000})}
+if(!S._v7){S._v7=1;(()=>{const H=3600000;const hsh=s=>[...String(s)].reduce((a,ch)=>(a*31+ch.charCodeAt(0))>>>0,7);
+const SPEC=[['TRX','6.2L supercharged HEMI V8','Diamond Black','702'],['Mustang GT','5.0L Coyote V8','Oxford White','460'],['Road Glide','Milwaukee-Eight 117 V-twin','Vivid Black','105'],['Skyline','2.6L twin-turbo RB26 I6','Bayside Blue','550'],['EcoBoost','2.3L turbo I4','Matte Grey wrap','350'],['Supra Turbo','3.0L twin-turbo 2JZ-GTE I6','Renaissance Red','800'],['M4 Competition','3.0L twin-turbo S58 I6','Isle of Man Green','503'],['Light Bee','72V electric hub motor','Black / Grey','10'],['911','3.0L twin-turbo flat-6','GT Silver','443'],['Z06 (C8)','5.5L flat-plane V8','Amplify Orange','670'],['Rubicon','3.6L Pentastar V6','Hydro Blue','285'],['Super Duty','6.7L Power Stroke V8 diesel','Pink chassis / custom wrap','475'],['Tahoe','5.3L V8','Black','355'],['325i','2.5L M20 I6','Alpine White','168'],['IS300','2JZ-GTE swap, big single turbo','Midnight Black','520'],['Stingray (C3)','454 big-block V8','Mille Miglia Red','300'],['RS3','2.5L turbo I5','Nardo Grey','394'],['Gladiator','3.6L Pentastar V6','Sarge Green','285'],['Ultra Bee','74V electric mid-drive','White / Black','17'],['SS 2.0','72V electric motor','Grey / Black','13'],['Silverado 1500','5.3L V8','Summit White','355'],['Dark Horse','5.0L Coyote V8','Blue Ember','500'],['Beach Cruiser','500W rear hub motor','Seafoam','1'],['Cargo Bike','750W mid-drive','Matte Black','1'],['Stingray (C8) x2','6.2L LT2 V8','Torch Red & Amplify Orange','495'],['Trail Boss','3.0L Duramax I6 diesel','Sterling Gray','305'],['3100','350 small-block V8','Original patina','280'],['3500 Dually','6.7L Cummins I6 diesel','Diamond Black','400'],['Aventador','6.5L V12','Grigio Telesto','759'],['458','4.5L V8','Satin Giallo Modena','562'],['720S','4.0L twin-turbo V8','Satin Silver','710'],['Bronco','2.7L twin-turbo V6','Satin blue wrap','330'],['Hellcat','6.2L supercharged HEMI V8','Custom printed wrap','717'],['Diablo','5.7L V12','Viola SE','492'],['Z NISMO','3.0L twin-turbo V6','Boulder Gray','420'],['Sierra 1500','6.2L V8','Desert Sand','420'],['RX-7','1.3L twin-turbo 13B rotary','Competition Yellow','255'],['M4 (F82)','3.0L twin-turbo S55 I6','Sakhir Orange','503'],['600LT','3.8L twin-turbo V8','Papaya Spark','592'],['California','4.3L V8','Bianco Avus','453'],['GT R','4.0L twin-turbo V8','Matte Selenite Grey','577'],['Scat Pack','6.4L 392 HEMI V8','Pitch Black','485'],['Daytona','5.7L HEMI V8','Go Mango','370'],['Lineup','72V electric motors','Grey / Black','10'],['Escalade IQ','Dual-motor electric','Black Raven','750'],['Z06 Convertible','5.5L flat-plane V8','Accelerate Yellow','670']];
+const CMT=['Clean 🔥','That stance though','Need this in my life','Bring it to the next meet!','Wheels are perfect','What tune are you running?','Sounds even better in person','Built not bought 💪','Insane build','Love the color','How long did the build take?','Dream car right here'];
+S.gallery.forEach(g=>{if(g.author!=='sample')return;const v=g.v,s=SPEC.find(x=>(v.model||'').includes(x[0]));const k=hsh(v.make+v.model);
+ if(s){v.engine=v.engine||s[1];v.color=v.color||s[2];if(!v.hp)v.hp=s[3]}
+ if(!v.mods)v.mods='Tint, ceramic coat, aftermarket wheels';
+ const base=(v.model||'ride').toLowerCase().replace(/\(.*?\)/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,12);
+ if(!g.ig)g.ig=base+'_'+['fl','561','pbc','built','life'][k%5];
+ if(!g.tt)g.tt=g.ig.replace(/_/g,'.')+(k%2?'':'.official');
+ g.spotted=false;
+ if(!g.comments||!g.comments.length){const c=S.clubs.find(x=>x.id===g.clubId),pool=c?c.members.filter(m=>m!=='You'):['gt_kingpin'];const n=1+k%3;g.comments=[];for(let i=0;i<n;i++)g.comments.push({u:pool[(k+i*7)%pool.length],t:CMT[(k+i*5)%CMT.length],time:now()-(i+1)*H*(1+k%5)})}
+ if(!g.likes)g.likes=20+k%150});
+})()}
 if(S.me.mainClub===undefined)S.me.mainClub=S.clubs.some(c=>c.id==="c2"&&(c.mine||c.joined))?"c2":"";
 let view={tab:'gallery',club:null,clubTab:'news',event:null,gclub:''};
 let draft=null,vdraft=null;
 const handle=s=>String(s||'').trim().replace(/^@+/,'').replace(/\s+/g,'');
 const GALLERY_NOTE="Thanks for sharing your ride! This photo didn't make the gallery. The gallery is for photos of members' cars, trucks and bikes. Feel free to share a different photo.";
-const LG=c=>c&&c.logoImg?`<img class="clogo" src="${c.logoImg}" alt="">`:(c?c.logo:'');
+const hsh=s=>[...String(s)].reduce((a,ch)=>(a*31+ch.charCodeAt(0))>>>0,7);
+function inits(n){const w=String(n).replace(/[^A-Za-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!/^(the|of|and|club|crew|co|pbc|fl)$/i.test(x));if(!w.length)return'GG';if(/\d/.test(w[0])&&w[0].length<=3)return w[0].toUpperCase();return w.slice(0,3).map(x=>/^\d+$/.test(x)?x:x[0]).join('').toUpperCase().slice(0,3)}
+function badge(name,col,kind){const t=inits(name),k=hsh(name),fs=t.length>2?11:t.length>1?14:18,
+ shapes=['<circle cx="20" cy="20" r="17.5"/>','<path d="M20 2.5L35 8v11c0 9-6.5 16-15 18.5C11.5 35 5 28 5 19V8z"/>','<path d="M20 2.5l15.2 8.75v17.5L20 37.5 4.8 28.75v-17.5z"/>','<rect x="3" y="3" width="34" height="34" rx="9"/>','<path d="M20 2l18 18-18 18L2 20z"/>'],
+ sh=kind==='s'?shapes[3]:shapes[k%3===0?0:k%3===1?1:k%5===0?4:2],gid='lg'+k%100000;
+ return `<svg class="clogo gen" viewBox="0 0 40 40"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2a31"/><stop offset="1" stop-color="#0b0b0d"/></linearGradient></defs><g fill="url(#${gid})" stroke="${col}" stroke-width="2.6">${sh}</g><g fill="none" stroke="${col}" stroke-width=".8" opacity=".55" transform="translate(20 20) scale(.8) translate(-20 -20)">${sh}</g><text x="20" y="${20+fs*.36}" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="${fs}" fill="${col}" letter-spacing="-.5">${esc(t)}</text></svg>`}
+const SPC=['#ff6a1a','#2f9bff','#20c4a8','#e63946','#ffb703','#9b5de5','#7ed957','#ff6fb5'];
+const SL=s=>s&&s.logoImg?`<img class="clogo" src="${s.logoImg}" alt="">`:badge(s.name,SPC[hsh(s.name)%SPC.length],'s');
+const LG=c=>c&&c.logoImg?`<img class="clogo" src="${c.logoImg}" alt="">`:(c?badge(c.name,c.color||'#ff6a1a'):'');
 const C=id=>S.clubs.find(c=>c.id===id);
 const E=id=>S.events.find(e=>e.id===id);
 function notify(t){S.notifs.unshift({id:uid(),text:t,time:now()});S.unread++;save()}
@@ -571,7 +596,7 @@ function clubMembers(c,host){
  <div class="row end"><button class="btn" data-a="saveBrand" data-id="${c.id}">Save branding</button></div></div>
  <div class="card"><h3>Club Perks (club sponsors)</h3><p class="sub" style="margin:0 0 6px">Sponsors you bring in show as small cards on your club page. Feeds and chat stay ad-free.</p>
  <div class="meta">Your tier: <b style="color:var(--tx)">${clubTier(c)}</b> · standard price set by Garage Group (TBD) · your club keeps <b style="color:var(--tx)">${c.founding?'80%':'70%'}</b>${c.founding?' (Founding Club bonus)':''}</div>
- ${c.sponsors.map(s=>`<div class="pinrow"><span class="logo">${s.logo}</span><div class="grow"><b>${esc(s.name)}</b><div class="meta">${esc(s.deal)}</div></div><button class="btn sm ghost danger" data-a="rmSponsor" data-c="${c.id}" data-id="${s.id}">Remove</button></div>`).join('')}
+ ${c.sponsors.map(s=>`<div class="pinrow"><span class="logo">${SL(s)}</span><div class="grow"><b>${esc(s.name)}</b><div class="meta">${esc(s.deal)}</div></div><button class="btn sm ghost danger" data-a="rmSponsor" data-c="${c.id}" data-id="${s.id}">Remove</button></div>`).join('')}
  <button class="btn wide ghost" data-a="addSponsor" data-id="${c.id}">＋ Add a sponsor</button></div>
  <div class="card"><h3>Who can join?</h3><div class="row"><div class="seg sm">${[['open','Anyone, right away'],['approval','I approve them']].map(m=>`<button data-a="joinMode" data-c="${c.id}" data-id="${m[0]}" class="${c.joinMode===m[0]?'on':''}">${m[1]}</button>`).join('')}</div></div></div>`:''}
  ${host&&c.requests.length?`<div class="card"><h3>Join requests</h3>${c.requests.map(r=>`<div class="pinrow"><span class="av">${esc(r[0])}</span><b class="grow">${esc(r)}</b><button class="btn sm" data-a="approveReq" data-c="${c.id}" data-u="${esc(r)}">Accept</button><button class="btn sm ghost" data-a="declineReq" data-c="${c.id}" data-u="${esc(r)}">Decline</button></div>`).join('')}</div>`:''}
@@ -645,13 +670,13 @@ function gCard(g){const c=C(g.clubId)||{name:'',logo:'',color:'#ff6a1a'},col=c.c
  return `<div class="gc"><div class="fc${g.premium?' gold':''}" data-a="flip" style="--cc:${col}"><div class="fc-in">
  <div class="face fr">${vPhotos(v).length?`<img src="${vPhotos(v)[0]}" alt="">`:art(g.kind,col)}<div class="fbadge">${g.premium?'⭐ ':''}${c.founding?'🏅 ':''}${LG(c)} ${esc(c.name)}${c.verified?VB:''}</div><div class="fband"><div class="yr">${esc(v.year)}</div><div class="mm">${esc(v.make)} ${esc(v.model)}</div></div></div>
  <div class="face bk"><div class="bh">${LG(c)} ${esc(c.name)}</div><div class="bmm">${esc(v.year)} ${esc(v.make)} ${esc(v.model)}</div>
- ${v.hp?`<div class="bhp"><b>${esc(v.hp)}</b>HP</div>`:''}
+ ${v.hp?`<div class="bhp"><b>${esc(v.hp)}</b>HP</div>`:''}${v.engine||v.color?`<div class="bspec">${v.engine?`<div><span>Engine</span> ${esc(v.engine)}</div>`:''}${v.color?`<div><span>Color</span> ${esc(v.color)}</div>`:''}</div>`:''}
  ${v.mods?`<div class="blbl">Mods</div><div class="bmods">${esc(v.mods)}</div>`:'<div style="flex:1"></div>'}
- <div class="bso">${g.spotted?'<span style="font-size:11px;color:var(--mut)">📸 Spotted at a car show</span>':''}${g.ig?`<a href="https://instagram.com/${encodeURIComponent(g.ig)}" target="_blank" rel="noopener">📸 @${esc(g.ig)}</a>`:''}${g.tt?`<a href="https://www.tiktok.com/@${encodeURIComponent(g.tt)}" target="_blank" rel="noopener">🎵 @${esc(g.tt)}</a>`:''}</div>
+ <div class="bso">${g.author==='sample'?`${g.ig?`<span>📸 @${esc(g.ig)}</span>`:''}${g.tt?`<span>🎵 @${esc(g.tt)}</span>`:''}`:`${g.ig?`<a href="https://instagram.com/${encodeURIComponent(g.ig)}" target="_blank" rel="noopener">📸 @${esc(g.ig)}</a>`:''}${g.tt?`<a href="https://www.tiktok.com/@${encodeURIComponent(g.tt)}" target="_blank" rel="noopener">🎵 @${esc(g.tt)}</a>`:''}`}</div>
  <div class="tapb">Tap to flip</div></div></div></div>
  ${g.status==='approved'?`<div class="gact"><button data-a="like" data-id="${g.id}">${g.liked?'❤️':'🤍'} ${g.likes}</button><button data-a="comments" data-id="${g.id}">💬 ${g.comments.length}</button>${vPhotos(v).length>1?`<button data-a="photos" data-id="${g.id}">📷 ${vPhotos(v).length}</button>`:''}</div>`:`<div class="gst">${g.status==='pending'?'⏳ Waiting for approval':'✖ Not approved'}</div>`}</div>`}
 function dCard(s,col,cid){return `<div class="dc"><div class="fc" data-a="flip" style="--cc:${col||'#ff6a1a'}"><div class="fc-in">
- <div class="face fr dfront"><div class="dl">${s.logo||'🏪'}</div><b>${esc(s.name)}</b><span>${esc(s.cat)}</span></div>
+ <div class="face fr dfront"><div class="dl">${SL(s)}</div><b>${esc(s.name)}</b><span>${esc(s.cat)}</span></div>
  <div class="face bk dback"><div class="d1">✔ ${esc(s.deal)}</div>${s.hours?`<div class="tapb" style="text-align:left">🕒 ${esc(s.hours)}</div>`:''}<div class="tapb">Show your member card</div></div></div></div>${cid?`<button class="btn sm ghost" style="width:100%;margin-top:5px;padding:4px" data-a="sponsorInfo" data-c="${cid}" data-id="${s.id}">ⓘ Details</button>`:''}</div>`}
 function clubTier(c){return c.verified?'Verified club':c.members.length>=25?'Big club':'Small club'}
 function foundingChecks(){return[['Picked your state',!!S.me.state],['Member of an approved club',S.clubs.some(c=>(c.joined||c.mine)&&c.status==='active')],['Has a vehicle photo approved in the Gallery',S.gallery.some(g=>g.author==='You'&&g.status==='approved')]]}
@@ -809,7 +834,7 @@ const A={
  saveBrand(el){const c=C(el.dataset.id),n=$('#brName').value.trim();if(!n)return toast('Your club needs a name');go(()=>{c.name=n;c.logo=$('#brLogo').value});toast('Branding saved')},
  flip(el){el.classList.toggle('flip')},
  sponsorInfo(el){const c=C(el.dataset.c),s=c.sponsors.find(x=>x.id===el.dataset.id);if(!s)return;
-  modal(`<div style="text-align:center;font-size:44px">${s.logo||'🏪'}</div><h2 style="text-align:center;margin:4px 0">${esc(s.name)}</h2><div class="meta" style="text-align:center">${esc(s.cat)} · Club Perk from ${esc(c.name)}</div>
+  modal(`<div style="text-align:center;font-size:56px">${SL(s)}</div><h2 style="text-align:center;margin:4px 0">${esc(s.name)}</h2><div class="meta" style="text-align:center">${esc(s.cat)} · Club Perk from ${esc(c.name)}</div>
   <div class="card" style="border-color:var(--acc)"><div class="lbl" style="margin-top:0">Member deal</div><b>✔ ${esc(s.deal)}</b><div class="meta" style="margin-top:4px">Show your member card at the counter.</div></div>
   ${s.about?`<p>${esc(s.about)}</p>`:''}
   <div class="card">${s.address?`<div class="pinrow"><span>📍</span><div class="grow">${esc(s.address)}</div><a class="btn sm ghost" href="${mapsLink(s.name+', '+s.address)}" target="_blank" rel="noopener">Directions</a></div>`:''}${s.hours?`<div class="pinrow"><span>🕒</span><div class="grow">${esc(s.hours)}</div></div>`:''}${s.phone?`<div class="pinrow"><span>📞</span><div class="grow">${esc(s.phone)}</div><a class="btn sm ghost" href="tel:${esc(s.phone.replace(/[^0-9+]/g,''))}">Call</a></div>`:''}</div>
