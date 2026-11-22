@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Garage Group</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 :root{--bg:#0c0c0e;--card:#16161a;--card2:#1d1d22;--line:#2a2a31;--tx:#ececf1;--mut:#8d8d98;--acc:#ff6a1a;--ok:#2ecc71;--bad:#ff4d5e;--blue:#3d9bff;--gold:#f5c542}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -16,6 +17,7 @@ header{position:sticky;top:0;z-index:5;background:rgba(12,12,14,.94);backdrop-fi
 .cbrand{display:flex;align-items:center;gap:8px}.cbrand .logo{font-size:26px;margin:0}.cbrand .cn{font-weight:900;font-size:17px;color:var(--acc);line-height:1.1}.cbrand small{font-size:10px;letter-spacing:.12em;color:var(--mut)}
 .sw{width:34px;height:34px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--bg) inset}
 .chead h1{color:var(--acc)}
+.clogo{width:1.25em;height:1.25em;border-radius:50%;object-fit:cover;vertical-align:middle;display:inline-block}
 .tire{width:20px;height:20px;border-radius:50%;border:4px dashed #555;box-shadow:inset 0 0 0 3px #0c0c0e,inset 0 0 0 6px #777}
 .bell{position:relative;background:none;border:0;font-size:20px;padding:4px 6px;cursor:pointer}
 .bell i,nav i{position:absolute;top:-2px;right:-4px;background:var(--acc);color:#fff;font:700 10px/16px sans-serif;min-width:16px;height:16px;border-radius:8px;font-style:normal;padding:0 4px}
@@ -131,6 +133,30 @@ nav i{top:0;right:18%}
 .pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:6px 0}
 .pgrid .ph{margin:0}
 .ph .main{position:absolute;bottom:3px;left:3px;font-size:9px;background:var(--acc);color:#fff;padding:1px 4px;border-radius:4px}
+.lmap{height:260px;border-radius:12px;border:1px solid var(--line);margin:10px 0;z-index:0}
+.leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile-container,.leaflet-pane>svg,.leaflet-pane>canvas,.leaflet-zoom-box,.leaflet-image-layer,.leaflet-layer{position:absolute;left:0;top:0}
+.leaflet-container{overflow:hidden;background:#1b1e24;outline:0;font:12px/1.5 sans-serif;-webkit-tap-highlight-color:transparent;touch-action:none}
+.leaflet-tile,.leaflet-marker-icon{-webkit-user-select:none;user-select:none}
+.leaflet-container img.leaflet-tile,.leaflet-container .leaflet-marker-pane img{max-width:none!important;max-height:none!important;width:auto;padding:0}
+.leaflet-tile{visibility:hidden}.leaflet-tile-loaded{visibility:inherit}
+.leaflet-zoom-animated{transform-origin:0 0}
+.leaflet-zoom-anim .leaflet-zoom-animated{transition:transform .25s cubic-bezier(0,0,.25,1)}
+.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-marker-pane{z-index:600}.leaflet-popup-pane{z-index:700}
+.leaflet-pane>svg path.leaflet-interactive{pointer-events:auto}
+.leaflet-top,.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none}.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}
+.leaflet-control{position:relative;z-index:800;pointer-events:auto;float:left;clear:both}.leaflet-right .leaflet-control{float:right}
+.leaflet-top .leaflet-control{margin-top:10px}.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:0}.leaflet-bottom .leaflet-control{margin-bottom:0}
+.leaflet-bar{border-radius:8px;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.6)}.leaflet-bar a{display:block;width:30px;height:30px;line-height:30px;text-align:center;background:#222;color:#fff;text-decoration:none;font:bold 18px sans-serif;border-bottom:1px solid #333}
+.leaflet-control-attribution{background:rgba(0,0,0,.6);color:#aaa;font-size:9px;padding:0 5px}.leaflet-control-attribution a{color:#ccc}
+.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}
+.leaflet-popup-content-wrapper{background:#1d1d22;color:var(--tx);border:1px solid var(--line);border-radius:12px;text-align:left;padding:1px}
+.leaflet-popup-content{margin:10px 14px;line-height:1.35;font-size:13px}
+.leaflet-popup-content a.btn{color:#fff;margin-top:6px}
+.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-left:-20px;overflow:hidden;pointer-events:none}
+.leaflet-popup-tip{width:17px;height:17px;margin:-10px auto 0;transform:rotate(45deg);background:#1d1d22}
+.leaflet-popup-close-button{position:absolute;top:2px;right:4px;color:var(--mut);text-decoration:none;font:18px/20px sans-serif}
+.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:grab}.leaflet-dragging .leaflet-grab{cursor:move}
+.lpin{width:26px;height:26px;border-radius:50%;background:var(--acc);border:2px solid #fff;color:#fff;font:800 12px/22px sans-serif;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.5)}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#26262d;border:1px solid var(--line);color:var(--tx);padding:10px 14px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -173,10 +199,10 @@ function seed(){const H=3600000;return{
   {id:uid(),name:'TintPro Car Club',logo:'🪟',focus:'Window tint deals',link:'tintpro-deals.com',joinMode:'open',by:'TintPro LLC',why:'Join for 50% off tint every week!'}
  ],
  events:[
-  {id:'e1',clubs:['c1'],title:'Cars & Coffee',kind:'meet',date:dplus(6),time:'08:00',details:'Park by the fountain. All Mustangs welcome.',pins:[{x:44,y:30,label:'Wellington Green, Wellington FL'}],sponsor:"Joe's Detailing",featured:true,pub:'approved'},
-  {id:'e2',clubs:['c2'],title:'Lake O Truck Ride-Out',kind:'rideout',date:dplus(13),time:'07:30',details:'Fuel up before. Regroup at each stop.',pins:[{x:72,y:44,label:'Shell, Southern Blvd, Royal Palm Beach FL'},{x:48,y:26,label:'Loxahatchee Groves FL'},{x:14,y:16,label:'Pahokee Marina, Pahokee FL'}],sponsor:'',featured:false,pub:'pending'},
-  {id:'e3',clubs:['c1','c4'],title:'Import vs Domestic Night',kind:'meet',date:dplus(20),time:'19:00',details:'Two clubs, one lot. Bring your best.',pins:[{x:62,y:50,label:'Lake Worth Rd, Wellington FL'}],sponsor:'Gator Performance Parts',featured:false,pub:'approved'},
-  {id:'e4',clubs:['c3'],title:'Sunday Coast Ride',kind:'rideout',date:dplus(8),time:'09:00',details:'Easy pace. Lunch at the end.',pins:[{x:30,y:42,label:'Wellington FL'},{x:88,y:20,label:'Jupiter Inlet, Jupiter FL'}],sponsor:'',featured:false,pub:'approved'}
+  {id:'e1',clubs:['c1'],title:'Cars & Coffee',kind:'meet',date:dplus(6),time:'08:00',details:'Park by the fountain. All Mustangs welcome.',pins:[{x:44,y:30,lat:26.6455,lng:-80.2075,label:'Wellington Green, Wellington FL'}],sponsor:"Joe's Detailing",featured:true,pub:'approved'},
+  {id:'e2',clubs:['c2'],title:'Lake O Truck Ride-Out',kind:'rideout',date:dplus(13),time:'07:30',details:'Fuel up before. Regroup at each stop.',pins:[{x:72,y:44,lat:26.6830,lng:-80.2300,label:'Shell, Southern Blvd, Royal Palm Beach FL'},{x:48,y:26,lat:26.7050,lng:-80.2800,label:'Loxahatchee Groves FL'},{x:14,y:16,lat:26.8225,lng:-80.6650,label:'Pahokee Marina, Pahokee FL'}],sponsor:'',featured:false,pub:'pending'},
+  {id:'e3',clubs:['c1','c4'],title:'Import vs Domestic Night',kind:'meet',date:dplus(20),time:'19:00',details:'Two clubs, one lot. Bring your best.',pins:[{x:62,y:50,lat:26.6180,lng:-80.1950,label:'Lake Worth Rd, Wellington FL'}],sponsor:'Gator Performance Parts',featured:false,pub:'approved'},
+  {id:'e4',clubs:['c3'],title:'Sunday Coast Ride',kind:'rideout',date:dplus(8),time:'09:00',details:'Easy pace. Lunch at the end.',pins:[{x:30,y:42,lat:26.6590,lng:-80.2410,label:'Wellington FL'},{x:88,y:20,lat:26.9440,lng:-80.0720,label:'Jupiter Inlet, Jupiter FL'}],sponsor:'',featured:false,pub:'approved'}
  ],
  posts:[
   {id:uid(),eventId:'e1',clubId:'c1',author:'Dave R.',text:'',status:'approved',time:now()-6*H},
@@ -216,22 +242,48 @@ function load(){try{const s=localStorage.getItem('gg_v1');return s?JSON.parse(s)
 function save(){try{localStorage.setItem('gg_v1',JSON.stringify(S));return true}catch(e){return false}}
 let S=load()||seed();
 if(!S.gallery)S.gallery=seedGallery();if(S.me.ig===undefined){S.me.ig='';S.me.tt=''}
+if(!S.announcements)S.announcements=[];if(!S.premiumList)S.premiumList=['gt_kingpin','r34_luis'];
 if(S.vouches===undefined){S.vouches=0;S.founding=false;S.vouchedFor=[];S.premium=false}if(S.me.state===undefined)S.me.state='';
+const SEEDLL={'Wellington Green, Wellington FL':[26.6455,-80.2075],'Shell, Southern Blvd, Royal Palm Beach FL':[26.683,-80.23],'Loxahatchee Groves FL':[26.705,-80.28],'Pahokee Marina, Pahokee FL':[26.8225,-80.665],'Lake Worth Rd, Wellington FL':[26.618,-80.195],'Wellington FL':[26.659,-80.241],'Jupiter Inlet, Jupiter FL':[26.944,-80.072]};
+S.events.forEach(ev=>ev.pins.forEach(p=>{if(p.lat==null){const s=SEEDLL[p.label];Object.assign(p,s?{lat:s[0],lng:s[1]}:toLL(p.x,p.y))}}));
 S.me.vehicles.forEach(v=>{if(!v.photos){v.photos=v.photo?[v.photo]:[];delete v.photo}});
 S.clubs.forEach(c=>{if(!c.sponsors)c.sponsors=JSON.parse(JSON.stringify(SEED_SPONSORS[c.id]||[]))});
 let view={tab:'gallery',club:null,clubTab:'news',event:null,gclub:''};
 let draft=null,vdraft=null;
 const handle=s=>String(s||'').trim().replace(/^@+/,'').replace(/\s+/g,'');
 const GALLERY_NOTE="Thanks for sharing your ride! This photo didn't make the gallery. The gallery is for photos of members' cars, trucks and bikes. Feel free to share a different photo.";
+const LG=c=>c&&c.logoImg?`<img class="clogo" src="${c.logoImg}" alt="">`:(c?c.logo:'');
 const C=id=>S.clubs.find(c=>c.id===id);
 const E=id=>S.events.find(e=>e.id===id);
 function notify(t){S.notifs.unshift({id:uid(),text:t,time:now()});S.unread++;save()}
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2800)}
 function modal(h,keep){const m=$('#modal'),b=m.querySelector('.box'),st=keep&&b?b.scrollTop:0;m.innerHTML='<div class="box">'+h+'</div>';m.classList.add('show');if(keep)m.querySelector('.box').scrollTop=st}
-function closeModal(){$('#modal').classList.remove('show');$('#modal').innerHTML='';draft=null;vdraft=null}
+function closeModal(){if(draft)killMaps();$('#modal').classList.remove('show');$('#modal').innerHTML='';draft=null;vdraft=null}
 const modalOpen=()=>$('#modal').classList.contains('show');
+const HAS_MAP=typeof window.L!=='undefined'&&!!window.L.map;
+const toXY=(lat,lng)=>({x:+Math.min(98,Math.max(2,(lng+80.70)/0.65*100)).toFixed(1),y:+Math.min(58,Math.max(2,(26.95-lat)/0.4*60)).toFixed(1)});
+const toLL=(x,y)=>({lat:+(26.95-y/60*0.4).toFixed(5),lng:+(-80.70+x/100*0.65).toFixed(5)});
+const pinQ=p=>p.lat!=null?p.lat+','+p.lng:p.label;
+const dirLink=p=>'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(pinQ(p));
+let maps=[];
+function killMaps(){maps.forEach(m=>{try{m.remove()}catch(e){}});maps=[]}
+function pinIcon(n){return L.divIcon({className:'',html:'<div class="lpin">'+n+'</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-12]})}
+function buildMap(el,pins,kind,o){const col=getComputedStyle($('#app')).getPropertyValue('--acc').trim()||'#ff6a1a';
+ const m=L.map(el,{zoomControl:true,attributionControl:true,scrollWheelZoom:false});
+ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(m);
+ pins.forEach((p,i)=>{const mk=L.marker([p.lat,p.lng],{icon:pinIcon(i+1)}).addTo(m);
+  mk.bindPopup('<b>'+pinName(kind,i,pins.length)+'</b><br>'+esc(p.label||'Pinned on map')+(o&&o.edit?'':'<br><a class="btn sm" href="'+dirLink(p)+'" target="_blank" rel="noopener">Directions</a>'))});
+ if(pins.length>1)L.polyline(pins.map(p=>[p.lat,p.lng]),{color:col,weight:4,dashArray:'8 8'}).addTo(m);
+ if(o&&o.view)m.setView(o.view.c,o.view.z);else if(pins.length>1)m.fitBounds(pins.map(p=>[p.lat,p.lng]),{padding:[30,30]});else if(pins.length)m.setView([pins[0].lat,pins[0].lng],13);else m.setView([26.66,-80.24],10);
+ maps.push(m);return m}
+function initMaps(){if(!HAS_MAP)return;document.querySelectorAll('.lmap[data-ev]').forEach(el=>{const ev=E(el.dataset.ev);if(!ev)return;try{buildMap(el,ev.pins,ev.kind)}catch(e){console.error(e)}})}
+let formMap=null;
+function initFormMap(){if(!HAS_MAP||!draft)return;const el=document.getElementById('lmf');if(!el)return;if(formMap){try{formMap.remove()}catch(e){}maps=maps.filter(x=>x!==formMap);formMap=null}try{const m=formMap=buildMap(el,draft.pins,draft.kind,{edit:true,view:draft.view});
+ m.on('moveend',()=>{if(draft)draft.view={c:m.getCenter(),z:m.getZoom()}});
+ m.on('click',e=>{if(!draft)return;const lat=+e.latlng.lat.toFixed(5),lng=+e.latlng.lng.toFixed(5),pin=Object.assign({lat,lng},toXY(lat,lng));draft.view={c:m.getCenter(),z:m.getZoom()};
+  if(draft.kind==='meet')draft.pins=[Object.assign(pin,{label:draft.pins[0]?draft.pins[0].label:''})];else draft.pins.push(Object.assign(pin,{label:''}));renderEventForm(true)})}catch(e){console.error(e)}}
 const mapsLink=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
-function routeLink(pins){const p=pins.filter(x=>x.label);if(p.length<2)return null;let u='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(p[0].label)+'&destination='+encodeURIComponent(p[p.length-1].label);if(p.length>2)u+='&waypoints='+encodeURIComponent(p.slice(1,-1).map(x=>x.label).join('|'));return u}
+function routeLink(pins){const p=pins.filter(x=>x.lat!=null||x.label);if(p.length<2)return null;let u='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(pinQ(p[0]))+'&destination='+encodeURIComponent(pinQ(p[p.length-1]));if(p.length>2)u+='&waypoints='+encodeURIComponent(p.slice(1,-1).map(pinQ).join('|'));return u}
 const pinName=(kind,i,n)=>kind==='rideout'?(i===0?'Start':i===n-1&&n>1?'Finish':'Stop '+i):'Meet spot';
 
 function mapSVG(pins,o={}){const route=pins.length>1;
@@ -246,17 +298,19 @@ function mapSVG(pins,o={}){const route=pins.length>1;
  </svg>`}
 
 function render(){
+ killMaps();
  const keep={};['pubIn','newsIn','chatIn'].forEach(i=>{const el=document.getElementById(i);if(el)keep[i]=el.value});
- const tabs=[['gallery','🃏','Gallery'],['feed','🌐','Feed'],['clubs','🏁','Clubs'],['events','📍','Events'],['perks','🎟️','Discounts'],['garage','🔧','Garage']];
+ const tabs=[['gallery','🃏','Gallery'],['feed','🌐','Feed'],['clubs','🏁','Clubs'],['events','📍','Events'],['perks','🎟️','Perks'],['garage','🔧','Garage']];
  if(S.role==='manager')tabs.push(['review','🛡️','Review']);
  const pc=S.posts.filter(p=>p.status==='pending').length+S.apps.length+S.gallery.filter(g=>g.status==='pending').length;
  const bc=brandClub();$('#app').style.setProperty('--acc',bc?(bc.color||'#ff6a1a'):'#ff6a1a');
- $('#app').innerHTML=`<header><div class="top">${bc?`<div class="cbrand"><span class="logo">${bc.logo}</span><div><div class="cn">${esc(bc.name)}${bc.verified?VB:''}</div><small>powered by GARAGE GROUP</small></div></div>`:'<div class="brand"><span class="tire"></span>GARAGE<b>GROUP</b></div>'}<button class="bell" data-a="bell">🔔${S.unread?`<i>${S.unread}</i>`:''}</button></div>
+ $('#app').innerHTML=`<header><div class="top">${bc?`<div class="cbrand"><span class="logo">${LG(bc)}</span><div><div class="cn">${esc(bc.name)}${bc.verified?VB:''}</div><small>powered by GARAGE GROUP</small></div></div>`:'<div class="brand"><span class="tire"></span>GARAGE<b>GROUP</b></div>'}<button class="bell" data-a="bell">🔔${S.unread?`<i>${S.unread}</i>`:''}</button></div>
  <div class="roles"><span>Try as</span>${['member','host','manager'].map(r=>`<button data-a="role" data-id="${r}" class="${S.role===r?'on':''}">${{member:'Member',host:'Host',manager:'App Manager'}[r]}</button>`).join('')}</div></header>
  <main>${main()}</main>
  <nav>${tabs.map(t=>`<button data-a="tab" data-id="${t[0]}" class="${view.tab===t[0]&&!view.event?'on':''}"><span>${t[1]}</span>${t[2]}${t[0]==='review'&&pc?`<i>${pc}</i>`:''}</button>`).join('')}</nav>`;
  for(const i in keep){const el=document.getElementById(i);if(el)el.value=keep[i]}
  const cb=$('#chatBox');if(cb)cb.scrollTop=cb.scrollHeight;
+ initMaps();
 }
 function brandClub(){if(view.event){const ev=E(view.event);return ev&&ev.clubs.length===1?C(ev.clubs[0]):null}return view.tab==='clubs'&&view.club?C(view.club):null}
 function main(){
@@ -266,22 +320,23 @@ function main(){
 
 function evCard(ev){const cs=ev.clubs.map(C).filter(Boolean);
  return `<div class="card ev" data-a="openEvent" data-id="${ev.id}">${mapSVG(ev.pins)}<div class="evb"><div class="tags"><span class="tag ${ev.kind}">${ev.kind==='rideout'?'Ride-out':'Meet'}</span>${cs.length>1?'<span class="tag merged">Merged</span>':''}${ev.featured&&ev.pub==='approved'?'<span class="tag feat">⭐ Featured</span>':''}</div>
- <h3>${esc(ev.title)}</h3><div class="meta">${fmtDate(ev.date,ev.time)}${ev.kind==='rideout'?' · '+ev.pins.length+' stops':''}</div><div class="meta">${cs.map(c=>c.logo+' '+esc(c.name)+(c.verified?VB:'')).join(' × ')}</div>
+ <h3>${esc(ev.title)}</h3><div class="meta">${fmtDate(ev.date,ev.time)}${ev.kind==='rideout'?' · '+ev.pins.length+' stops':''}</div><div class="meta">${cs.map(c=>LG(c)+' '+esc(c.name)+(c.verified?VB:'')).join(' × ')}</div>
  ${ev.sponsor?`<div class="pres">Presented by <b>${esc(ev.sponsor)}</b></div>`:''}</div></div>`}
 function postCard(p){if(p.eventId){const ev=E(p.eventId);return ev&&!ev.featured?evCard(ev):''}const c=C(p.clubId);
- return `<div class="card"><div class="who">${c?`<span class="logo">${c.logo}</span><b class="lnk" data-a="openClub" data-id="${c.id}">${esc(c.name)}</b>${c.verified?VB:''}`:`<b>${esc(p.author)}</b>`}<span class="t">${ago(p.time)}</span></div><p>${esc(p.text)}</p></div>`}
+ return `<div class="card"><div class="who">${c?`<span class="logo">${LG(c)}</span><b class="lnk" data-a="openClub" data-id="${c.id}">${esc(c.name)}</b>${c.verified?VB:''}`:`<b>${esc(p.author)}</b>`}<span class="t">${ago(p.time)}</span></div><p>${esc(p.text)}</p></div>`}
 
+function hostClubs(){return S.role==='host'?S.clubs.filter(c=>c.status==='active'&&(c.mine||c.cohosts.includes('You'))):[]}
 function feedView(){
  const feat=S.events.filter(e=>e.featured&&e.pub==='approved');
  const posts=S.posts.filter(p=>p.status==='approved').sort((a,b)=>b.time-a.time);
  const mine=S.posts.filter(p=>p.author==='You'&&p.status!=='approved').slice(0,4);
  return `<h1>Public feed</h1><p class="sub">Meets, ride-outs and club news from every club. The app manager approves every post. No ads.</p>
- <div class="card"><textarea id="pubIn" rows="2" placeholder="Share a meet, ride-out or club news…"></textarea><div class="row end"><button class="btn" data-a="pubSend">Send for review</button></div>
+ ${(()=>{const hc=hostClubs();return hc.length?`<div class="card"><textarea id="pubIn" rows="2" placeholder="Share a meet, ride-out or club news…"></textarea><div class="row"><select id="pubClub" class="grow">${hc.map(c=>`<option value="${c.id}">Post as ${esc(c.name)}</option>`).join('')}</select><button class="btn" data-a="pubSend">Send for review</button></div>`:'<div class="card"><div class="meta">Only club hosts and co-hosts can post to the public feed.</div>'})()}
  ${mine.map(p=>`<div class="mini ${p.status}"><b>${p.status==='pending'?'⏳ Waiting for review:':'✖ Not approved:'}</b> ${esc(p.text||(E(p.eventId)||{}).title)}${p.note?`<div class="note">${esc(p.note)}</div>`:''}</div>`).join('')}</div>
  ${feat.length?`<h2>⭐ Featured</h2>${feat.map(evCard).join('')}`:''}
  <h2>Latest</h2>${posts.map(postCard).join('')||'<p class="empty">Nothing yet.</p>'}`}
 
-function clubRow(c){return `<div class="card club" data-a="openClub" data-id="${c.id}"><span class="logo big">${c.logo}</span><div class="grow"><b>${esc(c.name)}</b>${c.verified?VB:''}<div class="meta">${esc(c.focus)} · ${c.members.length} members · ${c.joinMode==='open'?'Open':'Approval'}</div></div>${c.status==='suspended'?'<span class="chip bad">Suspended</span>':c.mine?'<span class="chip">Host</span>':c.pending?'<span class="chip">Requested</span>':''}</div>`}
+function clubRow(c){return `<div class="card club" data-a="openClub" data-id="${c.id}"><span class="logo big">${LG(c)}</span><div class="grow"><b>${esc(c.name)}</b>${c.verified?VB:''}<div class="meta">${esc(c.focus)} · ${c.members.length} members · ${c.joinMode==='open'?'Open':'Approval'}</div></div>${c.status==='suspended'?'<span class="chip bad">Suspended</span>':c.mine?'<span class="chip">Host</span>':c.pending?'<span class="chip">Requested</span>':''}</div>`}
 function clubsView(){
  const my=S.clubs.filter(c=>c.joined||c.mine),disc=S.clubs.filter(c=>!c.joined&&!c.mine&&c.status==='active'),apps=S.apps.filter(a=>a.by==='You');
  return `<h1>Clubs</h1><p class="sub">Join as many clubs as you like. Your garage comes with you.</p><button class="btn wide" data-a="startClub">＋ Start a club</button>
@@ -292,18 +347,17 @@ function clubsView(){
 function clubView(c){
  const host=S.role==='host'&&c.mine,member=c.joined||c.mine;
  const btn=c.mine?'<span class="chip">You host this club</span>':c.joined?`<button class="btn ghost sm" data-a="leave" data-id="${c.id}">Leave club</button>`:c.pending?'<span class="chip">Request sent</span>':`<button class="btn sm" data-a="join" data-id="${c.id}">${c.joinMode==='open'?'Join club':'Request to join'}</button>`;
- const tabs=[['news','News'],['chat','Chat'],['events','Events'],['members','Members']];
- const f={news:clubNews,chat:clubChat,events:clubEvents,members:clubMembers}[view.clubTab]||clubNews;
+ const tabs=[['news','News'],['chat','Chat'],['events','Events'],['perks','Perks'],['members','Members']];
+ const f={news:clubNews,chat:clubChat,events:clubEvents,perks:clubPerks,members:clubMembers}[view.clubTab]||clubNews;
  return `<button class="back" data-a="back">‹ Clubs</button>
- <div class="chead"><span class="logo xl">${c.logo}</span><div class="grow"><h1>${esc(c.name)}${c.verified?VB:''}</h1><div class="meta">${esc(c.focus)} · ${c.members.length} members</div><div class="meta">${c.joinMode==='open'?'🔓 Open to join':'🔒 Host approves members'}</div></div></div>
+ <div class="chead"><span class="logo xl">${LG(c)}</span><div class="grow"><h1>${esc(c.name)}${c.verified?VB:''}</h1><div class="meta">${esc(c.focus)} · ${c.members.length} members</div><div class="meta">${c.joinMode==='open'?'🔓 Open to join':'🔒 Host approves members'}</div></div></div>
  <div class="row">${btn}${c.verified?'<span class="chip">✓ Verified club</span>':''}</div>
  ${c.status==='suspended'?'<div class="mini rejected">This club is suspended by the app manager.</div>':''}
  ${c.mine&&!host?'<div class="mini">You host this club. Switch to <b>Host</b> at the top to manage it.</div>':''}
- ${c.sponsors.length?`<div class="lbl">My Discounts · tap to flip</div><div class="drow">${c.sponsors.map(s=>dCard(s,c.color)).join('')}</div>`:''}
  <div class="seg">${tabs.map(t=>`<button data-a="clubTab" data-id="${t[0]}" class="${view.clubTab===t[0]?'on':''}">${t[1]}</button>`).join('')}</div>${f(c,host,member)}`}
 function clubNews(c,host){
  return `${host?`<div class="card"><textarea id="newsIn" rows="2" placeholder="Post news to your club…"></textarea><label class="chk"><input type="checkbox" id="newsPub"> Also send to the public feed (needs approval)</label><div class="row end"><button class="btn" data-a="newsSend" data-id="${c.id}">Post &amp; notify</button></div></div>`:''}
- ${c.feed.map(n=>`<div class="card"><div class="who"><span class="logo">${c.logo}</span><b>${esc(c.host)}</b> <span class="chip sm">Host</span><span class="t">${ago(n.time)}</span></div><p>${esc(n.text)}</p></div>`).join('')||'<p class="empty">No news yet.</p>'}`}
+ ${c.feed.map(n=>`<div class="card"><div class="who"><span class="logo">${LG(c)}</span><b>${esc(c.host)}</b> <span class="chip sm">Host</span><span class="t">${ago(n.time)}</span></div><p>${esc(n.text)}</p></div>`).join('')||'<p class="empty">No news yet.</p>'}`}
 function clubChat(c,host,member){
  if(!member)return'<p class="empty">🔒 Join the club to see the group chat.</p>';
  const muted=c.muted.includes('You');
@@ -311,23 +365,27 @@ function clubChat(c,host,member){
  <div class="chat" id="chatBox">${c.chat.map(m=>{const me=m.user==='You';return `<div class="msg ${me?'me':''}"><div class="mu">${esc(m.user)}${c.cohosts.includes(m.user)?' <span class="chip sm">Co-host</span>':''}${m.user===c.host?' <span class="chip sm">Host</span>':''}${c.muted.includes(m.user)?' <span class="chip sm bad">Muted</span>':''} · ${ago(m.time)}</div><div class="bub">${esc(m.text)}</div>
  ${host?`<div class="mod"><button data-a="pin" data-c="${c.id}" data-id="${m.id}">${m.pinned?'Unpin':'📌 Pin'}</button><button data-a="delMsg" data-c="${c.id}" data-id="${m.id}">🗑 Delete</button>${!me?(c.muted.includes(m.user)?`<button data-a="unmute" data-c="${c.id}" data-u="${esc(m.user)}">Unmute</button>`:`<button data-a="mute" data-c="${c.id}" data-u="${esc(m.user)}">🔇 Mute</button>`):''}</div>`:''}</div>`}).join('')||'<p class="empty">Say hi to the club.</p>'}</div>
  ${muted?'<div class="mini rejected">You are muted in this chat.</div>':`<div class="chatin"><input id="chatIn" placeholder="Message the club…"><button class="btn" data-a="chatSend" data-id="${c.id}">Send</button></div>`}`}
+function clubPerks(c,host){return `<p class="sub" style="margin-top:10px">Club Perks from ${esc(c.name)}'s sponsors. Tap a card to see the deal, then show your member card.</p>
+ ${c.sponsors.length?`<div class="dgrid">${c.sponsors.map(s=>dCard(s,c.color)).join('')}</div>`:'<p class="empty">No perks yet.</p>'}
+ <button class="btn wide ghost" data-a="memberCard">🎟️ Show my member card</button>${host?'<p class="sub">Add or remove sponsors in the Members tab.</p>':''}`}
 function clubEvents(c,host){const evs=S.events.filter(e=>e.clubs.includes(c.id)).sort((a,b)=>a.date.localeCompare(b.date));
  return `${host?`<button class="btn wide" data-a="newEvent" data-id="${c.id}">＋ New meet or ride-out</button>`:''}${evs.map(evCard).join('')||'<p class="empty">No events yet.</p>'}`}
 function clubMembers(c,host){
  const COLS=['#ff6a1a','#e63946','#2f9bff','#20c4a8','#2ecc71','#d4a017','#9b5de5','#ff4fa3','#c0c0c8'];
  return `${host?`<div class="card"><h3>Club branding</h3><p class="sub" style="margin:0">Your club name, logo and colors show across the app when members are in your club. Free for every club.</p>
  <label>Club name<input id="brName" value="${esc(c.name)}"></label>
- <label>Logo<select id="brLogo">${['🚗','🛻','🏍️','🏎️','🏁','🔧','🔥','🐎','⚡','🦅','💀','🐍'].concat([c.logo]).filter((x,i,a)=>a.indexOf(x)===i).map(e=>`<option ${e===c.logo?'selected':''}>${e}</option>`).join('')}</select></label>
+ <div class="lbl">Club logo</div><div class="row" style="margin-top:0"><span class="logo xl">${LG(c)}</span><label class="btn ghost sm" style="margin:0">📷 Upload logo<input type="file" accept="image/*" data-f="clubLogo" data-c="${c.id}" hidden></label>${c.logoImg?`<button class="btn ghost sm" data-a="rmLogo" data-id="${c.id}">Use an icon</button>`:''}</div>
+ <label>${c.logoImg?'Backup icon':'Or pick an icon'}<select id="brLogo">${['🚗','🛻','🏍️','🏎️','🏁','🔧','🔥','🐎','⚡','🦅','💀','🐍'].concat([c.logo]).filter((x,i,a)=>a.indexOf(x)===i).map(e=>`<option ${e===c.logo?'selected':''}>${e}</option>`).join('')}</select></label>
  <div class="lbl">Club color</div><div class="row wrap" style="margin-top:0">${COLS.map(x=>`<button class="sw ${(c.color||'#ff6a1a')===x?'on':''}" style="background:${x}" data-a="brandColor" data-c="${c.id}" data-id="${x}"></button>`).join('')}<input type="color" id="brColor" data-c="${c.id}" value="${c.color||'#ff6a1a'}" style="width:44px;height:36px;padding:2px"></div>
  <div class="row end"><button class="btn" data-a="saveBrand" data-id="${c.id}">Save branding</button></div></div>
- <div class="card"><h3>My Discounts (club sponsors)</h3><p class="sub" style="margin:0 0 6px">Sponsors you bring in show as small cards on your club page. Feeds and chat stay ad-free.</p>
+ <div class="card"><h3>Club Perks (club sponsors)</h3><p class="sub" style="margin:0 0 6px">Sponsors you bring in show as small cards on your club page. Feeds and chat stay ad-free.</p>
  <div class="meta">Your tier: <b style="color:var(--tx)">${clubTier(c)}</b> · standard price set by Garage Group (TBD) · your club keeps <b style="color:var(--tx)">70%</b></div>
  ${c.sponsors.map(s=>`<div class="pinrow"><span class="logo">${s.logo}</span><div class="grow"><b>${esc(s.name)}</b><div class="meta">${esc(s.deal)}</div></div><button class="btn sm ghost danger" data-a="rmSponsor" data-c="${c.id}" data-id="${s.id}">Remove</button></div>`).join('')}
  <button class="btn wide ghost" data-a="addSponsor" data-id="${c.id}">＋ Add a sponsor</button></div>
  <div class="card"><h3>Who can join?</h3><div class="row"><div class="seg sm">${[['open','Anyone, right away'],['approval','I approve them']].map(m=>`<button data-a="joinMode" data-c="${c.id}" data-id="${m[0]}" class="${c.joinMode===m[0]?'on':''}">${m[1]}</button>`).join('')}</div></div></div>`:''}
  ${host&&c.requests.length?`<div class="card"><h3>Join requests</h3>${c.requests.map(r=>`<div class="pinrow"><span class="av">${esc(r[0])}</span><b class="grow">${esc(r)}</b><button class="btn sm" data-a="approveReq" data-c="${c.id}" data-u="${esc(r)}">Accept</button><button class="btn sm ghost" data-a="declineReq" data-c="${c.id}" data-u="${esc(r)}">Decline</button></div>`).join('')}</div>`:''}
  <div class="card">${c.members.map(m=>{const role=m===c.host?'Host':c.cohosts.includes(m)?'Co-host':'';return `<div class="pinrow"><span class="av">${esc(m[0])}</span><b class="grow">${esc(m)} ${role?`<span class="chip sm">${role}</span>`:''}${c.muted.includes(m)?' <span class="chip sm bad">Muted</span>':''}</b>
- ${S.premium&&m!=='You'?(S.vouchedFor.includes(m)?'<span class="chip sm">✓ Vouched</span>':`<button class="btn sm ghost" data-a="vouch" data-u="${esc(m)}">⭐ Vouch</button>`):''}${host&&m!==c.host?`${c.cohosts.includes(m)?`<button class="btn sm ghost" data-a="uncohost" data-c="${c.id}" data-u="${esc(m)}">Remove co-host</button>`:`<button class="btn sm ghost" data-a="cohost" data-c="${c.id}" data-u="${esc(m)}">Make co-host</button>`}<button class="btn sm ghost danger" data-a="removeMember" data-c="${c.id}" data-u="${esc(m)}">Remove</button>`:''}</div>`}).join('')}</div>`}
+ ${S.premium&&m!=='You'?(S.vouchedFor.includes(m)?'<span class="chip sm">✓ Vouched</span>':`<button class="btn sm ghost" data-a="vouch" data-u="${esc(m)}">⭐ Vouch</button>`):''}${host&&m!==c.host?`${c.cohosts.includes(m)?`<button class="btn sm ghost" data-a="unCohost" data-c="${c.id}" data-u="${esc(m)}">Remove co-host</button>`:`<button class="btn sm ghost" data-a="cohost" data-c="${c.id}" data-u="${esc(m)}">Make co-host</button>`}<button class="btn sm ghost danger" data-a="removeMember" data-c="${c.id}" data-u="${esc(m)}">Remove</button>`:''}</div>`}).join('')}</div>`}
 
 function eventsView(){
  const evs=S.events.filter(e=>e.pub==='approved'||e.clubs.some(id=>{const c=C(id);return c&&(c.joined||c.mine)})).sort((a,b)=>(b.featured&&b.pub==='approved')-(a.featured&&a.pub==='approved')||a.date.localeCompare(b.date));
@@ -337,20 +395,20 @@ function eventView(ev){
  return `<button class="back" data-a="back">‹ Back</button>
  <div class="tags"><span class="tag ${ev.kind}">${ev.kind==='rideout'?'Ride-out':'Meet'}</span>${cs.length>1?'<span class="tag merged">Merged event</span>':''}${ev.featured&&ev.pub==='approved'?'<span class="tag feat">⭐ Featured</span>':''}</div>
  <h1>${esc(ev.title)}</h1><div class="meta big">${fmtDate(ev.date,ev.time)}</div>
- <div class="meta">${cs.map(c=>`<span class="lnk" data-a="openClub" data-id="${c.id}">${c.logo} ${esc(c.name)}</span>${c.verified?VB:''}`).join(' × ')}</div>
+ <div class="meta">${cs.map(c=>`<span class="lnk" data-a="openClub" data-id="${c.id}">${LG(c)} ${esc(c.name)}</span>${c.verified?VB:''}`).join(' × ')}</div>
  ${ev.sponsor?`<div class="pres">Presented by <b>${esc(ev.sponsor)}</b></div>`:''}
- ${mapSVG(ev.pins,{big:true})}
- <div class="card">${ev.pins.map((p,i)=>`<div class="pinrow"><span class="pn">${i+1}</span><div class="grow"><b>${pinName(ev.kind,i,ev.pins.length)}</b><div class="meta">${esc(p.label||'Pinned on map')}</div></div>${p.label?`<a class="btn sm ghost" href="${mapsLink(p.label)}" target="_blank" rel="noopener">Directions</a>`:''}</div>`).join('')}
+ ${HAS_MAP?`<div class="lmap" data-ev="${ev.id}"></div>`:mapSVG(ev.pins,{big:true})}
+ <div class="card">${ev.pins.map((p,i)=>`<div class="pinrow"><span class="pn">${i+1}</span><div class="grow"><b>${pinName(ev.kind,i,ev.pins.length)}</b><div class="meta">${esc(p.label||'Pinned on map')}</div></div>${p.lat!=null||p.label?`<a class="btn sm ghost" href="${dirLink(p)}" target="_blank" rel="noopener">Directions</a>`:''}</div>`).join('')}
  ${dir?`<a class="btn wide" href="${dir}" target="_blank" rel="noopener">Open full route in Maps</a>`:''}</div>
  ${ev.details?`<div class="card"><p>${esc(ev.details)}</p></div>`:''}
  <p class="sub">No RSVP needed. Just show up.</p>
  ${host?`<div class="card"><h3>Host tools</h3><div class="row wrap"><button class="btn" data-a="editEvent" data-id="${ev.id}">Edit</button><button class="btn ghost" data-a="boost" data-id="${ev.id}" ${ev.featured?'disabled':''}>${ev.featured?'⭐ Boosted':'⭐ Boost to top (paid)'}</button><button class="btn ghost danger" data-a="delEvent" data-id="${ev.id}">Delete</button></div><div class="meta" style="margin-top:8px">Public feed: ${{approved:'Approved',pending:'Waiting for review',rejected:'Not approved',none:'Club only'}[ev.pub]}</div></div>`:''}`}
 
 function perksView(){const my=S.clubs.filter(c=>(c.joined||c.mine)&&c.sponsors.length);
- return `<h1>My Discounts</h1><p class="sub">Deals from your clubs' sponsors. Tap a card to see the deal, then show your member card at the counter.</p>
+ return `<h1>Club Perks</h1><p class="sub">Deals from your clubs' sponsors. Tap a card to see the deal, then show your member card at the counter.</p>
  <button class="btn wide" data-a="memberCard">🎟️ Show my member card</button>
- ${my.map(c=>`<h2>${c.logo} ${esc(c.name)}</h2><div class="dgrid">${c.sponsors.map(s=>dCard(s,c.color)).join('')}</div>`).join('')||'<p class="empty">Join a club to unlock its discounts.</p>'}
- ${S.premium?'':'<p class="sub" style="margin-top:14px">🔒 Bigger deals unlock with Premium. Earn it in My Garage.</p>'}`}
+ ${my.map(c=>`<h2>${LG(c)} ${esc(c.name)}</h2><div class="dgrid">${c.sponsors.map(s=>dCard(s,c.color)).join('')}</div>`).join('')||'<p class="empty">Join a club to unlock its discounts.</p>'}
+`}
 
 function vCard(v){
  const ps=vPhotos(v);return `<div class="card">${ps.length?`<img class="vimg" src="${ps[0]}" alt="">`:''}${ps.length>1?`<div class="meta" style="margin:-4px 0 6px">📷 ${ps.length} photos</div>`:''}<div class="row" style="margin-top:0"><div class="grow"><h3>${esc(v.year)} ${esc(v.make)} ${esc(v.model)}</h3>${v.hp?`<span class="hp">${esc(v.hp)} HP</span>`:''}</div><button class="btn sm ghost" data-a="shareCard" data-id="${v.id}">🃏 Share</button><button class="btn sm ghost" data-a="editVehicle" data-id="${v.id}">Edit</button></div>
@@ -358,7 +416,7 @@ function vCard(v){
  ${S.premium?`<div class="lbl">Build log</div>${(v.log||[]).map(l=>`<div class="log"><span>${esc(l.d)}</span>${esc(l.t)}</div>`).join('')}<div class="chatin"><input id="log_${v.id}" placeholder="Add a build log entry"><button class="btn sm" data-a="addLog" data-id="${v.id}">Add</button></div>`:'<div class="meta" style="margin-top:8px">🔒 Build log is a Premium feature</div>'}</div>`}
 function garageView(){const m=S.me,my=S.clubs.filter(c=>c.joined||c.mine),cards=S.gallery.filter(g=>g.author==='You');
  return `<h1>My garage</h1><p class="sub">Your profile is your rides: your clubs, your handles and your vehicles. No names or bios.</p>
- <div class="card"><div class="lbl" style="margin-top:0">My clubs</div><div class="row wrap" style="margin-top:0">${my.map(c=>`<span class="chip lnk" data-a="openClub" data-id="${c.id}" style="border-color:${c.color||'#ff6a1a'}">${c.logo} ${esc(c.name)}${c.verified?VB:''}</span>`).join('')||'<span class="meta">Join a club in the Clubs tab.</span>'}${S.premium?'<span class="chip prem">⭐ Premium</span>':''}</div>
+ <div class="card"><div class="lbl" style="margin-top:0">My clubs</div><div class="row wrap" style="margin-top:0">${my.map(c=>`<span class="chip lnk" data-a="openClub" data-id="${c.id}" style="border-color:${c.color||'#ff6a1a'}">${LG(c)} ${esc(c.name)}${c.verified?VB:''}</span>`).join('')||'<span class="meta">Join a club in the Clubs tab.</span>'}${S.premium?'<span class="chip prem">⭐ Premium</span>':''}</div>
  <div class="lbl">Instagram</div><input data-me="ig" value="${esc(m.ig)}" placeholder="@yourhandle" autocapitalize="off">
  <div class="lbl">TikTok</div><input data-me="tt" value="${esc(m.tt)}" placeholder="@yourhandle" autocapitalize="off">
  <div class="meta" style="margin-top:6px">Your handles show on the back of your gallery cards.</div>
@@ -378,8 +436,8 @@ function art(kind,col){const id='a'+uid();
  return `<svg viewBox="0 0 126 176" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="${id}" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="${col}" stop-opacity=".85"/><stop offset="1" stop-color="#0c0c0e"/></radialGradient></defs><rect width="126" height="176" fill="url(#${id})"/><g transform="translate(0,42)">${body}<rect x="0" y="79" width="126" height="2" fill="${col}" opacity=".5"/></g></svg>`}
 function gCard(g){const c=C(g.clubId)||{name:'',logo:'',color:'#ff6a1a'},col=c.color||'#ff6a1a',v=g.v;
  return `<div class="gc"><div class="fc${g.premium?' gold':''}" data-a="flip" style="--cc:${col}"><div class="fc-in">
- <div class="face fr">${vPhotos(v).length?`<img src="${vPhotos(v)[0]}" alt="">`:art(g.kind,col)}<div class="fbadge">${g.premium?'⭐ ':''}${c.logo} ${esc(c.name)}${c.verified?VB:''}</div><div class="fband"><div class="yr">${esc(v.year)}</div><div class="mm">${esc(v.make)} ${esc(v.model)}</div></div></div>
- <div class="face bk"><div class="bh">${c.logo} ${esc(c.name)}</div><div class="bmm">${esc(v.year)} ${esc(v.make)} ${esc(v.model)}</div>
+ <div class="face fr">${vPhotos(v).length?`<img src="${vPhotos(v)[0]}" alt="">`:art(g.kind,col)}<div class="fbadge">${g.premium?'⭐ ':''}${LG(c)} ${esc(c.name)}${c.verified?VB:''}</div><div class="fband"><div class="yr">${esc(v.year)}</div><div class="mm">${esc(v.make)} ${esc(v.model)}</div></div></div>
+ <div class="face bk"><div class="bh">${LG(c)} ${esc(c.name)}</div><div class="bmm">${esc(v.year)} ${esc(v.make)} ${esc(v.model)}</div>
  ${v.hp?`<div class="bhp"><b>${esc(v.hp)}</b>HP</div>`:''}
  ${v.mods?`<div class="blbl">Mods</div><div class="bmods">${esc(v.mods)}</div>`:'<div style="flex:1"></div>'}
  <div class="bso">${g.ig?`<a href="https://instagram.com/${encodeURIComponent(g.ig)}" target="_blank" rel="noopener">📸 @${esc(g.ig)}</a>`:''}${g.tt?`<a href="https://www.tiktok.com/@${encodeURIComponent(g.tt)}" target="_blank" rel="noopener">🎵 @${esc(g.tt)}</a>`:''}</div>
@@ -387,15 +445,17 @@ function gCard(g){const c=C(g.clubId)||{name:'',logo:'',color:'#ff6a1a'},col=c.c
  ${g.status==='approved'?`<div class="gact"><button data-a="like" data-id="${g.id}">${g.liked?'❤️':'🤍'} ${g.likes}</button><button data-a="comments" data-id="${g.id}">💬 ${g.comments.length}</button>${vPhotos(v).length>1?`<button data-a="photos" data-id="${g.id}">📷 ${vPhotos(v).length}</button>`:''}</div>`:`<div class="gst">${g.status==='pending'?'⏳ Waiting for approval':'✖ Not approved'}</div>`}</div>`}
 function dCard(s,col){return `<div class="dc"><div class="fc" data-a="flip" style="--cc:${col||'#ff6a1a'}"><div class="fc-in">
  <div class="face fr dfront"><div class="dl">${s.logo||'🏪'}</div><b>${esc(s.name)}</b><span>${esc(s.cat)}</span></div>
- <div class="face bk dback"><div class="d1">✔ ${esc(s.deal)}</div><div class="d2 ${S.premium?'':'lk'}">${S.premium?'⭐':'🔒'} Premium: ${esc(s.prem)}</div><div class="tapb">Show your member card</div></div></div></div></div>`}
+ <div class="face bk dback"><div class="d1">✔ ${esc(s.deal)}</div><div class="tapb">Show your member card</div></div></div></div></div>`}
 function clubTier(c){return c.verified?'Verified club':c.members.length>=25?'Big club':'Small club'}
-function premiumBox(){const perks='<ul><li>5 photos per vehicle (members get 2)</li><li>Gold border on your gallery cards</li><li>Unlimited vehicles and a build log</li><li>Bigger deals in My Discounts</li><li>Early alerts for new meets and ride-outs</li><li>Vouch power: help friends earn Premium</li></ul>';
+function foundingChecks(){return[['Picked your state',!!S.me.state],['Member of an approved club',S.clubs.some(c=>(c.joined||c.mine)&&c.status==='active')],['Has a vehicle photo approved in the Gallery',S.gallery.some(g=>g.author==='You'&&g.status==='approved')]]}
+function premiumBox(){const perks='<ul><li>5 photos per vehicle (members get 2)</li><li>Gold border on your gallery cards</li><li>Unlimited vehicles</li><li>Build log for every vehicle</li></ul>';
  if(S.premium)return `<div class="card premc"><h3>⭐ You're Premium${S.founding?' · Founding member':''}</h3>${perks}<div class="meta">Vouch for friends from any club's Members tab.</div></div>`;
- const st=S.me.state,left=st?spotsLeft(st):0,pct=Math.min(100,S.vouches/5*100);
+ const st=S.me.state,left=st?spotsLeft(st):0,pct=Math.min(100,S.vouches/5*100),q=foundingChecks(),ok=q.every(x=>x[1]);
  return `<div class="card premc"><h3>⭐ Earn Premium</h3><p class="sub" style="margin:0">Premium can't be bought. It's earned.</p>${perks}
- <div class="lbl">1 · Founding member</div><div class="meta">The first 500 members in each state get Premium automatically.</div>
- ${st?`<div class="meta" style="margin-top:4px"><b style="color:var(--tx)">${left}</b> founding spots left in ${st}</div><button class="btn wide" data-a="claimFounding">Claim my founding spot</button>`:'<div class="meta" style="margin-top:4px">Pick your state above to check for spots.</div>'}
- <div class="lbl">2 · Get 5 vouches</div><div class="meta">Invite friends. Once 5 Premium members vouch for you, you're in.</div>
+ <div class="lbl">1 · Founding member</div><div class="meta">The first 500 members in each state get Premium, once they meet these:</div>
+ ${q.map(x=>`<div class="meta" style="color:${x[1]?'var(--ok)':'var(--mut)'}">${x[1]?'✔':'○'} ${x[0]}</div>`).join('')}
+ ${st?`<div class="meta" style="margin-top:4px"><b style="color:var(--tx)">${left}</b> founding spots left in ${st}</div>`:''}<button class="btn wide" data-a="claimFounding" ${ok?'':'disabled'}>Claim my founding spot</button>
+ <div class="lbl">2 · Get 5 vouches</div><div class="meta">Invite friends. Once 5 Premium members vouch for you, you're in. Only Premium members can vouch.</div>
  <div class="prog"><i style="width:${pct}%"></i></div><div class="meta">${S.vouches} of 5 vouches</div>
  <div class="row"><button class="btn grow" data-a="invite">Invite friends</button><button class="btn ghost grow" data-a="fakeVouch">Simulate a vouch (demo)</button></div></div>`}
 function galleryView(){
@@ -404,18 +464,23 @@ function galleryView(){
  const list=view.gclub?live.filter(g=>g.clubId===view.gclub):live;
  return `<h1>Gallery</h1><p class="sub">Every ride gets a card. Tap a card to flip it for the stats.</p>
  <button class="btn wide" data-a="shareCard">🃏 Share your ride</button>
- <div class="chips"><button data-a="gclub" data-id="" class="${!view.gclub?'on':''}">All clubs</button>${ids.map(id=>{const c=C(id);return `<button data-a="gclub" data-id="${id}" class="${view.gclub===id?'on':''}">${c.logo} ${esc(c.name)}</button>`}).join('')}</div>
+ <div class="chips"><button data-a="gclub" data-id="" class="${!view.gclub?'on':''}">All clubs</button>${ids.map(id=>{const c=C(id);return `<button data-a="gclub" data-id="${id}" class="${view.gclub===id?'on':''}">${LG(c)} ${esc(c.name)}</button>`}).join('')}</div>
  ${list.length?`<div class="ggrid">${list.map(gCard).join('')}</div>`:'<p class="empty">No cards yet.</p>'}`}
 
 function reviewView(){
  const pend=S.posts.filter(p=>p.status==='pending');
  const clubs=S.clubs;
  return `<h1>App manager</h1><p class="sub">Keep Garage Group relevant: real clubs, real meets, no free advertising.</p>
- <h2>Public feed posts (${pend.length})</h2>${pend.map(p=>{const ev=p.eventId&&E(p.eventId),c=C(p.clubId);return `<div class="card"><div class="who"><b>${c?c.logo+' '+esc(c.name):esc(p.author)}</b><span class="t">${ago(p.time)}</span></div>${ev?evCard(ev):`<p>${esc(p.text)}</p>`}<div class="row"><button class="btn ok" data-a="approvePost" data-id="${p.id}">Approve</button><button class="btn ghost danger" data-a="rejectPost" data-id="${p.id}">Reject with note</button></div></div>`}).join('')||'<p class="empty">All caught up.</p>'}
+ <div class="card"><h3>📣 Send an announcement</h3><textarea id="anIn" rows="2" placeholder="News about the app, a big upcoming event…"></textarea>
+ <div class="row"><select id="anTo" class="grow"><option value="">Everyone</option>${STATES.map(s=>`<option value="${s}">Members in ${s}</option>`).join('')}</select><button class="btn" data-a="announce">Send</button></div>
+ ${(S.announcements||[]).slice(0,3).map(a=>`<div class="mini">📣 <b>${a.to?'To '+a.to:'To everyone'}:</b> ${esc(a.text)} <span class="meta">· ${ago(a.time)}</span></div>`).join('')}</div>
+ <h2>Public feed posts (${pend.length})</h2>${pend.map(p=>{const ev=p.eventId&&E(p.eventId),c=C(p.clubId);return `<div class="card"><div class="who"><b>${c?LG(c)+' '+esc(c.name):esc(p.author)}</b><span class="t">${ago(p.time)}</span></div>${ev?evCard(ev):`<p>${esc(p.text)}</p>`}<div class="row"><button class="btn ok" data-a="approvePost" data-id="${p.id}">Approve</button><button class="btn ghost danger" data-a="rejectPost" data-id="${p.id}">Reject with note</button></div></div>`}).join('')||'<p class="empty">All caught up.</p>'}
  <h2>Gallery photos (${S.gallery.filter(g=>g.status==='pending').length})</h2>${(()=>{const pg=S.gallery.filter(g=>g.status==='pending');return pg.length?`<div class="ggrid">${pg.map(g=>`<div>${gCard(g)}<div class="row" style="margin-top:6px"><button class="btn sm ok grow" data-a="approveCard" data-id="${g.id}">Approve</button><button class="btn sm ghost danger grow" data-a="rejectCard" data-id="${g.id}">Reject</button></div></div>`).join('')}</div>`:'<p class="empty">No photos waiting.</p>'})()}
  <h2>Club applications (${S.apps.length})</h2>${S.apps.map(a=>`<div class="card"><div class="row" style="margin-top:0"><span class="logo big">${a.logo}</span><div class="grow"><b>${esc(a.name)}</b><div class="meta">${esc(a.focus)} · by ${esc(a.by)}</div><div class="meta">🔗 ${esc(a.link)}</div></div></div><p>${esc(a.why)}</p><div class="row"><button class="btn ok" data-a="approveApp" data-id="${a.id}">Approve club</button><button class="btn ghost danger" data-a="declineApp" data-id="${a.id}">Decline</button></div></div>`).join('')||'<p class="empty">No applications.</p>'}
+ <h2>Premium members</h2><p class="sub">Premium is earned. Take it away from anyone who abuses it.</p>
+ <div class="card">${(S.premiumList||[]).concat(S.premium?['You']:[]).map(u=>`<div class="pinrow"><span class="av">⭐</span><b class="grow">${u==='You'?'You'+(handle(S.me.ig)?' (@'+esc(handle(S.me.ig))+')':''):'@'+esc(u)}</b><button class="btn sm ghost danger" data-a="revokePremium" data-u="${esc(u)}">Remove Premium</button></div>`).join('')||'<p class="empty">No Premium members yet.</p>'}</div>
  <h2>Clubs &amp; verified badges</h2><p class="sub">Badges can't be bought. Clubs earn them through activity.</p>
- ${clubs.map(c=>{const ev=S.events.filter(e=>e.clubs.includes(c.id)).length;return `<div class="card"><b>${c.logo} ${esc(c.name)}</b>${c.verified?VB:''}${c.status==='suspended'?' <span class="chip bad">Suspended</span>':''}
+ ${clubs.map(c=>{const ev=S.events.filter(e=>e.clubs.includes(c.id)).length;return `<div class="card"><b>${LG(c)} ${esc(c.name)}</b>${c.verified?VB:''}${c.status==='suspended'?' <span class="chip bad">Suspended</span>':''}
  <div class="stat"><span><b>${c.members.length}</b> members</span><span><b>${ev}</b> events</span><span><b>${c.feed.length}</b> news posts</span><span><b>${c.chat.length}</b> chat messages</span></div>
  <div class="row wrap">${c.verified?`<button class="btn sm ghost" data-a="unverify" data-id="${c.id}">Remove badge</button>`:`<button class="btn sm" data-a="verify" data-id="${c.id}">✓ Grant verified badge</button>`}${c.status==='suspended'?`<button class="btn sm ghost" data-a="reinstate" data-id="${c.id}">Reinstate</button>`:`<button class="btn sm ghost danger" data-a="suspend" data-id="${c.id}">Suspend</button>`}</div></div>`}).join('')}`}
 
@@ -431,13 +496,13 @@ function renderEventForm(keep){const d=draft,others=S.clubs.filter(c=>c.id!==d.c
  <div class="row"><label class="grow">Date<input type="date" data-d="date" value="${d.date}"></label><label class="grow">Time<input type="time" data-d="time" value="${d.time}"></label></div>
  <label>Details<textarea data-d="details" rows="2" placeholder="Where to park, what to bring…">${esc(d.details)}</textarea></label>
  <div class="lbl">${d.kind==='rideout'?'Tap the map to drop pins in order: start, stops, finish':'Tap the map to drop the meet pin'}</div>
- ${mapSVG(d.pins,{tap:true,big:true})}
+ ${HAS_MAP?'<div class="lmap" id="lmf"></div>':mapSVG(d.pins,{tap:true,big:true})}
  ${d.pins.map((p,i)=>`<div class="pinrow"><span class="pn">${i+1}</span><input data-pin="${i}" value="${esc(p.label)}" placeholder="${pinName(d.kind,i,d.pins.length)}: place or address"><button class="x" data-a="rmPin" data-i="${i}">✕</button></div>`).join('')}
- ${d.pins.length?'<div class="meta">Add a place or address to each pin so members get directions.</div>':''}
+ ${d.pins.length?'<div class="meta">Give each pin a name, like the business or street. Directions use the exact pin spot.</div>':''}
  <label>Merge with another club (optional)<select data-d="merge"><option value="">No merge</option>${others.map(c=>`<option value="${c.id}" ${d.merge===c.id?'selected':''}>${c.logo} ${esc(c.name)}</option>`).join('')}</select></label>
  <label>Event sponsor (optional)<select data-d="sponsor"><option value="">None</option>${[...new Set(S.sponsors.map(s=>s.name).concat(...S.clubs.map(c=>c.sponsors.map(s=>s.name))))].map(n=>`<option value="${esc(n)}" ${d.sponsor===n?'selected':''}>${esc(n)}</option>`).join('')}</select></label>
  <label class="chk"><input type="checkbox" data-d="pub" ${d.pub?'checked':''}> Post to the public feed (the app manager approves it). Merged events always go public.</label>
- <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="saveEvent">${d.isNew?'Post event':'Save changes'}</button></div>`,keep)}
+ <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="saveEvent">${d.isNew?'Post event':'Save changes'}</button></div>`,keep);initFormMap()}
 function applyDraft(ev,d){
  const goPublic=d.pub||!!d.merge;
  Object.assign(ev,{clubs:[d.club].concat(d.merge?[d.merge]:[]),title:d.title.trim(),kind:d.kind,date:d.date,time:d.time,details:d.details,pins:d.pins,sponsor:d.sponsor});
@@ -470,7 +535,7 @@ const A={
   if(c.joinMode==='open'){go(()=>{c.joined=true;c.members.push('You')});toast('You joined '+c.name)}
   else{go(()=>{c.pending=true});toast('Request sent to the host');const id=c.id;setTimeout(()=>{const k=C(id);if(!k||!k.pending)return;k.pending=false;k.joined=true;k.members.push('You');notify(k.name+' accepted your request to join.');if(!modalOpen())render();toast('🔔 '+k.name+' accepted you')},3500)}},
  leave(el){const c=C(el.dataset.id);go(()=>{c.joined=false;c.members=c.members.filter(m=>m!=='You')});toast('You left '+c.name)},
- pubSend(){const t=$('#pubIn').value.trim();if(!t)return toast('Write something first');$('#pubIn').value='';go(()=>S.posts.unshift({id:uid(),clubId:null,author:'You',text:t,status:'pending',time:now()}));toast('Sent to the app manager for review')},
+ pubSend(){const t=$('#pubIn').value.trim();if(!t)return toast('Write something first');$('#pubIn').value='';const cl=$('#pubClub').value;go(()=>S.posts.unshift({id:uid(),clubId:cl,author:'You',text:t,status:'pending',time:now()}));toast('Sent to the app manager for review')},
  newsSend(el){const c=C(el.dataset.id),t=$('#newsIn').value.trim(),pub=$('#newsPub').checked;if(!t)return toast('Write something first');$('#newsIn').value='';
   go(()=>{c.feed.unshift({id:uid(),text:t,time:now()});if(pub)S.posts.unshift({id:uid(),clubId:c.id,author:'You',text:t,status:'pending',time:now()})});toast('Posted. '+(c.members.length-1)+' members notified.'+(pub?' Public copy sent for review.':''))},
  chatSend(el){const c=C(el.dataset.id),i=$('#chatIn'),t=i.value.trim();if(!t)return;i.value='';go(()=>c.chat.push({id:uid(),user:'You',text:t,time:now(),pinned:false}));
@@ -479,16 +544,16 @@ const A={
  delMsg(el){const c=C(el.dataset.c);go(()=>c.chat=c.chat.filter(x=>x.id!==el.dataset.id));toast('Message deleted')},
  mute(el){const c=C(el.dataset.c);go(()=>c.muted.push(el.dataset.u));toast(el.dataset.u+' is muted')},
  unmute(el){const c=C(el.dataset.c);go(()=>c.muted=c.muted.filter(u=>u!==el.dataset.u));toast(el.dataset.u+' can chat again')},
- cohost(el){const c=C(el.dataset.c);go(()=>c.cohosts.push(el.dataset.u));toast(el.dataset.u+' is now a co-host')},
- uncohost(el){const c=C(el.dataset.c);go(()=>c.cohosts=c.cohosts.filter(u=>u!==el.dataset.u))},
+ cohost(el){const c=C(el.dataset.c);if(c.cohosts.length>=4)return toast('A club can have up to 4 co-hosts');go(()=>c.cohosts.push(el.dataset.u));toast(el.dataset.u+' is now a co-host')},
+ unCohost(el){const c=C(el.dataset.c);go(()=>c.cohosts=c.cohosts.filter(u=>u!==el.dataset.u))},
  removeMember(el){const c=C(el.dataset.c),u=el.dataset.u;go(()=>{c.members=c.members.filter(m=>m!==u);c.cohosts=c.cohosts.filter(m=>m!==u)});toast(u+' was removed')},
  approveReq(el){const c=C(el.dataset.c),u=el.dataset.u;go(()=>{c.requests=c.requests.filter(r=>r!==u);c.members.push(u)});toast(u+' joined the club')},
  declineReq(el){const c=C(el.dataset.c),u=el.dataset.u;go(()=>c.requests=c.requests.filter(r=>r!==u));toast('Request declined')},
  joinMode(el){const c=C(el.dataset.c);go(()=>c.joinMode=el.dataset.id);toast(el.dataset.id==='open'?'Anyone can join right away':'You approve new members')},
  newEvent(el){openEventForm(el.dataset.id)},
  editEvent(el){openEventForm(null,el.dataset.id)},
- mapTap(el,e){const r=el.getBoundingClientRect(),x=+((e.clientX-r.left)/r.width*100).toFixed(1),y=+((e.clientY-r.top)/r.height*60).toFixed(1);
-  if(draft.kind==='meet')draft.pins=[{x,y,label:draft.pins[0]?draft.pins[0].label:''}];else draft.pins.push({x,y,label:''});renderEventForm(true)},
+ mapTap(el,e){const r=el.getBoundingClientRect(),x=+((e.clientX-r.left)/r.width*100).toFixed(1),y=+((e.clientY-r.top)/r.height*60).toFixed(1),ll=toLL(x,y);
+  if(draft.kind==='meet')draft.pins=[{x,y,...ll,label:draft.pins[0]?draft.pins[0].label:''}];else draft.pins.push({x,y,...ll,label:''});renderEventForm(true)},
  rmPin(el){draft.pins.splice(+el.dataset.i,1);renderEventForm(true)},
  saveEvent(){const d=draft;if(!d.title.trim())return toast('Give the event a title');if(!d.date)return toast('Pick a date');if(!d.pins.length)return toast('Drop at least one pin on the map');if(d.kind==='rideout'&&d.pins.length<2)return toast('A ride-out needs a start and a finish pin');
   if(d.isNew){const ev={id:uid(),pub:'none',featured:false};const pub=applyDraft(ev,d);S.events.push(ev);const c=C(d.club);c.feed.unshift({id:uid(),text:'New '+(ev.kind==='rideout'?'ride-out':'meet')+': '+ev.title+', '+fmtDate(ev.date,ev.time),time:now()});save();closeModal();view.event=ev.id;render();scrollTo(0,0);toast('Event posted. '+(c.members.length-1)+' members notified.'+(pub?' Sent to the public feed for review.':''))}
@@ -531,19 +596,21 @@ const A={
  brandColor(el){go(()=>C(el.dataset.c).color=el.dataset.id)},
  saveBrand(el){const c=C(el.dataset.id),n=$('#brName').value.trim();if(!n)return toast('Your club needs a name');go(()=>{c.name=n;c.logo=$('#brLogo').value});toast('Branding saved')},
  flip(el){el.classList.toggle('flip')},
+ rmLogo(el){go(()=>delete C(el.dataset.id).logoImg)},
+ announce(){const t=$('#anIn').value.trim(),to=$('#anTo').value;if(!t)return toast('Write the announcement first');S.announcements.unshift({text:t,to,time:now()});if(!to||to===S.me.state)notify('📣 Garage Group'+(to?' ('+to+')':'')+': '+t);save();render();toast(to?'Sent to members in '+to:'Sent to all members')},
+ revokePremium(el){const u=el.dataset.u;if(u==='You'){go(()=>{S.premium=false;S.founding=false;S.vouches=0});notify('Your Premium was removed by the app manager.')}else go(()=>S.premiumList=S.premiumList.filter(x=>x!==u));toast('Premium removed')},
  rmVPhoto(el){vdraft.photos.splice(+el.dataset.i,1);renderVehicleForm()},
  photos(el){const g=S.gallery.find(x=>x.id===el.dataset.id);modal(`<h2>${esc(g.v.year+' '+g.v.make+' '+g.v.model)}</h2>${vPhotos(g.v).map(p=>`<img src="${p}" alt="" style="width:100%;border-radius:12px;margin:6px 0">`).join('')}<button class="btn wide ghost" data-a="close">Close</button>`)},
- claimFounding(){if(!S.me.state)return toast('Pick your state first');go(()=>{S.premium=true;S.founding=true});notify("You're a founding member in "+S.me.state+'! Premium is unlocked.');toast('⭐ Founding member! Premium unlocked.')},
+ claimFounding(){if(!foundingChecks().every(x=>x[1]))return toast('Finish the checklist first');go(()=>{S.premium=true;S.founding=true});notify("You're a founding member in "+S.me.state+'! Premium is unlocked.');toast('⭐ Founding member! Premium unlocked.')},
  invite(el){const t="Join me on Garage Group, the app for car, truck and bike clubs. Get the app, then vouch for me so I can earn Premium.";try{navigator.clipboard.writeText(t).then(()=>toast('Invite copied. Paste it in a text to a friend.'),()=>modal(`<h2>Invite friends</h2><p class="sub">Copy this and send it to a friend:</p><textarea rows="4">${esc(t)}</textarea><button class="btn wide ghost" data-a="close">Done</button>`))}catch(e){modal(`<h2>Invite friends</h2><p class="sub">Copy this and send it to a friend:</p><textarea rows="4">${esc(t)}</textarea><button class="btn wide ghost" data-a="close">Done</button>`)}},
  fakeVouch(){const names=['gt_kingpin','trx_rico','r34_luis','ironglide_dee','stang.life'];go(()=>{S.vouches=Math.min(5,S.vouches+1);if(S.vouches>=5)S.premium=true});if(S.premium){notify('5 Premium members vouched for you. Premium is unlocked!');toast('⭐ 5 vouches! Premium unlocked.')}else toast('@'+names[S.vouches-1]+' vouched for you ('+S.vouches+'/5)')},
  vouch(el){const u=el.dataset.u;go(()=>S.vouchedFor.push(u));toast('You vouched for '+u)},
- addSponsor(el){const c=C(el.dataset.id);modal(`<h2>Add a sponsor</h2><p class="sub">This shows as a card in ${esc(c.name)}'s My Discounts. Tier: ${clubTier(c)}, standard price (TBD). Your club keeps 70%.</p>
+ addSponsor(el){const c=C(el.dataset.id);modal(`<h2>Add a sponsor</h2><p class="sub">This shows as a card in ${esc(c.name)}'s Club Perks. Tier: ${clubTier(c)}, standard price (TBD). Your club keeps 70%.</p>
   <label>Business name<input id="spName" placeholder="Joe's Detailing"></label>
   <div class="row"><label class="grow">Icon<select id="spLogo">${['🧽','🛞','⚙️','✨','🔧','🏁','⛽','🍔','🎨','🔊'].map(e=>`<option>${e}</option>`).join('')}</select></label><label class="grow">Type of business<input id="spCat" placeholder="Detailing"></label></div>
   <label>Member deal<input id="spDeal" placeholder="10% off any detail"></label>
-  <label>Premium deal<input id="spPrem" placeholder="20% off + free tire shine"></label>
   <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="saveSponsor" data-id="${c.id}">Add sponsor</button></div>`)},
- saveSponsor(el){const c=C(el.dataset.id),v=i=>$(i).value.trim();if(!v('#spName')||!v('#spDeal'))return toast('Add a business name and a member deal');c.sponsors.push({id:uid(),name:v('#spName'),logo:$('#spLogo').value,cat:v('#spCat')||'Sponsor',deal:v('#spDeal'),prem:v('#spPrem')||v('#spDeal')});save();closeModal();render();toast('Sponsor added to My Discounts')},
+ saveSponsor(el){const c=C(el.dataset.id),v=i=>$(i).value.trim();if(!v('#spName')||!v('#spDeal'))return toast('Add a business name and a member deal');c.sponsors.push({id:uid(),name:v('#spName'),logo:$('#spLogo').value,cat:v('#spCat')||'Sponsor',deal:v('#spDeal')});save();closeModal();render();toast('Sponsor added to Club Perks')},
  rmSponsor(el){const c=C(el.dataset.c);go(()=>c.sponsors=c.sponsors.filter(s=>s.id!==el.dataset.id))},
  gclub(el){view.gclub=el.dataset.id;render()},
  like(el){const g=S.gallery.find(x=>x.id===el.dataset.id);go(()=>{g.liked=!g.liked;g.likes+=g.liked?1:-1})},
@@ -574,6 +641,7 @@ document.addEventListener('input',e=>{const t=e.target,d=t.dataset;
 document.addEventListener('change',e=>{const t=e.target,d=t.dataset;
  if(d.d==='kind'&&draft){draft.kind=t.value;if(t.value==='meet')draft.pins=draft.pins.slice(0,1);renderEventForm(true)}
  if(d.d==='pub'&&draft)draft.pub=t.checked;
+ if(d.f==='clubLogo'&&t.files[0]){const c=C(d.c);readImg(t.files[0],u=>{c.logoImg=u;if(!save()){delete c.logoImg;toast('Storage is full on this device')}else toast('Logo uploaded');render()})}
  if(d.f==='gallery'){[...t.files].slice(0,6).forEach(f=>readImg(f,u=>{S.me.gallery.push(u);if(!save()){S.me.gallery.pop();toast('Storage is full on this device')}render()}))}
  if(d.f==='vphoto'&&vdraft){const room=maxPhotos()-vdraft.photos.length;if(t.files.length>room)toast('Only '+maxPhotos()+' photos per vehicle'+(S.premium?'':'. Premium gets 5.'));[...t.files].slice(0,room).forEach(f=>readImg(f,u=>{if(vdraft&&vdraft.photos.length<maxPhotos()){vdraft.photos.push(u);renderVehicleForm()}}))}
  if(d.me)render()});
