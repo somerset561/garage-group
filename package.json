@@ -1,0 +1,12 @@
+{
+  "name": "garage-group",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Garage Group - members app for car, truck and bike clubs (prototype)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
