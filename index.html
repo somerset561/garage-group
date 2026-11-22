@@ -14,7 +14,7 @@ header{position:sticky;top:0;z-index:5;background:rgba(12,12,14,.94);backdrop-fi
 .top{display:flex;align-items:center;justify-content:space-between}
 .brand{font-weight:900;letter-spacing:.14em;font-size:17px;display:flex;align-items:center;gap:8px}
 .brand b{color:var(--acc);margin-left:5px}
-.cbrand{display:flex;align-items:center;gap:8px}.cbrand .logo{font-size:26px;margin:0}.cbrand .cn{font-weight:900;font-size:17px;color:var(--acc);line-height:1.1}.cbrand small{font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.cbrand{display:flex;align-items:center;gap:12px}.cbrand .logo{font-size:56px;margin:0;display:flex;line-height:1}.cbrand .logo .clogo{width:60px;height:60px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}.cbrand .cn{font-weight:900;font-size:22px;color:var(--acc);line-height:1.1;letter-spacing:.01em}.cbrand small{font-size:10px}.cbrand small{font-size:10px;letter-spacing:.12em;color:var(--mut)}
 .sw{width:34px;height:34px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--bg) inset}
 .chead h1{color:var(--acc)}
 .clogo{width:1.25em;height:1.25em;border-radius:50%;object-fit:cover;vertical-align:middle;display:inline-block}
@@ -170,6 +170,13 @@ nav i{top:0;right:18%}
 .bspec{font-size:11px;line-height:1.35}.bspec span{color:var(--mut)}
 .fband{display:flex;align-items:center;gap:7px}.ftx{min-width:0;flex:1}
 .flogo{flex:none;display:flex}.flogo .clogo{width:42px;height:42px;margin:0;vertical-align:0}
+.hlogo{width:62px;height:62px;flex:none;display:block}.hlogo.img{object-fit:contain;border-radius:10px}
+.flyer{position:relative;aspect-ratio:16/10;overflow:hidden;background:#111}.flyer img{width:100%;height:100%;object-fit:cover;display:block}
+.flyer .fdate{position:absolute;top:10px;left:10px;background:var(--fc);color:#fff;border-radius:10px;padding:5px 9px;text-align:center;line-height:1.05;box-shadow:0 4px 12px rgba(0,0,0,.5)}.flyer .fdate b{display:block;font-size:22px;font-weight:900}.flyer .fdate span{font-size:11px;font-weight:800;letter-spacing:.08em}
+.flyer .ftitle{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-weight:900;font-size:19px;text-transform:uppercase;letter-spacing:.02em}
+.flyer.gen{background:radial-gradient(circle at 70% 30%,var(--fc),#0c0c0e 75%)}.flyer.gen .bigl{position:absolute;right:14px;top:50%;transform:translateY(-60%);opacity:.9}.flyer.gen .bigl .clogo{width:84px;height:84px}
+.evinfo{display:grid;gap:3px;margin-top:6px;font-size:13px}.evinfo div{color:var(--mut)}.evinfo b{color:var(--tx);font-weight:600}
+.golink{margin-top:8px;font-size:13px;font-weight:700;color:var(--acc)}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#26262d;border:1px solid var(--line);color:var(--tx);padding:10px 14px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -478,6 +485,7 @@ S.posts.push({id:uid(),clubId:'c18',author:'Garage Group',text:'🎉 New club! 5
  {id:uid(),clubId:'c9',author:'c8_carl',text:'ZR1 in the house 💙',media:{type:'img',key:'zr1b'},status:'approved',time:now()-0.02*H},
  {id:uid(),clubId:'c4',author:'Kenji',text:'NSX spotted at Somerset Suds 🔥',media:{type:'img',key:'nsx1'},status:'approved',time:now()-0.04*H});
 })()}
+if(!S._v11){S._v11=1;const FK={e1:'gt',e2:'sierra',e3:'rx7',e5:'p997',e6:'m4f',e7:'cam1',e8:'rubi',e9:'c6v',e11:'ebikes',e13:'mclaren',e14:'scat'};S.events.forEach(e=>{if(!e.flyer&&!e.flyerKey&&FK[e.id])e.flyerKey=FK[e.id]})}
 if(S.me.mainClub===undefined)S.me.mainClub=S.clubs.some(c=>c.id==="c2"&&(c.mine||c.joined))?"c2":"";
 let view={tab:'gallery',club:null,clubTab:'news',event:null,gclub:''};
 let draft=null,vdraft=null;
@@ -485,6 +493,11 @@ const handle=s=>String(s||'').trim().replace(/^@+/,'').replace(/\s+/g,'');
 const GALLERY_NOTE="Thanks for sharing your ride! This photo didn't make the gallery. The gallery is for photos of members' cars, trucks and bikes. Feel free to share a different photo.";
 const hsh=s=>[...String(s)].reduce((a,ch)=>(a*31+ch.charCodeAt(0))>>>0,7);
 function inits(n){const w=String(n).replace(/[^A-Za-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!/^(the|of|and|club|crew|co|pbc|fl)$/i.test(x));if(!w.length)return'GG';if(/\d/.test(w[0])&&w[0].length<=3)return w[0].toUpperCase();return w.slice(0,3).map(x=>/^\d+$/.test(x)?x:x[0]).join('').toUpperCase().slice(0,3)}
+function solidBadge(name,col){const t=inits(name),k=hsh(name),fs=t.length>2?12:t.length>1?15:19,
+ shapes=['<circle cx="20" cy="20" r="18.5"/>','<path d="M20 1.5L36 7.5v11.5c0 9.5-7 17-16 19.5C11 36 4 28.5 4 19V7.5z"/>','<path d="M20 1.5l16.5 9.5v18L20 38.5 3.5 29v-18z"/>','<path d="M20 1l19 19-19 19L1 20z"/>'],sh=shapes[k%3===0?0:k%3===1?1:k%5===0?3:2];
+ const rgb=parseInt(String(col).slice(1),16),lum=((rgb>>16&255)*.3+(rgb>>8&255)*.59+(rgb&255)*.11),tc=lum>150?'#111':'#fff';
+ return `<svg class="hlogo" viewBox="0 0 40 40"><g fill="${col}">${sh}</g><text x="20" y="${20+fs*.36}" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="${fs}" fill="${tc}" letter-spacing="-.5">${esc(t)}</text></svg>`}
+const HLG=c=>c.logoImg?`<img class="hlogo img" src="${c.logoImg}" alt="">`:solidBadge(c.name,c.color||'#ff6a1a');
 function badge(name,col,kind){const t=inits(name),k=hsh(name),fs=t.length>2?11:t.length>1?14:18,
  shapes=['<circle cx="20" cy="20" r="17.5"/>','<path d="M20 2.5L35 8v11c0 9-6.5 16-15 18.5C11.5 35 5 28 5 19V8z"/>','<path d="M20 2.5l15.2 8.75v17.5L20 37.5 4.8 28.75v-17.5z"/>','<rect x="3" y="3" width="34" height="34" rx="9"/>','<path d="M20 2l18 18-18 18L2 20z"/>'],
  sh=kind==='s'?shapes[3]:shapes[k%3===0?0:k%3===1?1:k%5===0?4:2],gid='lg'+k%100000;
@@ -543,7 +556,7 @@ function render(){
  if(S.role==='manager')tabs.push(['review','🛡️','Review']);
  const pc=S.posts.filter(p=>p.status==='pending').length+S.coReqs.filter(q=>q.status==='pending').length+S.apps.length+S.gallery.filter(g=>g.status==='pending').length;
  const bc=brandClub(),acc=bc?(bc.color||'#ff6a1a'):'#ff6a1a';$('#app').style.setProperty('--acc',acc);$('#modal').style.setProperty('--acc',acc);
- $('#app').innerHTML=`<header><div class="top">${bc?`<div class="cbrand"><span class="logo">${LG(bc)}</span><div><div class="cn">${esc(bc.name)}${bc.verified?VB:''}</div><small>powered by GARAGE GROUP</small></div></div>`:'<div class="brand"><span class="tire"></span>GARAGE<b>GROUP</b></div>'}<button class="bell" data-a="bell">🔔${S.unread?`<i>${S.unread}</i>`:''}</button></div>
+ $('#app').innerHTML=`<header><div class="top">${bc?`<div class="cbrand">${HLG(bc)}<div><div class="cn">${esc(bc.name)}${bc.verified?VB:''}</div><small>powered by GARAGE GROUP</small></div></div>`:'<div class="brand"><span class="tire"></span>GARAGE<b>GROUP</b></div>'}<button class="bell" data-a="bell">🔔${S.unread?`<i>${S.unread}</i>`:''}</button></div>
  <div class="roles"><span>Try as</span>${['member','host','manager'].map(r=>`<button data-a="role" data-id="${r}" class="${S.role===r?'on':''}">${{member:'Member',host:'President',manager:'App Manager'}[r]}</button>`).join('')}</div></header>
  <main>${main()}</main>
  <nav>${tabs.map(t=>`<button data-a="tab" data-id="${t[0]}" class="${view.tab===t[0]&&!view.event?'on':''}"><span>${t[1]}</span>${t[2]}${t[0]==='review'&&pc?`<i>${pc}</i>`:''}</button>`).join('')}</nav>`;
@@ -558,10 +571,15 @@ function main(){
  switch(view.tab){case'gallery':return galleryView();case'feed':return feedView();case'clubs':return view.club&&C(view.club)?clubView(C(view.club)):clubsView();case'events':return eventsView();case'perks':return perksView();case'garage':return garageView();case'review':return S.role==='manager'?reviewView():feedView()}
 }
 
-function evCard(ev){const cs=ev.clubs.map(C).filter(Boolean);
- return `<div class="card ev" data-a="openEvent" data-id="${ev.id}">${mapSVG(ev.pins)}<div class="evb"><div class="tags"><span class="tag ${ev.kind}">${ev.kind==='rideout'?'Ride-out':'Meet'}</span>${cs.length>1?'<span class="tag merged">Merged</span>':''}${ev.featured&&ev.pub==='approved'?'<span class="tag feat">⭐ Featured</span>':''}</div>
- <h3>${esc(ev.title)}</h3><div class="meta">${fmtDate(ev.date,ev.time)}${ev.kind==='rideout'?' · '+ev.pins.length+' stops':''}</div><div class="meta">${cs.map(c=>LG(c)+' '+esc(c.name)+(c.verified?VB:'')).join(' × ')}</div>
- ${ev.sponsor?`<div class="pres">Presented by <b>${esc(ev.sponsor)}</b></div>`:''}</div></div>`}
+function flyerSrc(ev){return ev.flyer||(ev.flyerKey&&IMG[ev.flyerKey])||''}
+function evCard(ev){const cs=ev.clubs.map(C).filter(Boolean),c0=cs[0]||{},col=c0.color||'#ff6a1a',dt=new Date(ev.date+'T'+(ev.time||'12:00')),src=flyerSrc(ev);
+ const mon=isNaN(dt)?'':dt.toLocaleDateString(undefined,{month:'short'}).toUpperCase(),day=isNaN(dt)?'':dt.getDate(),tm=isNaN(dt)||!ev.time?'':dt.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+ const place=(ev.pins[0]||{}).label||'',end=ev.kind==='rideout'&&ev.pins.length>1?ev.pins[ev.pins.length-1].label:'';
+ return `<div class="card ev" data-a="openEvent" data-id="${ev.id}"><div class="flyer${src?'':' gen'}" style="--fc:${col}">${src?`<img src="${src}" alt="">`:`<div class="bigl">${LG(c0)}</div>`}<div class="fdate"><span>${mon}</span><b>${day}</b></div><div class="ftitle">${esc(ev.title)}</div></div>
+ <div class="evb"><div class="tags"><span class="tag ${ev.kind}">${ev.kind==='rideout'?'Ride-out':'Meet'}</span>${cs.length>1?'<span class="tag merged">Merged</span>':''}${ev.featured&&ev.pub==='approved'?'<span class="tag feat">⭐ Featured</span>':''}</div>
+ <div class="meta">${cs.map(c=>LG(c)+' '+esc(c.name)+(c.verified?VB:'')).join(' × ')}</div>
+ <div class="evinfo"><div>🗓️ <b>${fmtDate(ev.date)}</b>${tm?` · <b>${tm}</b>`:''}</div>${place?`<div>📍 <b>${esc(place)}</b>${end?` → ${esc(end)}`:''}</div>`:''}${ev.kind==='rideout'?`<div>🛣️ ${ev.pins.length} stops on the route</div>`:''}${ev.details?`<div>${esc(ev.details)}</div>`:''}</div>
+ ${ev.sponsor?`<div class="pres">Presented by <b>${esc(ev.sponsor)}</b></div>`:''}<div class="golink">View event, map &amp; directions ›</div></div></div>`}
 function postCard(p){if(p.eventId){const ev=E(p.eventId);return ev&&!ev.featured?evCard(ev):''}const c=C(p.clubId);
  return `<div class="card"><div class="who">${c?`<span class="logo">${LG(c)}</span><b class="lnk" data-a="openClub" data-id="${c.id}">${esc(c.name)}</b>${c.verified?VB:''}`:`<b>${esc(p.author)}</b>`}<span class="t">${ago(p.time)}</span></div>${p.text?`<p>${esc(p.text)}</p>`:''}${mediaHTML(p.media)}</div>`}
 
@@ -677,6 +695,7 @@ function eventView(ev){
  <h1>${esc(ev.title)}</h1><div class="meta big">${fmtDate(ev.date,ev.time)}</div>
  <div class="meta">${cs.map(c=>`<span class="lnk" data-a="openClub" data-id="${c.id}">${LG(c)} ${esc(c.name)}</span>${c.verified?VB:''}`).join(' × ')}</div>
  ${ev.sponsor?`<div class="pres">Presented by <b>${esc(ev.sponsor)}</b></div>`:''}
+ ${flyerSrc(ev)?`<img src="${flyerSrc(ev)}" alt="" style="width:100%;border-radius:12px;margin-top:10px;display:block">`:''}
  ${HAS_MAP?`<div class="lmap" data-ev="${ev.id}"></div>`:mapSVG(ev.pins,{big:true})}
  <div class="card">${ev.pins.map((p,i)=>`<div class="pinrow"><span class="pn">${i+1}</span><div class="grow"><b>${pinName(ev.kind,i,ev.pins.length)}</b><div class="meta">${esc(p.label||'Pinned on map')}</div></div>${p.lat!=null||p.label?`<a class="btn sm ghost" href="${dirLink(p)}" target="_blank" rel="noopener">Directions</a>`:''}</div>`).join('')}
  ${dir?`<a class="btn wide" href="${dir}" target="_blank" rel="noopener">Open full route in Maps</a>`:''}</div>
@@ -786,7 +805,7 @@ function reviewView(){
 
 /* ---------- forms ---------- */
 function openEventForm(clubId,evId){
- if(evId){const ev=E(evId);draft={id:ev.id,isNew:false,club:ev.clubs[0],merge:ev.clubs[1]||'',title:ev.title,kind:ev.kind,date:ev.date,time:ev.time,details:ev.details,pins:JSON.parse(JSON.stringify(ev.pins)),sponsor:ev.sponsor,pub:ev.pub!=='none'}}
+ if(evId){const ev=E(evId);draft={id:ev.id,isNew:false,club:ev.clubs[0],merge:ev.clubs[1]||'',title:ev.title,kind:ev.kind,date:ev.date,time:ev.time,details:ev.details,pins:JSON.parse(JSON.stringify(ev.pins)),sponsor:ev.sponsor,pub:ev.pub!=='none',flyer:ev.flyer||'',flyerKey:ev.flyerKey||''}}
  else draft={isNew:true,club:clubId,merge:'',title:'',kind:'meet',date:dplus(7),time:'09:00',details:'',pins:[],sponsor:'',pub:false};
  renderEventForm()}
 function renderEventForm(keep){const d=draft,others=S.clubs.filter(c=>c.id!==d.club&&c.status==='active');
@@ -795,6 +814,7 @@ function renderEventForm(keep){const d=draft,others=S.clubs.filter(c=>c.id!==d.c
  <label>Type<select data-d="kind"><option value="meet" ${d.kind==='meet'?'selected':''}>Meet (one spot)</option><option value="rideout" ${d.kind==='rideout'?'selected':''}>Ride-out (route)</option></select></label>
  <div class="row"><label class="grow">Date<input type="date" data-d="date" value="${d.date}"></label><label class="grow">Time<input type="time" data-d="time" value="${d.time}"></label></div>
  <label>Details<textarea data-d="details" rows="2" placeholder="Where to park, what to bring…">${esc(d.details)}</textarea></label>
+ <div class="lbl">Flyer or photo</div>${d.flyer||d.flyerKey?`<div class="mprev"><img class="media" src="${d.flyer||IMG[d.flyerKey]}" alt=""><button class="x" data-a="rmFlyer">✕</button></div>`:'<label class="btn ghost wide" style="margin:4px 0">📷 Upload a flyer or photo<input type="file" accept="image/*" data-f="flyer" hidden></label>'}
  <div class="lbl">${d.kind==='rideout'?'Tap the map to drop pins in order: start, stops, finish':'Tap the map to drop the meet pin'}</div>
  ${HAS_MAP?'<div class="lmap" id="lmf"></div>':mapSVG(d.pins,{tap:true,big:true})}
  ${d.pins.map((p,i)=>`<div class="pinrow"><span class="pn">${i+1}</span><input data-pin="${i}" value="${esc(p.label)}" placeholder="${pinName(d.kind,i,d.pins.length)}: place or address"><button class="x" data-a="rmPin" data-i="${i}">✕</button></div>`).join('')}
@@ -805,7 +825,7 @@ function renderEventForm(keep){const d=draft,others=S.clubs.filter(c=>c.id!==d.c
  <div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="saveEvent">${d.isNew?'Post event':'Save changes'}</button></div>`,keep);initFormMap()}
 function applyDraft(ev,d){
  const goPublic=(d.pub||!!d.merge)&&!!(C(d.club)||{}).verified;
- Object.assign(ev,{clubs:[d.club].concat(d.merge?[d.merge]:[]),title:d.title.trim(),kind:d.kind,date:d.date,time:d.time,details:d.details,pins:d.pins,sponsor:d.sponsor});
+ Object.assign(ev,{clubs:[d.club].concat(d.merge?[d.merge]:[]),title:d.title.trim(),kind:d.kind,date:d.date,time:d.time,details:d.details,pins:d.pins,sponsor:d.sponsor,flyer:d.flyer||'',flyerKey:d.flyer?'':(d.flyerKey||'')});
  if(goPublic&&(ev.pub==='none'||ev.pub==='rejected')){ev.pub='pending';S.posts.unshift({id:uid(),eventId:ev.id,clubId:d.club,author:'You',text:'',status:'pending',time:now()})}
  if(!goPublic)ev.pub='none';
  return goPublic}
@@ -909,6 +929,7 @@ const A={
  merch(el){const c=C(el.dataset.c),x=MERCH.find(y=>y[0]===el.dataset.id);modal(`<h2>${x[1]} ${x[2]}</h2><div style="text-align:center;font-size:56px">${LG(c)}</div><p class="sub" style="text-align:center">${esc(c.name)} logo · ${x[4]}</p><label>Quantity<input id="mQty" type="number" min="1" value="${x[0]==='banner'?1:12}" inputmode="numeric"></label><div class="meta" id="mTot" style="margin-top:6px">${money$(x[3])} each</div><div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="merchBuy" data-c="${c.id}" data-id="${x[0]}">Order with club money</button></div>`)},
  merchBuy(el){const c=C(el.dataset.c),x=MERCH.find(y=>y[0]===el.dataset.id),q=Math.max(1,parseInt($('#mQty').value)||1),tot=q*x[3],m=moneyOf(c),pct=c.founding?.8:.7,bal=m.payments.reduce((a,p)=>a+p.gross*pct,0)-m.spend.reduce((a,s)=>a+s.amount,0);
   if(tot>bal)return toast('Not enough in the club balance ('+money$(bal)+')');m.orders.unshift({id:uid(),name:x[2],qty:q,status:'In production',time:now()});m.spend.push({id:uid(),cat:'Merch',note:q+' × '+x[2],amount:tot,time:now()});save();closeModal();render();toast('Ordered '+q+' × '+x[2]+' for '+money$(tot)+' (demo)')},
+ rmFlyer(){draft.flyer='';draft.flyerKey='';renderEventForm(true)},
  rmMedia(el){delete pendMedia[el.dataset.id];render()},
  memberPost(el){const c=C(el.dataset.id),t=$('#newsIn').value.trim(),m=pendMedia.news||null;if(!t&&!m)return toast('Write something or add a photo or video');const vid=m&&m.type==='video';$('#newsIn').value='';delete pendMedia.news;
   c.feed.unshift({id:uid(),by:'You',text:t,media:m,status:vid?'pending':'approved',time:now()});if(!save()){c.feed.shift();render();return toast('Storage is full on this device. Try a smaller file.')}render();toast(vid?'Video sent to the president for approval':'Posted to the club')},
@@ -968,6 +989,7 @@ document.addEventListener('input',e=>{const t=e.target,d=t.dataset;
 document.addEventListener('change',e=>{const t=e.target,d=t.dataset;
  if(d.d==='kind'&&draft){draft.kind=t.value;if(t.value==='meet')draft.pins=draft.pins.slice(0,1);renderEventForm(true)}
  if(d.d==='pub'&&draft)draft.pub=t.checked;
+ if(d.f==='flyer'&&t.files[0]&&draft){readImg(t.files[0],u=>{if(draft){draft.flyer=u;draft.flyerKey='';renderEventForm(true)}})}
  if(d.f==='media'&&t.files[0]){const tg=d.t;readMedia(t.files[0],m=>{pendMedia[tg]=m;render()})}
  if(d.f==='clubLogo'&&t.files[0]){const c=C(d.c);readImg(t.files[0],u=>{c.logoImg=u;if(!save()){delete c.logoImg;toast('Storage is full on this device')}else toast('Logo uploaded');render()})}
  if(d.f==='gallery'){[...t.files].slice(0,6).forEach(f=>readImg(f,u=>{S.me.gallery.push(u);if(!save()){S.me.gallery.pop();toast('Storage is full on this device')}render()}))}
