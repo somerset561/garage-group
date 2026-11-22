@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Garage Group</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Monoton&family=Pacifico&family=Rye&family=Abril+Fatface&family=Cinzel:wght@600;800&family=Cormorant+Garamond:wght@500;700&family=Russo+One&family=Saira+Stencil+One&family=Share+Tech+Mono&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 :root{--bg:#0c0c0e;--card:#16161a;--card2:#1d1d22;--line:#2a2a31;--tx:#ececf1;--mut:#8d8d98;--acc:#ff6a1a;--ok:#2ecc71;--bad:#ff4d5e;--blue:#3d9bff;--gold:#f5c542}
@@ -177,6 +178,147 @@ nav i{top:0;right:18%}
 .flyer.gen{background:radial-gradient(circle at 70% 30%,var(--fc),#0c0c0e 75%)}.flyer.gen .bigl{position:absolute;right:14px;top:50%;transform:translateY(-60%);opacity:.9}.flyer.gen .bigl .clogo{width:84px;height:84px}
 .evinfo{display:grid;gap:3px;margin-top:6px;font-size:13px}.evinfo div{color:var(--mut)}.evinfo b{color:var(--tx);font-weight:600}
 .golink{margin-top:8px;font-size:13px;font-weight:700;color:var(--acc)}
+
+/* ---- Neon Miami theme ---- */
+body.miami{--bg:#14061f;--card:rgba(28,8,44,.82);--card2:rgba(46,14,70,.85);--line:rgba(255,64,170,.35);--tx:#fff6fd;--mut:#d7b6f0;--ok:#19f0c8;--gold:#ffd166;
+ background:#14061f linear-gradient(180deg,#1a0630 0%,#3b0a52 38%,#a1166f 66%,#ff6b3d 86%,#ffb347 100%) fixed}
+body.miami::before{content:"";position:fixed;left:50%;bottom:120px;width:260px;height:260px;margin-left:-130px;border-radius:50%;z-index:-2;
+ background:repeating-linear-gradient(180deg,#ffd166 0 14px,#ff4fa3 14px 16px,transparent 16px 22px);opacity:.55;-webkit-mask:linear-gradient(#000 45%,transparent 100%);mask:linear-gradient(#000 45%,transparent 100%)}
+body.miami::after{content:"";position:fixed;left:0;right:0;bottom:0;height:300px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='xMidYMax slice'%3E%3Cg fill='%23140620'%3E%3Cpath d='M48 300 C52 220 58 160 70 110 L74 111 C64 160 60 220 58 300Z'/%3E%3Cpath d='M71 110c-20-8-42-6-58 6 18-4 36-3 52 3zM71 110c-6-18-20-30-40-34 16 8 28 20 36 36zM71 110c10-18 26-28 46-28-18 6-32 16-42 30zM71 110c20-4 40 2 54 16-16-8-34-12-52-12zM71 110c-16 10-26 26-28 44 6-16 16-30 30-40z'/%3E%3Cpath d='M330 300 C334 230 340 180 350 140 L354 141 C346 180 342 230 340 300Z'/%3E%3Cpath d='M351 140c-18-7-38-5-52 5 16-3 32-2 47 3zM351 140c-5-16-18-27-36-31 14 7 25 18 32 33zM351 140c9-16 23-25 41-25-16 5-29 14-38 27zM351 140c18-3 36 2 48 14-14-7-30-11-46-11z'/%3E%3Cpath d='M0 300v-30h400v30z'/%3E%3C/g%3E%3Cg stroke='%23ff4fa3' stroke-opacity='.35' stroke-width='1'%3E%3Cpath d='M0 285h400M0 292h400M200 270L120 300M200 270L280 300M200 270L40 300M200 270L360 300'/%3E%3C/g%3E%3C/svg%3E") bottom/100% auto no-repeat}
+body.miami #app{background:transparent}
+body.miami header{background:linear-gradient(180deg,rgba(20,6,31,.95),rgba(40,8,60,.88));border-bottom:1px solid #ff4fa3;box-shadow:0 2px 18px rgba(255,79,163,.45)}
+body.miami nav{background:rgba(20,6,31,.94);border-top:1px solid #19e6d6;box-shadow:0 -2px 18px rgba(25,230,214,.35)}
+body.miami nav button.on{color:#19e6d6;text-shadow:0 0 8px #19e6d6}
+body.miami h1{font-family:Pacifico,cursive;font-weight:400;font-size:30px;color:#ff4fa3;text-shadow:0 0 6px #ff4fa3,0 0 18px rgba(255,79,163,.7)}
+body.miami h2{color:#19e6d6;text-shadow:0 0 8px rgba(25,230,214,.7)}
+body.miami .card{border:1px solid rgba(255,79,163,.45);box-shadow:0 0 0 1px rgba(25,230,214,.12) inset,0 0 16px rgba(255,79,163,.18);backdrop-filter:blur(6px)}
+body.miami .btn:not(.ghost){background:linear-gradient(90deg,#ff4fa3,#ff8a3d);border-color:transparent;box-shadow:0 0 14px rgba(255,79,163,.6)}
+body.miami .btn.ghost{border-color:#19e6d6;color:#19e6d6}
+body.miami .roles button.on,body.miami .chips button.on,body.miami .seg button.on{background:linear-gradient(90deg,#ff4fa3,#7b2ff7);border-color:transparent;color:#fff}
+body.miami .brand{font-family:Monoton,cursive;font-weight:400;letter-spacing:.06em;color:#19e6d6;text-shadow:0 0 8px #19e6d6}
+body.miami .brand b{color:#ff4fa3;text-shadow:0 0 8px #ff4fa3}
+body.miami .cbrand .cn{font-family:Pacifico,cursive;font-weight:400;font-size:24px;text-shadow:0 0 10px currentColor}
+body.miami .face{box-shadow:0 0 18px rgba(255,79,163,.45)}
+body.miami .flyer .ftitle{font-family:Pacifico,cursive;font-weight:400;text-transform:none;font-size:22px;text-shadow:0 0 10px #ff4fa3}
+body.miami .fband .mm{text-shadow:0 0 8px rgba(255,79,163,.8)}
+
+/* ---- Anime theme ---- */
+body.anime{--bg:#fff6e6;--card:#ffffff;--card2:#fff0f6;--line:#16161d;--tx:#16161d;--mut:#5b5566;--ok:#12b886;--gold:#f59f00;--bad:#e8364f;
+ background-color:#fff6e6;background-image:radial-gradient(rgba(255,79,163,.18) 1.6px,transparent 1.7px),radial-gradient(rgba(0,180,255,.12) 1.6px,transparent 1.7px);background-size:14px 14px,14px 14px;background-position:0 0,7px 7px}
+body.anime #app{background:transparent}
+body.anime header{background:#fff;border-bottom:3px solid #16161d;background-image:repeating-conic-gradient(from 0deg at 100% 0%,rgba(22,22,29,.06) 0deg 2deg,transparent 2deg 6deg)}
+body.anime nav{background:#fff;border-top:3px solid #16161d}
+body.anime nav button{color:#5b5566}body.anime nav button span{filter:none;opacity:1}
+body.anime nav button.on{color:#ff2e88}
+body.anime h1{font-family:Bangers,Impact,sans-serif;font-weight:400;font-size:38px;letter-spacing:.04em;transform:skew(-6deg);display:inline-block;color:#16161d;text-shadow:2px 2px 0 #ffd43b}
+body.anime .chead h1::after{content:none}
+body.anime main>h1::after{content:" ガレージ";font-size:16px;color:#ff2e88;text-shadow:none;letter-spacing:0;vertical-align:middle}
+body.anime h2{font-family:Bangers,Impact,sans-serif;font-weight:400;font-size:22px;letter-spacing:.06em;color:#16161d;background:#ffd43b;display:inline-block;padding:0 10px;border:2px solid #16161d;transform:skew(-8deg)}
+body.anime .card{border:3px solid #16161d;border-radius:12px;box-shadow:5px 5px 0 #16161d}
+body.anime .card.ev,body.anime .card.club{transition:transform .1s}body.anime .card.ev:active{transform:translate(2px,2px);box-shadow:3px 3px 0 #16161d}
+body.anime .btn{border:2px solid #16161d;box-shadow:3px 3px 0 #16161d;font-family:Bangers,Impact,sans-serif;font-weight:400;letter-spacing:.08em;font-size:17px}
+body.anime .btn:not(.ghost){background:#ff2e88;color:#fff}body.anime .btn.ghost{background:#fff;color:#16161d}body.anime .btn.ghost.danger{color:#e8364f}
+body.anime .roles button,body.anime .chips button,body.anime .seg button{border:2px solid #16161d;color:#16161d;background:#fff}
+body.anime .roles button.on,body.anime .chips button.on,body.anime .seg button.on{background:#00b4ff;color:#fff;box-shadow:2px 2px 0 #16161d}
+body.anime .seg{border:2px solid #16161d;background:#fff}
+body.anime .brand{font-family:Bangers,Impact,sans-serif;font-weight:400;font-size:24px;letter-spacing:.08em;color:#16161d}
+body.anime .brand b{color:#ff2e88}
+body.anime .cbrand .cn{font-family:Bangers,Impact,sans-serif;font-weight:400;font-size:26px;letter-spacing:.05em;color:#16161d;text-shadow:2px 2px 0 var(--acc)}
+body.anime .cbrand small{color:#5b5566}
+body.anime .hlogo{filter:drop-shadow(3px 3px 0 #16161d)}
+body.anime .face{border:3px solid #16161d!important;color:#fff;box-shadow:5px 5px 0 #16161d}
+body.anime .fband .mm{font-family:Bangers,Impact,sans-serif;font-weight:400;font-size:16px;letter-spacing:.03em}
+body.anime .fbadge{background:#ffd43b;color:#16161d;border:2px solid #16161d}
+body.anime .flyer{border-bottom:3px solid #16161d}
+body.anime .flyer .ftitle{font-family:Bangers,Impact,sans-serif;font-weight:400;font-size:28px;letter-spacing:.06em;text-shadow:2px 2px 0 #ff2e88}
+body.anime .flyer .fdate{border:2px solid #16161d;box-shadow:3px 3px 0 #16161d}
+body.anime .gact button{border:2px solid #16161d;background:#fff;color:#16161d;box-shadow:2px 2px 0 #16161d}
+body.anime .av{background:#ffd43b;color:#16161d;border:2px solid #16161d}
+body.anime .pinned{background:#fff3bf;border:2px solid #16161d}
+body.anime .premc{background:#fff3bf}
+body.anime .mcard{color:#fff}
+body.anime .x{background:#fff;color:#16161d;border:2px solid #16161d}
+body.anime .bub{border:2px solid #16161d;background:#fff}body.anime .msg.me .bub{background:#00b4ff;color:#fff}
+body.anime .mini{background:#fff;border:2px dashed #16161d}
+body.anime .tag{border:1.5px solid #16161d}
+body.anime .leaflet-popup-content-wrapper,body.anime .leaflet-popup-tip{background:#fff;color:#16161d}
+body.anime #modal .box{border:3px solid #16161d}
+body.anime input,body.anime select,body.anime textarea{border:2px solid #16161d;background:#fff}
+
+/* ---- shared light-theme fixes ---- */
+body.light .av{color:var(--tx)}body.light .pinned{background:rgba(0,0,0,.05);border:1px solid var(--line)}body.light .premc{background:var(--card2)}
+body.light .x{background:var(--card);color:var(--tx)}body.light .bub{background:var(--card2)}body.light .face,body.light .mcard{color:#fff}
+body.light .leaflet-popup-content-wrapper,body.light .leaflet-popup-tip{background:#fff;color:#222}body.light nav button span{filter:none;opacity:1}
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}.themes button{border:2px solid var(--line);border-radius:12px;padding:10px 8px;font-weight:700;font-size:13px;cursor:pointer;text-align:left;color:#fff}
+.themes button.on{outline:3px solid var(--acc);outline-offset:2px}
+.flyer .ftitle,.fband{color:#fff}body.light #toast{background:#2b2b30;color:#fff;border-color:#2b2b30}
+/* ---- Vintage ---- */
+body.vintage{--bg:#efe3c8;--card:#fbf3df;--card2:#f1e4c4;--line:#8b6b43;--tx:#2b1d12;--mut:#6e5a44;--ok:#4f7a3a;--gold:#b8860b;--bad:#a8322a;
+ background:#efe3c8 radial-gradient(ellipse at center,transparent 55%,rgba(90,60,30,.25)) fixed}
+body.vintage #app{background:transparent}
+body.vintage header{background:#2b3a55;border-bottom:4px double #c9a46a}body.vintage header .brand,body.vintage .cbrand .cn{font-family:Rye,serif;font-weight:400;color:#f3e6c8;letter-spacing:.04em}
+body.vintage .brand b{color:#d9534f}body.vintage .cbrand small,body.vintage .roles span{color:#c9b48d}body.vintage .bell{filter:sepia(1)}
+body.vintage .roles button{background:transparent;border:1px solid #c9a46a;color:#f3e6c8}body.vintage .roles button.on{background:#a8322a;border-color:#a8322a}
+body.vintage nav{background:#2b3a55;border-top:4px double #c9a46a}body.vintage nav button{color:#c9b48d}body.vintage nav button.on{color:#ffd98e}
+body.vintage h1{font-family:'Abril Fatface',serif;font-weight:400;font-size:34px;color:#a8322a}
+body.vintage h2{font-family:Rye,serif;font-weight:400;color:#2b3a55;letter-spacing:.06em;border-bottom:2px solid #8b6b43;padding-bottom:4px}
+body.vintage .card{border:2px solid #8b6b43;border-radius:6px;box-shadow:0 0 0 4px #fbf3df,0 0 0 5px #8b6b43}
+body.vintage .btn:not(.ghost){background:#a8322a;border-color:#7d241e;font-family:Rye,serif;font-weight:400;letter-spacing:.05em}
+body.vintage .face{border-color:#c9a46a!important;filter:sepia(.25)}body.vintage .fband .mm,body.vintage .flyer .ftitle{font-family:Rye,serif;font-weight:400}
+body.vintage .chips button.on,body.vintage .seg button.on{background:#2b3a55;color:#f3e6c8}
+/* ---- Luxury ---- */
+body.luxury{--bg:#0a0a0a;--card:#121212;--card2:#1a1a1a;--line:#3a3222;--tx:#f5efe0;--mut:#a89f8a;--gold:#d4af37;background:#0a0a0a linear-gradient(180deg,#0a0a0a,#15120c) fixed}
+body.luxury header{background:#0a0a0a;border-bottom:1px solid #d4af37}body.luxury nav{background:#0a0a0a;border-top:1px solid #d4af37}
+body.luxury .brand,body.luxury .cbrand .cn{font-family:Cinzel,serif;font-weight:800;letter-spacing:.18em;color:#d4af37}body.luxury .brand b{color:#f5efe0}
+body.luxury h1{font-family:Cinzel,serif;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:24px;background:linear-gradient(90deg,#b8860b,#f6e27a,#d4af37,#b8860b);-webkit-background-clip:text;background-clip:text;color:transparent}
+body.luxury h2{font-family:Cinzel,serif;color:#d4af37;letter-spacing:.2em}
+body.luxury .sub,body.luxury p{font-family:'Cormorant Garamond',serif;font-size:16px}
+body.luxury .card{border:1px solid #3a3222;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(212,175,55,.08)}
+body.luxury .btn:not(.ghost){background:linear-gradient(135deg,#b8860b,#f6e27a 50%,#b8860b);color:#111;border:none;letter-spacing:.15em;text-transform:uppercase;font-size:12px}
+body.luxury .btn.ghost{border-color:#d4af37;color:#d4af37}
+body.luxury .roles button.on,body.luxury .chips button.on,body.luxury .seg button.on{background:#d4af37;color:#111;border-color:#d4af37}
+body.luxury nav button.on{color:#d4af37}body.luxury .face{border-color:#d4af37!important}
+body.luxury .fband .mm,body.luxury .flyer .ftitle{font-family:Cinzel,serif;letter-spacing:.1em}
+/* ---- Motorsport ---- */
+body.motorsport{--bg:#0d0d0f;--card:#18181c;--card2:#222228;--line:#33333b;--tx:#fff;--mut:#a3a3ad;
+ background-color:#0d0d0f;background-image:linear-gradient(45deg,#16161a 25%,transparent 25%,transparent 75%,#16161a 75%),linear-gradient(45deg,#16161a 25%,transparent 25%,transparent 75%,#16161a 75%);background-size:8px 8px;background-position:0 0,4px 4px}
+body.motorsport header{background:#0d0d0f;border-bottom:4px solid #e10600}
+body.motorsport header::after{content:"";position:absolute;right:0;bottom:-4px;width:90px;height:4px;background:repeating-linear-gradient(90deg,#fff 0 8px,#000 8px 16px)}
+body.motorsport .brand,body.motorsport .cbrand .cn{font-family:'Russo One',sans-serif;font-weight:400;font-style:italic;letter-spacing:.04em}
+body.motorsport h1{font-family:'Russo One',sans-serif;font-weight:400;font-style:italic;text-transform:uppercase;font-size:28px;border-left:6px solid #e10600;padding-left:10px}
+body.motorsport h2{font-family:'Russo One',sans-serif;font-style:italic;color:#fff;background:#e10600;display:inline-block;padding:2px 12px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+body.motorsport .card{border:none;border-left:4px solid #e10600;border-radius:4px}
+body.motorsport .btn:not(.ghost){background:#e10600;border-color:#e10600;font-style:italic;text-transform:uppercase;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);border-radius:0}
+body.motorsport .roles button.on,body.motorsport .chips button.on,body.motorsport .seg button.on{background:#e10600;color:#fff}
+body.motorsport nav{background:#0d0d0f;border-top:3px solid #e10600}body.motorsport nav button.on{color:#e10600}
+body.motorsport .fband .mm,body.motorsport .flyer .ftitle{font-family:'Russo One',sans-serif;font-style:italic}
+/* ---- Overland ---- */
+body.overland{--bg:#e9e1cf;--card:#f6f0e2;--card2:#e6dcc5;--line:#7a6a4a;--tx:#2c2a20;--mut:#6b6350;--ok:#556b2f;--bad:#b5532a;
+ background:#e9e1cf url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg fill='none' stroke='%23a8956a' stroke-opacity='.35'%3E%3Cpath d='M-20 60c40-30 80 20 120-10s80-20 160 10'/%3E%3Cpath d='M-20 90c40-30 80 20 120-10s80-20 160 10'/%3E%3Cpath d='M-20 130c50-40 90 30 130-5s70-25 150 15'/%3E%3Cpath d='M-20 170c50-40 90 30 130-5s70-25 150 15'/%3E%3Cpath d='M-20 210c40-30 80 20 120-10s80-20 160 10'/%3E%3C/g%3E%3C/svg%3E")}
+body.overland #app{background:transparent}
+body.overland header{background:#3d4a2a;border-bottom:3px solid #c27b3a}body.overland nav{background:#3d4a2a;border-top:3px solid #c27b3a}
+body.overland header .brand,body.overland .cbrand .cn{font-family:'Saira Stencil One',sans-serif;font-weight:400;color:#efe6cf;letter-spacing:.06em}
+body.overland .cbrand small,body.overland .roles span{color:#c9bf9f}body.overland .roles button{background:transparent;border-color:#8a9a6a;color:#efe6cf}
+body.overland .roles button.on{background:#c27b3a;border-color:#c27b3a}body.overland nav button{color:#c9bf9f}body.overland nav button.on{color:#f2b766}
+body.overland h1{font-family:'Saira Stencil One',sans-serif;font-weight:400;font-size:32px;color:#3d4a2a;letter-spacing:.04em}
+body.overland h2{font-family:'Saira Stencil One',sans-serif;color:#c27b3a}
+body.overland .card{border:2px solid #7a6a4a;border-radius:8px}
+body.overland .btn:not(.ghost){background:#c27b3a;border-color:#8f5524;font-family:'Saira Stencil One',sans-serif;font-weight:400;letter-spacing:.05em}
+body.overland .chips button.on,body.overland .seg button.on{background:#3d4a2a;color:#efe6cf}
+body.overland .fband .mm,body.overland .flyer .ftitle{font-family:'Saira Stencil One',sans-serif;font-weight:400}
+/* ---- Blueprint ---- */
+body.blueprint{--bg:#0b3a6e;--card:rgba(10,58,110,.85);--card2:rgba(255,255,255,.08);--line:rgba(255,255,255,.45);--tx:#eaf4ff;--mut:#a9c7ea;
+ background-color:#0b3a6e;background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:60px 60px,60px 60px,12px 12px,12px 12px}
+body.blueprint *{font-family:'Share Tech Mono',ui-monospace,monospace}
+body.blueprint #app{background:transparent}body.blueprint header,body.blueprint nav{background:#0a3260;border-color:rgba(255,255,255,.6)}
+body.blueprint h1{text-transform:uppercase;letter-spacing:.12em;font-size:24px;border:1px solid #eaf4ff;display:inline-block;padding:4px 10px}
+body.blueprint h1::before{content:"DWG // ";opacity:.6}
+body.blueprint h2{color:#fff;letter-spacing:.2em}
+body.blueprint .card{border:1px dashed rgba(255,255,255,.7);border-radius:0;background:rgba(10,50,96,.8)}
+body.blueprint .btn{border-radius:0;border:1px solid #eaf4ff;background:transparent!important;color:#eaf4ff!important;text-transform:uppercase;letter-spacing:.1em}
+body.blueprint .roles button,body.blueprint .chips button,body.blueprint .seg button{border-radius:0}
+body.blueprint .roles button.on,body.blueprint .chips button.on,body.blueprint .seg button.on{background:#eaf4ff;color:#0b3a6e}
+body.blueprint .face{border:1px solid #eaf4ff!important;border-radius:0;filter:grayscale(.3) contrast(1.1)}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#26262d;border:1px solid var(--line);color:var(--tx);padding:10px 14px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -486,6 +628,7 @@ S.posts.push({id:uid(),clubId:'c18',author:'Garage Group',text:'🎉 New club! 5
  {id:uid(),clubId:'c4',author:'Kenji',text:'NSX spotted at Somerset Suds 🔥',media:{type:'img',key:'nsx1'},status:'approved',time:now()-0.04*H});
 })()}
 if(!S._v11){S._v11=1;const FK={e1:'gt',e2:'sierra',e3:'rx7',e5:'p997',e6:'m4f',e7:'cam1',e8:'rubi',e9:'c6v',e11:'ebikes',e13:'mclaren',e14:'scat'};S.events.forEach(e=>{if(!e.flyer&&!e.flyerKey&&FK[e.id])e.flyerKey=FK[e.id]})}
+if(!S._v12){S._v12=1;const TH={c5:'luxury',c17:'luxury',c6:'motorsport',c7:'blueprint',c8:'overland',c9:'vintage',c10:'miami',c14:'miami',c4:'anime',c16:'motorsport',c12:'overland',c13:'overland'};S.clubs.forEach(c=>{if(!c.theme)c.theme=TH[c.id]||'classic'})}
 if(S.me.mainClub===undefined)S.me.mainClub=S.clubs.some(c=>c.id==="c2"&&(c.mine||c.joined))?"c2":"";
 let view={tab:'gallery',club:null,clubTab:'news',event:null,gclub:''};
 let draft=null,vdraft=null;
@@ -549,7 +692,9 @@ function mapSVG(pins,o={}){const route=pins.length>1;
  ${!pins.length&&o.tap?'<text x="50" y="31" font-size="4" text-anchor="middle" fill="#8d8d98" font-family="sans-serif">Tap to drop a pin</text>':''}
  </svg>`}
 
+const THEMES=[['classic','Classic','#16161a'],['miami','🌴 Neon Miami','linear-gradient(135deg,#3b0a52,#ff4fa3,#ff8a3d)'],['anime','⚡ Anime','linear-gradient(135deg,#ff2e88,#00b4ff)'],['vintage','🎩 Vintage','linear-gradient(135deg,#2b3a55,#a8322a)'],['luxury','💎 Luxury','linear-gradient(135deg,#0a0a0a,#b8860b)'],['motorsport','🏁 Motorsport','linear-gradient(135deg,#0d0d0f 50%,#e10600)'],['overland','🏕️ Overland','linear-gradient(135deg,#3d4a2a,#c27b3a)'],['blueprint','📐 Blueprint','#0b3a6e']];
 function render(){
+ const THM=(brandClub()||{}).theme||'classic';THEMES.forEach(t=>document.body.classList.toggle(t[0],THM===t[0]));document.body.classList.toggle('light',['anime','vintage','overland'].includes(THM));
  killMaps();
  const keep={};['pubIn','newsIn','chatIn'].forEach(i=>{const el=document.getElementById(i);if(el)keep[i]=el.value});
  const tabs=[['gallery','🃏','Gallery'],['feed','🌐','Feed'],['clubs','🏁','Clubs'],['events','📍','Events'],['perks','🎟️','Perks'],['garage','🔧','Garage']];
@@ -674,6 +819,8 @@ function clubMembers(c,host){
  <label>Club name<input id="brName" value="${esc(c.name)}"></label>
  <div class="lbl">Club logo</div><div class="row" style="margin-top:0"><span class="logo xl">${LG(c)}</span><label class="btn ghost sm" style="margin:0">📷 Upload logo<input type="file" accept="image/*" data-f="clubLogo" data-c="${c.id}" hidden></label>${c.logoImg?`<button class="btn ghost sm" data-a="rmLogo" data-id="${c.id}">Use an icon</button>`:''}</div>
  <label>${c.logoImg?'Backup icon':'Or pick an icon'}<select id="brLogo">${['🚗','🛻','🏍️','🏎️','🏁','🔧','🔥','🐎','⚡','🦅','💀','🐍'].concat([c.logo]).filter((x,i,a)=>a.indexOf(x)===i).map(e=>`<option ${e===c.logo?'selected':''}>${e}</option>`).join('')}</select></label>
+ <div class="lbl">Club style</div><div class="themes">${THEMES.map(t=>`<button data-a="clubTheme" data-c="${c.id}" data-id="${t[0]}" class="${(c.theme||'classic')===t[0]?'on':''}" style="background:${t[2]}">${t[1]}</button>`).join('')}</div>
+ <div class="meta" style="margin-bottom:4px">Members who pick this as their main club see the whole app in this style.</div>
  <div class="lbl">Club color</div><div class="row wrap" style="margin-top:0">${COLS.map(x=>`<button class="sw ${(c.color||'#ff6a1a')===x?'on':''}" style="background:${x}" data-a="brandColor" data-c="${c.id}" data-id="${x}"></button>`).join('')}<input type="color" id="brColor" data-c="${c.id}" value="${c.color||'#ff6a1a'}" style="width:44px;height:36px;padding:2px"></div>
  <div class="row end"><button class="btn" data-a="saveBrand" data-id="${c.id}">Save branding</button></div></div>
  <div class="card"><h3>Club Perks (club sponsors)</h3><p class="sub" style="margin:0 0 6px">Sponsors you bring in show as small cards on your club page. Feeds and chat stay ad-free.</p>
@@ -929,6 +1076,7 @@ const A={
  merch(el){const c=C(el.dataset.c),x=MERCH.find(y=>y[0]===el.dataset.id);modal(`<h2>${x[1]} ${x[2]}</h2><div style="text-align:center;font-size:56px">${LG(c)}</div><p class="sub" style="text-align:center">${esc(c.name)} logo · ${x[4]}</p><label>Quantity<input id="mQty" type="number" min="1" value="${x[0]==='banner'?1:12}" inputmode="numeric"></label><div class="meta" id="mTot" style="margin-top:6px">${money$(x[3])} each</div><div class="row end"><button class="btn ghost" data-a="close">Cancel</button><button class="btn" data-a="merchBuy" data-c="${c.id}" data-id="${x[0]}">Order with club money</button></div>`)},
  merchBuy(el){const c=C(el.dataset.c),x=MERCH.find(y=>y[0]===el.dataset.id),q=Math.max(1,parseInt($('#mQty').value)||1),tot=q*x[3],m=moneyOf(c),pct=c.founding?.8:.7,bal=m.payments.reduce((a,p)=>a+p.gross*pct,0)-m.spend.reduce((a,s)=>a+s.amount,0);
   if(tot>bal)return toast('Not enough in the club balance ('+money$(bal)+')');m.orders.unshift({id:uid(),name:x[2],qty:q,status:'In production',time:now()});m.spend.push({id:uid(),cat:'Merch',note:q+' × '+x[2],amount:tot,time:now()});save();closeModal();render();toast('Ordered '+q+' × '+x[2]+' for '+money$(tot)+' (demo)')},
+ clubTheme(el){const c=C(el.dataset.c);go(()=>c.theme=el.dataset.id);toast((THEMES.find(t=>t[0]===c.theme)||THEMES[0])[1]+' style saved for '+c.name)},
  rmFlyer(){draft.flyer='';draft.flyerKey='';renderEventForm(true)},
  rmMedia(el){delete pendMedia[el.dataset.id];render()},
  memberPost(el){const c=C(el.dataset.id),t=$('#newsIn').value.trim(),m=pendMedia.news||null;if(!t&&!m)return toast('Write something or add a photo or video');const vid=m&&m.type==='video';$('#newsIn').value='';delete pendMedia.news;
