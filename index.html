@@ -168,6 +168,8 @@ nav i{top:0;right:18%}
 .fbadge,.bh{display:block}
 .dl .clogo{width:46px;height:46px}.clogo.gen{display:inline-block;vertical-align:middle}
 .bspec{font-size:11px;line-height:1.35}.bspec span{color:var(--mut)}
+.fband{display:flex;align-items:center;gap:7px}.ftx{min-width:0;flex:1}
+.flogo{flex:none;display:flex}.flogo .clogo{width:42px;height:42px;margin:0;vertical-align:0}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#26262d;border:1px solid var(--line);color:var(--tx);padding:10px 14px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -668,7 +670,7 @@ function art(kind,col){const id='a'+uid(),k='#0b0b0d',gl=`fill="${col}" opacity=
  <g transform="translate(0,42)">${b}</g></svg>`}
 function gCard(g){const c=C(g.clubId)||{name:'',logo:'',color:'#ff6a1a'},col=c.color||'#ff6a1a',v=g.v;
  return `<div class="gc"><div class="fc${g.premium?' gold':''}" data-a="flip" style="--cc:${col}"><div class="fc-in">
- <div class="face fr">${vPhotos(v).length?`<img src="${vPhotos(v)[0]}" alt="">`:art(g.kind,col)}<div class="fbadge">${g.premium?'⭐ ':''}${c.founding?'🏅 ':''}${LG(c)} ${esc(c.name)}${c.verified?VB:''}</div><div class="fband"><div class="yr">${esc(v.year)}</div><div class="mm">${esc(v.make)} ${esc(v.model)}</div></div></div>
+ <div class="face fr">${vPhotos(v).length?`<img src="${vPhotos(v)[0]}" alt="">`:art(g.kind,col)}<div class="fbadge">${esc(c.name)}${c.verified?VB:''}</div><div class="fband"><span class="flogo">${LG(c)}</span><div class="ftx"><div class="yr">${esc(v.year)}</div><div class="mm">${esc(v.make)} ${esc(v.model)}</div></div></div></div>
  <div class="face bk"><div class="bh">${LG(c)} ${esc(c.name)}</div><div class="bmm">${esc(v.year)} ${esc(v.make)} ${esc(v.model)}</div>
  ${v.hp?`<div class="bhp"><b>${esc(v.hp)}</b>HP</div>`:''}${v.engine||v.color?`<div class="bspec">${v.engine?`<div><span>Engine</span> ${esc(v.engine)}</div>`:''}${v.color?`<div><span>Color</span> ${esc(v.color)}</div>`:''}</div>`:''}
  ${v.mods?`<div class="blbl">Mods</div><div class="bmods">${esc(v.mods)}</div>`:'<div style="flex:1"></div>'}
